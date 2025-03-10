@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+  html {
+    @apply h-screen;
+  }
+  body{
+    @apply dark:bg-customDarkBg bg-slate-50
+  }
+}
