@@ -1,5 +1,7 @@
 'use client';
+
 import { useState } from "react";
+import { Button } from "@/components/ui/button"
 
 type Message = {
     role: "user" | "assistant" | "system";
@@ -83,6 +85,8 @@ export default function Chat() {
                 <div className="text-center mt-4">
                     <p className="text-sm text-gray-600">Powered by DeepSeek</p>
                 </div>
+                <Button className={'text-red-900'}>Click me</Button>
+
             </div>
         </div>
     );
