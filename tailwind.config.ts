@@ -20,8 +20,8 @@ const config: Config = {
       colors: {
         customGray: '#EAEAEA',
         customDarkBrown: '#E1AD7C',
-        customDarkBg: '#040D12',
-        customDarkFooter: '#18181B',
+        customDarkBg: '#212020',
+        customDarkNav: '#161716',
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
