@@ -1,4 +1,4 @@
-import {ChatMessage} from "@/app/models/ChatMessage";
+import {ChatMessage} from "@/models/ChatMessage";
 
 export interface ChatResponse {
     id: string;

@@ -1,9 +1,10 @@
 'use client';
 
 import React, {useState} from "react";
-import {ChatResponse} from "@/app/models/ChatResponse";
-import {Button, Input} from "@heroui/react";
-import {ChatMessage} from "@/app/models/ChatMessage";
+import {Button} from "@heroui/react";
+import {Textarea} from "@heroui/input";
+import {ChatResponse} from "@/models/ChatResponse";
+import {ChatMessage} from "@/models/ChatMessage";
 
 
 const Chat: React.FC = () => {
@@ -67,7 +68,7 @@ const Chat: React.FC = () => {
                     </div>
                 </div>
                 <div className={'flex flex-col gap-4'}>
-                    <Input
+                    <Textarea
                         label={'Message'}
                         labelPlacement={'outside'}
                         type="text"

@@ -1,6 +1,6 @@
-import {ChatBody} from "@/app/models/ChatMessage";
-import {chatConfig} from "@/app/models/ChatConfig";
-import {fetchHelper} from "@/app/utils/fetchWrapper";
+import {ChatBody} from "@/models/ChatMessage";
+import {fetchHelper} from "@/utils/fetchWrapper";
+import {chatConfig} from "@/models/ChatConfig";
 
 export async function POST(request: Request) {
     const reqBody: ChatBody = await request.json();
@@ -10,23 +10,48 @@ export async function POST(request: Request) {
     }
 
     try {
-        const response = await fetchHelper(`${process.env.API_URL}/chat/completions`, {
-            method: 'POST',
+        const response = await fetchHelper(`${process.env.LOCAL_API_URL}/chat/completions`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
             body: {
-                "model": chatConfig.model,
-                "messages": reqBody.messages
+                model: chatConfig.localModel,
+                messages: reqBody.messages,
+                stream: true,
             },
         });
 
-        if (response.status !== 200) {
-            console.error(response.toString());
-            return new Response(`Erro de API: ${response.status}`, {status: response.status});
+        if (!response.ok || !response.body) {
+            return new Response(`Erro de API: ${response}`, {status: response.status});
         }
 
-        const data = await response.json();
-        return Response.json(data);
+        const stream = new ReadableStream({
+            async start(controller) {
+                const reader = response.body!.getReader();
+                const decoder = new TextDecoder();
+
+                async function push() {
+                    const {done, value} = await reader.read();
+                    if (done) {
+                        controller.close();
+                        return;
+                    }
+                    controller.enqueue(decoder.decode(value));
+                    await push();
+                }
+
+                await push();
+            },
+        });
+
+        return new Response(stream, {
+            headers: {
+                "Content-Type": "text/event-stream",
+                "Cache-Control": "no-cache",
+                "Connection": "keep-alive",
+            },
+        });
     } catch (error) {
-        console.log(`Algo deu errado com a API: ${error}`)
-        return new Response('Internal Server Error', {status: 500});
+        console.error("Erro ao processar requisição:", error);
+        return new Response("Internal Server Error", {status: 500});
     }
 }
