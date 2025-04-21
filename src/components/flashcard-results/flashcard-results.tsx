@@ -1,6 +1,6 @@
-import { Button, select } from "@heroui/react";
+import {Button} from "@heroui/react";
 import FlashcardCardList from "../flashcards-card/flashcards-cards-list";
-import { Flashcard } from "@/models/Flashcard";
+import {Flashcard} from "@/models/Flashcard";
 import React from "react";
 
 interface FlashCardResultsProps {
