@@ -22,6 +22,7 @@ const config: Config = {
         customDarkBrown: '#E1AD7C',
         customDarkBg: '#212020',
         customDarkNav: '#161716',
+        customCardBgLight: '#EAEAEA'
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
