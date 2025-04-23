@@ -1,16 +1,19 @@
 "use client"
 
 import React from "react";
-import { ThemeProvider } from "next-themes";
+import {ThemeProvider} from "next-themes";
+import {HeroUIProvider} from "@heroui/react";
 
 interface ProvidersProps {
     children: React.ReactNode;
 }
 
-const Providers: React.FC<ProvidersProps> = ({ children }) => {
+const Providers: React.FC<ProvidersProps> = ({children}) => {
     return (
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {children}
+            <HeroUIProvider>
+                {children}
+            </HeroUIProvider>
         </ThemeProvider>
     );
 };
