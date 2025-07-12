@@ -24,7 +24,10 @@ const config: Config = {
         customDarkBrown: '#E1AD7C',
         customDarkBg: '#212020',
         customDarkNav: '#161716',
-        customCardBgLight: '#EAEAEA'
+        customCardBgLight: '#EAEAEA',
+        customSidebarDarkBg: '#1A2537',
+        customSidebarItemLeftGradientDarkBg: '#2d4264',
+        customSidebarItemRightGradientDarkBg: '#30275A',
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

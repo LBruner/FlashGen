@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {ThemeProvider} from "next-themes";
 import {HeroUIProvider} from "@heroui/react";
 
@@ -9,6 +9,16 @@ interface ProvidersProps {
 }
 
 const Providers: React.FC<ProvidersProps> = ({children}) => {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) {
+        return <>{children}</>; // Render children without ThemeProvider during SSR
+    }
+
     return (
         <ThemeProvider attribute="class" defaultTheme="light">
             <HeroUIProvider>
