@@ -19,6 +19,7 @@ interface AddFlashcardsScreenProps {
     isOpen: boolean;
     onClose: () => void;
     onOpen: () => void;
+    isAnkiConnected: boolean;
 }
 
 const AddFlashcardsForm: React.FC<AddFlashcardsScreenProps> = (
@@ -34,6 +35,7 @@ const AddFlashcardsForm: React.FC<AddFlashcardsScreenProps> = (
             <div className="flex flex-col gap-4 bg-neutral-800 p-6">
                 <TagInput wordTags={props.wordTags} setWordTags={props.setWordTags}/>
                 <Button
+                    disabled={!props.isAnkiConnected}
                     onPress={props.onOpen}
                     className="w-full bg-blue-500 dark:bg-blue-800 dark:hover:bg-blue-900 text-white p-6 rounded-lg hover:bg-blue-600 disabled:opacity-50"
                 >
