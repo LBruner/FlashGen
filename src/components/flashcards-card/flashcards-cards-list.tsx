@@ -8,6 +8,7 @@ interface FlashcardCardListProps {
 }
 
 const FlashcardCardList: React.FC<FlashcardCardListProps> = ({flashcards, setFlashcards}) => {
+    console.log(flashcards)
     return (
         <div className={'flex justify-center items-start gap-4'}>
             {

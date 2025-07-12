@@ -10,7 +10,7 @@ interface ProvidersProps {
 
 const Providers: React.FC<ProvidersProps> = ({children}) => {
     return (
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light">
             <HeroUIProvider>
                 {children}
             </HeroUIProvider>

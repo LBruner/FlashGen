@@ -1,6 +1,6 @@
 import React from "react";
 import { Flashcard } from "@/models/Flashcard";
-import { capitalizeFirstLetter, removeTags } from "@/lib/flashcard";
+import { capitalizeFirstLetter, removeTags } from "@/lib/FlashcardFormatter";
 
 interface FlashcardMeaningsColumnsProps {
   meaning: {
@@ -45,16 +45,16 @@ const FlashcardMeaningColumns: React.FC<FlashcardMeaningsColumnsProps> = ({
   return (
     <div
       onClick={() => toggleMeaning(flashcardIndex, meaningIndex)}
-      className={` hover:bg-green-300 ${
+      className={`hover:bg-blue-300 hover:dark:bg-purple-800 ${
         isSelected
-          ? "border-blue-600 border-2 rounded bg-blue-500"
-          : "bg-blue-400 border-2 border-transparent"
+          ? "border-blue-600 rounded bg-blue-500 dark:bg-purple-950 dark:border-transparent"
+          : "bg-blue-400 border-transparent dark:bg-purple-900 dark:border-none"
       }`}
       key={meaning.example}
     >
       <div
         className={
-          "flex py-2 items-center border-b-gray-200 border-b justify-center shadow"
+          "flex py-2 items-center border-b-gray-200 dark:border-gray-800 border-b justify-center shadow"
         }
       >
         <p className={"text-lg text-white font-light text-center"}>
@@ -63,7 +63,7 @@ const FlashcardMeaningColumns: React.FC<FlashcardMeaningsColumnsProps> = ({
       </div>
       <div
         className={
-          "flex items-center py-2 border-b-gray-200 border-b justify-center shadow"
+          "flex items-center py-2 border-b-gray-200 dark:border-b-gray-800 border-b justify-center shadow"
         }
       >
         <p className={"text-2xl text-white font-bold text-center"}>
@@ -72,7 +72,7 @@ const FlashcardMeaningColumns: React.FC<FlashcardMeaningsColumnsProps> = ({
       </div>
       <div
         className={
-          "flex py-2 items-center border-b-gray-200 border-b justify-center shadow"
+          "flex py-2 items-center border-b-gray-200 dark:border-b-gray-900 border-b dark:border-b-3 justify-center shadow"
         }
       >
         <p className={"text-lg text-white font-light text-center"}>

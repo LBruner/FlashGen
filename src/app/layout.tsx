@@ -31,7 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50 dark:bg-customDarkBg`}
       >
         <Providers>
-          {/*<SideBar/>*/}
+          <SideBar/>
           <div className={""}>{children}</div>
         </Providers>
       </body>

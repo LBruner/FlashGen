@@ -9,8 +9,9 @@ const MeaningSchema = z.object({
 export const FlashcardSchema = z.object({
   word: z.string(),
   phonetic: z.string(),
+  inputLanguage: z.string(),
+  outputLanguage: z.string(),
   meanings: z.array(MeaningSchema),
-  language: z.string(),
 });
 
 export type Meaning = z.infer<typeof MeaningSchema>;

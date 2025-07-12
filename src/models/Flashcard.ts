@@ -3,7 +3,8 @@ export type FlashcardCtor = {
     phonetic: string;
     meanings: Meaning[];
     selectedMeaningIndex?: number[];
-    language?: string;
+    inputLanguage?: string;
+    outputLanguage?: string;
 };
 
 type Meaning = {
@@ -17,13 +18,15 @@ export class Flashcard {
     phonetic: string;
     meanings: Meaning[];
     selectedMeaningIndex: number[] = [0];
-    language: string;
+    inputLanguage: string;
+    outputLanguage: string;
 
     constructor(flashcard: FlashcardCtor) {
         this.word = flashcard.word;
         this.phonetic = flashcard.phonetic;
         this.meanings = flashcard.meanings;
         this.selectedMeaningIndex = flashcard.selectedMeaningIndex ?? [0];
-        this.language = flashcard.language ?? 'English';
+        this.inputLanguage = flashcard.inputLanguage ?? 'en';
+        this.outputLanguage = flashcard.inputLanguage ?? 'pt';
     }
 }

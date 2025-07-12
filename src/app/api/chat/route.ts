@@ -1,6 +1,8 @@
-import {ChatBody} from "@/models/ChatMessage";
-import {fetchHelper} from "@/utils/fetchWrapper";
+import {AIResponse, ChatBody} from "@/models/ChatMessage";
 import {chatConfig} from "@/models/ChatConfig";
+import axiosApi from "@/lib/AxiosApi";
+import {ApiResponse} from "@/models/ApiResponse";
+import {createJsonResponse} from "@/lib/NextApiResponse";
 
 export async function POST(request: Request) {
     const reqBody: ChatBody = await request.json();
@@ -9,47 +11,45 @@ export async function POST(request: Request) {
         return new Response("Requisição inválida", {status: 400});
     }
 
+    console.log(JSON.stringify({
+        body: {
+            model: chatConfig.apiModel,
+            messages: reqBody.messages,
+            stream: false,
+        },
+    }))
+
     try {
-        const response = await fetchHelper(`${process.env.LOCAL_API_URL}/chat/completions`, {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: {
-                model: chatConfig.localModel,
-                messages: reqBody.messages,
-                stream: true,
-            },
+        const response = await axiosApi.post(`${process.env.AI_API_URL}/chat/completions`, {
+            model: chatConfig.apiModel,
+            messages: reqBody.messages,
+            stream: false,
+        }, {
+            headers: {
+                Authorization: process.env.API_AUTHORIZATION_TOKEN!,
+            }
         });
 
-        if (!response.ok || !response.body) {
+        if (response.status != 200) {
             return new Response(`Erro de API: ${response}`, {status: response.status});
         }
 
-        const stream = new ReadableStream({
-            async start(controller) {
-                const reader = response.body!.getReader();
-                const decoder = new TextDecoder();
+        const data: AIResponse = await response.data;
 
-                async function push() {
-                    const {done, value} = await reader.read();
-                    if (done) {
-                        controller.close();
-                        return;
-                    }
-                    controller.enqueue(decoder.decode(value));
-                    await push();
-                }
+        console.log(data.choices[0].message.content);
+        const raw = data.choices[0].message.content;
+        const cleanedData = raw.replace(/```json\n?/, "").replace(/```$/, "").trim();
 
-                await push();
-            },
-        });
+        console.log(cleanedData);
 
-        return new Response(stream, {
-            headers: {
-                "Content-Type": "text/event-stream",
-                "Cache-Control": "no-cache",
-                "Connection": "keep-alive",
-            },
-        });
+        const apiResponse: ApiResponse<Array<string>> = {
+            data: [cleanedData],
+            status: response.status,
+            errorMessage: response.status == 200 ? null : `Erro de API: ${response}`,
+            success: response.status == 200,
+        };
+
+        return createJsonResponse(apiResponse);
     } catch (error) {
         console.error("Erro ao processar requisição:", error);
         return new Response("Internal Server Error", {status: 500});

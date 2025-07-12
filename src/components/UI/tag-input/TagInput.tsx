@@ -42,7 +42,7 @@ const CreateFlashcardsPage: React.FC<CreateFlashcardsPageProps> = ({wordTags, se
     };
 
     return (
-        <div className={'mt-32'}>
+        <div className={''}>
             <ReactTags
                 autoFocus={true}
                 classNames={{
