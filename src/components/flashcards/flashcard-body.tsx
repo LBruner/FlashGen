@@ -15,6 +15,7 @@ import {useDisclosure} from "@heroui/react";
 import AnkiConnectionStatusBar from "@/components/anki-connection/AnkiConnectionStatusBar";
 import axiosApi from "@/lib/AxiosApi";
 import {ApiResponse} from "@/models/ApiResponse";
+import {ankiPaths} from "@/path-routes";
 
 interface FlashcardBodyProps {
     userDecks: AnkiDeck[];
@@ -29,7 +30,7 @@ const FlashcardBody: React.FC<FlashcardBodyProps> = ({userDecks}) => {
 
     const {
         error: ankiConnectionError,
-    } = useSWR(`/api/anki/connection`, fetcher, {refreshInterval: 1000})
+    } = useSWR(ankiPaths.getConnection(), fetcher, {refreshInterval: 1000})
 
     const isAnkiConnected = ankiConnectionError == null;
 
@@ -78,6 +79,7 @@ const FlashcardBody: React.FC<FlashcardBodyProps> = ({userDecks}) => {
         <div className={'flex w-full h-[100vh] justify-center items-center'}>
             {currentScreen == 0 &&
                 <AddFlashcardsForm
+                    isAnkiConnected={isAnkiConnected}
                     wordTags={wordTags} setWordTags={setWordTags} userDecks={userDecks} selectedDeck={selectedDeck}
                     setSelectedDeck={setselectedDeck} setInputLanguage={setInputLanguage}
                     inputLanguage={inputLanguage}
