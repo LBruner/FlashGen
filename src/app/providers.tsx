@@ -16,7 +16,7 @@ const Providers: React.FC<ProvidersProps> = ({children}) => {
     }, []);
 
     if (!mounted) {
-        return <>{children}</>; // Render children without ThemeProvider during SSR
+        return <>{children}</>;
     }
 
     return (

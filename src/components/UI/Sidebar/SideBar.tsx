@@ -21,10 +21,10 @@ const SideBar: React.FC = _ => {
 
     if (isSidebarMinimized)
         return (
-            <div className={'bg-customSidebarDarkBg w-16 h-screen fixed flex flex-col items-center justify-between'}>
+            <div className={'bg-customSidebarDarkBg py-4 w-16 h-screen flex flex-col items-center justify-between'}>
                 <div>
                     <div className={'flex flex-col items-center justify-center'}>
-                        <button onClick={setIsSidebarMinimized.bind(null, false)} className={'p-2 mt-4'}>
+                        <button onClick={setIsSidebarMinimized.bind(null, false)} className={'p-2'}>
                             <RiExpandRightLine className={'text-gray-400 hover:text-gray-200'} size={30}/>
                         </button>
                     </div>
@@ -48,9 +48,9 @@ const SideBar: React.FC = _ => {
 
     return (
         <>
-            <div className={'bg-customSidebarDarkBg w-72 h-screen fixed flex flex-col'}>
-                <div className={'flex border-b border-b-gray-400 items-center justify-between'}>
-                    <div className={'flex py-6  gap-4 pl-4'}>
+            <div className={'bg-customSidebarDarkBg w-72 h-screen flex flex-col'}>
+                <div className={'flex border-b border-b-gray-400 dark:border-b-gray-600 items-center justify-between'}>
+                    <div className={'flex py-6 gap-4 pl-4'}>
                         <button
                             className={'bg-gradient-to-r from-indigo-500 via-blue-500 to-indigo-300 p-3 rounded-xl'}>
                             <IoBookOutline className={'text-white'} size={24}/>
