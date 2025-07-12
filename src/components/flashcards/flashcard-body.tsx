@@ -1,38 +1,27 @@
 'use client';
 
 import React, {useState} from "react";
-import {Tag} from "react-tag-input";
 import {Flashcard} from "@/models/Flashcard";
 import {ChatMessage} from "@/models/ChatMessage";
 import {getPrompt} from "../../../public/prompt";
 import FlashCardResults from "@/components/flashcard-results/flashcard-results";
 import {AnkiDeck} from "@/models/anki/deck";
 import {flashcardLanguages} from "@/lib/languages-list";
-import useSWR from "swr";
 import {AxiosResponse} from "axios";
 import AddFlashcardsForm from "@/components/pages/AddFlashcardsForm";
 import {useDisclosure} from "@heroui/react";
-import AnkiConnectionStatusBar from "@/components/anki-connection/AnkiConnectionStatusBar";
 import axiosApi from "@/lib/AxiosApi";
 import {ApiResponse} from "@/models/ApiResponse";
-import {ankiPaths} from "@/path-routes";
 
 interface FlashcardBodyProps {
     userDecks: AnkiDeck[];
 }
 
-const fetcher = (url: string) => axiosApi.get(url).then(res => res.data)
 
 const FlashcardBody: React.FC<FlashcardBodyProps> = ({userDecks}) => {
-    const [wordTags, setWordTags] = useState<Array<Tag>>([]);
+    const [wordTags, setWordTags] = useState<Array<string>>([]);
     const [isLoading, setIsLoading] = useState(false);
     const {isOpen, onOpen, onClose} = useDisclosure();
-
-    const {
-        error: ankiConnectionError,
-    } = useSWR(ankiPaths.getConnection(), fetcher, {refreshInterval: 1000})
-
-    const isAnkiConnected = ankiConnectionError == null;
 
     const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
 
@@ -48,7 +37,7 @@ const FlashcardBody: React.FC<FlashcardBodyProps> = ({userDecks}) => {
 
         const newMessage: ChatMessage = {
             role: "user",
-            content: getPrompt(wordTags.map((item) => item.text), inputLanguage, outputLanguage),
+            content: getPrompt(wordTags.map((item) => item), inputLanguage, outputLanguage),
         };
         setIsLoading(true);
 
@@ -76,15 +65,15 @@ const FlashcardBody: React.FC<FlashcardBodyProps> = ({userDecks}) => {
     }
 
     return (
-        <div className={'flex w-full h-[100vh] justify-center items-center'}>
+        <div className={'flex w-full h-auto justify-center items-center'}>
             {currentScreen == 0 &&
                 <AddFlashcardsForm
-                    isAnkiConnected={isAnkiConnected}
-                    wordTags={wordTags} setWordTags={setWordTags} userDecks={userDecks} selectedDeck={selectedDeck}
+                    isAnkiConnected={true}
+                    tags={wordTags} setTags={setWordTags} userDecks={userDecks} selectedDeck={selectedDeck}
                     setSelectedDeck={setselectedDeck} setInputLanguage={setInputLanguage}
                     inputLanguage={inputLanguage}
                     outputLanguage={outputLanguage} setOutputLanguage={setOutputLanguage} isLoading={isLoading}
-                    onStartFlashcardCreation={onStartFlashcardCreation} isOpen={isOpen} onClose={onClose}
+                    handleCreateFlashcards={onStartFlashcardCreation} isOpen={isOpen} onClose={onClose}
                     onOpen={onOpen}
                 />
             }
@@ -97,7 +86,6 @@ const FlashcardBody: React.FC<FlashcardBodyProps> = ({userDecks}) => {
                     selectedDeckName={selectedDeck}
                 />
             }
-            <AnkiConnectionStatusBar isConnected={isAnkiConnected}/>
         </div>
     )
 };
