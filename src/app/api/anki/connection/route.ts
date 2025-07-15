@@ -6,7 +6,7 @@ import axiosApi from "@/lib/AxiosApi";
 
 export async function GET(_: Request): Promise<Response> {
     try {
-        const ankiResponse: AxiosResponse<AnkiResponse> = await axiosApi.post(process.env.ANKI_URL!, {
+        const ankiResponse: AxiosResponse<AnkiResponse<number>> = await axiosApi.post(process.env.ANKI_URL!, {
             action: 'version',
             version: 6
         });
@@ -14,7 +14,7 @@ export async function GET(_: Request): Promise<Response> {
         const {result, error: ankiError} = ankiResponse.data;
 
         const apiResponse: ApiResponse<Array<string>> = {
-            data: result,
+            data: [result.toString()],
             status: ankiError ? 500 : 200,
             errorMessage: ankiError ?? null,
             success: !ankiError,

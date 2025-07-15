@@ -5,6 +5,9 @@ export const ankiPaths = {
     getDeckList() {
         return `${process.env.LOCAL_API_URL}/anki/decks`;
     },
+    getDeckStats() {
+        return `${process.env.LOCAL_API_URL}/anki/deck-stats`;
+    },
 }
 
 export const pagePaths = {

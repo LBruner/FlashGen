@@ -13,8 +13,8 @@ const FlashcardArraySchema = z.object({
 export async function POST(request: Request) {
     try {
         const reqBody = await request.json();
-        const parsed = FlashcardArraySchema.parse(reqBody);
-        const flashcards: Flashcard[] = parsed.cards.map((item) => new Flashcard(item));
+        const {selectedDeckName, cards} = FlashcardArraySchema.parse(reqBody);
+        const flashcards: Flashcard[] = cards.map((item) => new Flashcard(item));
 
         if (flashcards.length === 0) {
             return createJsonResponse({
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
             })
         }
 
-        const ankiResponse = await addFlashcards(flashcards, parsed.selectedDeckName);
+        const ankiResponse = await addFlashcards(flashcards, selectedDeckName);
 
         const {result, error: ankiError} = ankiResponse;
 
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
     } catch (error) {
         if (error instanceof z.ZodError) {
             console.error("Erro de validação Zod:", error.errors);
-            return new Response("Formato inválido de flashcards.", {status: 400});
+            return new Response(`Formato inválido de flashcards. Erro: ${error}`, {status: 400});
         }
 
         console.error("Erro interno:", error);
