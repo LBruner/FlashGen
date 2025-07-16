@@ -10,7 +10,7 @@ interface FlashcardCardListProps {
 const FlashcardCardList: React.FC<FlashcardCardListProps> = ({flashcards, setFlashcards}) => {
     console.log(flashcards)
     return (
-        <div className={'flex justify-center items-start gap-4'}>
+        <div className={'grid grid-cols-2 gap-4'}>
             {
                 flashcards.map((flashcard,index) => (
                     <FlashcardCard key={flashcard.word} flashcard={flashcard} setFlashcards={setFlashcards} flashcardIndex={index}/>

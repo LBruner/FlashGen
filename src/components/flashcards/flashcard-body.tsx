@@ -23,10 +23,67 @@ const FlashcardBody: React.FC<FlashcardBodyProps> = ({userDecks}) => {
     const [isLoading, setIsLoading] = useState(false);
     const {isOpen, onOpen, onClose} = useDisclosure();
 
-    const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
+    const [flashcards, setFlashcards] = useState<Flashcard[]>([
+        new Flashcard({
+            word: "beautiful",
+            phonetic: "/ˈbjuːtɪfəl/",
+            meanings: [
+                {
+                    definition: "Having qualities that give great pleasure to see, hear, or think about",
+                    translation: "bonito, belo",
+                    example: "The sunset was absolutely beautiful tonight."
+                },
+                {
+                    definition: "Excellent; very satisfying or pleasing",
+                    translation: "excelente, maravilhoso",
+                    example: "That was a beautiful performance by the orchestra."
+                },
+                {
+                    definition: "Used to express approval or admiration",
+                    translation: "perfeito, ótimo",
+                    example: "Beautiful! You solved the problem perfectly."
+                }
+            ],
+            selectedMeaningIndex: [0, 2]
+        }),
+        new Flashcard({
+            word: "serendipity",
+            phonetic: "/ˌserənˈdɪpɪti/",
+            meanings: [
+                {
+                    definition: "The occurrence and development of events by chance in a happy or beneficial way",
+                    translation: "serendipidade, descoberta casual",
+                    example: "Meeting my future business partner at that coffee shop was pure serendipity."
+                },
+                {
+                    definition: "A pleasant surprise or fortunate accident",
+                    translation: "surpresa agradável, acaso feliz",
+                    example: "Finding that rare book was a moment of serendipity."
+                }
+            ],
+            selectedMeaningIndex: [0]
+        }),
+        new Flashcard({
+            word: "resilience",
+            phonetic: "/rɪˈzɪliəns/",
+            meanings: [
+                {
+                    definition: "The ability to recover quickly from difficulties; toughness",
+                    translation: "resistência, capacidade de recuperação",
+                    example: "Her resilience helped her overcome the challenging period."
+                },
+                {
+                    definition: "The ability of a substance to spring back into shape; elasticity",
+                    translation: "elasticidade, flexibilidade",
+                    example: "The material's resilience makes it perfect for this application."
+                }
+            ],
+            selectedMeaningIndex: [0]
+        })
+    ]);
 
     const [selectedDeck, setselectedDeck] = useState<AnkiDeck>(userDecks[0]);
-    const [currentScreen, setCurrentScreen] = useState(0);
+    const [currentScreen, setCurrentScreen] = useState(1);
 
     const [inputLanguage, setInputLanguage] = useState<string>(flashcardLanguages[0].code);
     const [outputLanguage, setOutputLanguage] = useState<string>(flashcardLanguages[1].code);
