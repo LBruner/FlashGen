@@ -1,6 +1,7 @@
 import React, {ChangeEvent, Dispatch, SetStateAction, useState} from "react";
 import {AnkiDeckStats} from "@/models/anki/deck";
 import {Filter, Search} from "lucide-react";
+import {nestDecks} from "@/lib/Decks";
 
 interface DeckListSorterProps {
     decksStats: AnkiDeckStats[];
@@ -11,18 +12,22 @@ const DeckListSorter: React.FC<DeckListSorterProps> = (props) => {
     const {decksStats, setSortedDecksStats} = props;
     const [searchTerm, setSearchTerm] = useState('');
     const [sortBy, setSortBy] = useState('name');
-    const [showNestedDecks, setShowNestedDecks] = useState(false);
+    const [showNestedDecks, areDecksNested] = useState(false);
 
     const onSearchByName = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
+        areDecksNested(false);
 
         setSortedDecksStats(
             decksStats.filter((deck) => deck.name.toLowerCase().includes(e.target.value.toLowerCase()))
         );
     }
+
     const onSetSortBy = (event: ChangeEvent<HTMLSelectElement>) => {
         const sortValue = event.target.value;
         setSortBy(sortValue);
+        areDecksNested(false);
+        setSearchTerm('');
 
         const newSortedList = [...decksStats].sort((a, b) => {
             switch (sortValue) {
@@ -41,13 +46,16 @@ const DeckListSorter: React.FC<DeckListSorterProps> = (props) => {
         setSortedDecksStats(newSortedList);
     };
 
-    const onSetNestedDecks = () => {
-        console.log(decksStats)
-        setShowNestedDecks(!showNestedDecks);
-        const mainDecks = decksStats.filter((item) => !item.name.includes(':'));
+    const toggleDecksNesting = () => {
+        const isNowNested = !showNestedDecks;
+        areDecksNested(isNowNested);
 
-    }
-
+        if (isNowNested) {
+            setSortedDecksStats(nestDecks(decksStats));
+        } else {
+            setSortedDecksStats(decksStats);
+        }
+    };
 
     return (
         <div className="flex items-center space-x-4">
@@ -72,7 +80,7 @@ const DeckListSorter: React.FC<DeckListSorterProps> = (props) => {
                 <option value="reviewCards">Sort by Review Cards</option>
             </select>
             <button
-                onClick={onSetNestedDecks}
+                onClick={toggleDecksNesting}
                 className={`px-4 py-3 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${
                     showNestedDecks
                         ? 'bg-gradient-to-r from-blue-500/20 to-purple-600/20 text-white border border-blue-500/20'

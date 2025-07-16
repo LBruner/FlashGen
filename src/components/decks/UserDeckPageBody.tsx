@@ -7,7 +7,7 @@ import DecksList from "@/components/decks/DecksList";
 import DeckListSorter from "@/components/decks/DeckListSorter";
 
 interface UserDeckPageBodyProps {
-    decksStats: AnkiDeckStats[];
+    decksStats: AnkiDeckStats[ ];
 }
 
 const getSummaryStats = (decksStats: AnkiDeckStats[]) => {
@@ -30,7 +30,8 @@ const UserDeckPageBody: React.FC<UserDeckPageBodyProps> = ({decksStats}) => {
             </div>
             <div className={'flex flex-col gap-8'}>
                 <DecksSummaryList deckStats={getSummaryStats(sortedDecks)}/>
-                <DeckListSorter decksStats={decksStats} setSortedDecksStats={setSortedDecks}/>
+                <DeckListSorter decksStats={decksStats}
+                                setSortedDecksStats={setSortedDecks}/>
                 <DecksList decksStats={sortedDecks}/>
             </div>
         </div>
