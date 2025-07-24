@@ -8,6 +8,9 @@ export const ankiPaths = {
     getDeckStats() {
         return `${process.env.LOCAL_API_URL}/anki/deck-stats`;
     },
+    getAddFlashcard(){
+        return `/api/anki/add-flashcards`;
+    }
 }
 
 export const pagePaths = {

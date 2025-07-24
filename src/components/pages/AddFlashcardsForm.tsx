@@ -27,7 +27,7 @@ const AddFlashcardsForm: React.FC<AddFlashcardsScreenProps> = (
     props) => {
 
     return (
-        <div className={'flex flex-col w-full'}>
+        <div className={'flex flex-col w-full h-screen py-8 px-12'}>
             <DashboardHeader title={'Create Flashcards'} subtitle={'Add worlds and let AI generate your study cards'}
                              endContent={<AnkiConnectionStatusBar isConnected={props.isAnkiConnected}/>
                              }/>

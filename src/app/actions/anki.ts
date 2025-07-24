@@ -16,18 +16,23 @@ export const pegaTodosDecks = async (): Promise<AnkiDeck[]> => {
     }
 }
 
-export const pegaStatDosDecks = async (deckNames: AnkiDeck[]): Promise<AnkiDeckStats[]> =>{
-    console.log(JSON.stringify(deckNames[32]));
-    const decksWithStats: AxiosResponse<ApiResponse<DeckStatsMap>> = await axiosApi.post(ankiPaths.getDeckStats(), {
-        decks: deckNames
-    });
+export const pegaStatDosDecks = async (deckNames: AnkiDeck[]): Promise<AnkiDeckStats[]> => {
+    try {
+        const decksWithStats: AxiosResponse<ApiResponse<DeckStatsMap>> = await axiosApi.post(ankiPaths.getDeckStats(), {
+            decks: deckNames
+        });
 
-    return Object.values(decksWithStats.data.data).map((deck: AnkiDeckStats) => {
-        const fullName = deckNames.find((name) => name.endsWith(deck.name)) || deck.name;
+        return Object.values(decksWithStats.data.data).map((deck: AnkiDeckStats) => {
+            const fullName = deckNames.find((name) => name.endsWith(deck.name)) || deck.name;
 
-        return {
-            ...deck,
-            name: fullName
-        };
-    });
+            return {
+                ...deck,
+                name: fullName
+            };
+        });
+    }
+    catch (e) {
+        console.log(e)
+        return [];
+    }
 }

@@ -4,19 +4,21 @@ import React, {useState} from "react";
 import {Flashcard} from "@/models/Flashcard";
 import {ChatMessage} from "@/models/ChatMessage";
 import {getPrompt} from "../../../public/prompt";
-import FlashCardResults from "@/components/flashcard-results/flashcard-results";
 import {AnkiDeck} from "@/models/anki/deck";
 import {flashcardLanguages} from "@/lib/languages-list";
 import {AxiosResponse} from "axios";
-import AddFlashcardsForm from "@/components/pages/AddFlashcardsForm";
+import AddWordsForm from "@/components/pages/AddFlashcardsForm";
 import {useDisclosure} from "@heroui/react";
 import axiosApi from "@/lib/AxiosApi";
-import {ApiResponse} from "@/models/ApiResponse";
+import {AddCardFeedbackResponseData, ApiResponse} from "@/models/ApiResponse";
+import {ankiPaths} from "@/path-routes";
+import FlashcardsCreation from "@/components/FlashcardsCreation/FlashcardsCreation";
+import FlashcardsResults from "@/components/flashcards/FlashcardsResults";
+import CustomSpinner from "@/components/UI/CustomSpinner";
 
 interface FlashcardBodyProps {
     userDecks: AnkiDeck[];
 }
-
 
 const FlashcardBody: React.FC<FlashcardBodyProps> = ({userDecks}) => {
     const [wordTags, setWordTags] = useState<Array<string>>([]);
@@ -24,70 +26,47 @@ const FlashcardBody: React.FC<FlashcardBodyProps> = ({userDecks}) => {
     const {isOpen, onOpen, onClose} = useDisclosure();
 
     const [flashcards, setFlashcards] = useState<Flashcard[]>([
-        new Flashcard({
-            word: "beautiful",
-            phonetic: "/ˈbjuːtɪfəl/",
-            meanings: [
-                {
-                    definition: "Having qualities that give great pleasure to see, hear, or think about",
-                    translation: "bonito, belo",
-                    example: "The sunset was absolutely beautiful tonight."
-                },
-                {
-                    definition: "Excellent; very satisfying or pleasing",
-                    translation: "excelente, maravilhoso",
-                    example: "That was a beautiful performance by the orchestra."
-                },
-                {
-                    definition: "Used to express approval or admiration",
-                    translation: "perfeito, ótimo",
-                    example: "Beautiful! You solved the problem perfectly."
-                }
-            ],
-            selectedMeaningIndex: [0, 2]
-        }),
-        new Flashcard({
-            word: "serendipity",
-            phonetic: "/ˌserənˈdɪpɪti/",
-            meanings: [
-                {
-                    definition: "The occurrence and development of events by chance in a happy or beneficial way",
-                    translation: "serendipidade, descoberta casual",
-                    example: "Meeting my future business partner at that coffee shop was pure serendipity."
-                },
-                {
-                    definition: "A pleasant surprise or fortunate accident",
-                    translation: "surpresa agradável, acaso feliz",
-                    example: "Finding that rare book was a moment of serendipity."
-                }
-            ],
-            selectedMeaningIndex: [0]
-        }),
-        new Flashcard({
-            word: "resilience",
-            phonetic: "/rɪˈzɪliəns/",
-            meanings: [
-                {
-                    definition: "The ability to recover quickly from difficulties; toughness",
-                    translation: "resistência, capacidade de recuperação",
-                    example: "Her resilience helped her overcome the challenging period."
-                },
-                {
-                    definition: "The ability of a substance to spring back into shape; elasticity",
-                    translation: "elasticidade, flexibilidade",
-                    example: "The material's resilience makes it perfect for this application."
-                }
-            ],
-            selectedMeaningIndex: [0]
-        })
+        // new Flashcard({
+        //     "word": "<span style=\"color: rgb(231, 217, 15);\">live</span>",
+        //     "phonetic": "(/lɪv/)",
+        //     "meanings": [
+        //         {
+        //             "definition": "to be alive; have life",
+        //             "translation": "viver",
+        //             "example": "She wants to <span style=\"color: rgb(231, 217, 15);\">live</span> a long and happy life."
+        //         },
+        //         {
+        //             "definition": "to reside in a particular place",
+        //             "translation": "morar",
+        //             "example": "They <span style=\"color: rgb(231, 217, 15);\">live</span> in a small apartment downtown."
+        //         }
+        //     ]
+        // }),
+        // new Flashcard({
+        //     "word": "<span style=\"color: rgb(231, 217, 15);\">dance</span>",
+        //     "phonetic": "(/dæns/)",
+        //     "meanings": [
+        //         {
+        //             "definition": "to move rhythmically to music",
+        //             "translation": "dançar",
+        //             "example": "He loves to <span style=\"color: rgb(231, 217, 15);\">dance</span> at parties."
+        //         },
+        //         {
+        //             "definition": "a series of movements performed to music",
+        //             "translation": "dança",
+        //             "example": "The ballet <span style=\"color: rgb(231, 217, 15);\">dance</span> was beautiful and graceful."
+        //         }
+        //     ]
+        // })
     ]);
 
-    const [selectedDeck, setselectedDeck] = useState<AnkiDeck>(userDecks[0]);
-    const [currentScreen, setCurrentScreen] = useState(1);
+    const [selectedDeck, setSelectedDeck] = useState<AnkiDeck>(userDecks[0]);
+    const [currentScreen, setCurrentScreen] = useState(0);
 
     const [inputLanguage, setInputLanguage] = useState<string>(flashcardLanguages[0].code);
     const [outputLanguage, setOutputLanguage] = useState<string>(flashcardLanguages[1].code);
 
+    const [addFlashcardsFeedback, setAddFlashcardsFeedback] = useState<AddCardFeedbackResponseData | null>();
 
     const sendMessage = async () => {
         if (wordTags.length === 0 || isLoading) return;
@@ -105,12 +84,13 @@ const FlashcardBody: React.FC<FlashcardBodyProps> = ({userDecks}) => {
 
             const flashcards = JSON.parse(response.data.data[0]);
             console.log(flashcards.flashcards);
-            const flashcardArray: Array<Flashcard> = flashcards.flashcards.map((flashcard: any) => new Flashcard({
+            const flashcardArray: Array<Flashcard> = flashcards.flashcards.map((flashcard: Flashcard) => new Flashcard({
                 ...flashcard, inputLanguage, outputLanguage,
                 selectedMeaningIndex: [0],
             }));
 
             setFlashcards(flashcardArray);
+            setIsLoading(false);
         } catch (e) {
             console.log(e)
         }
@@ -121,13 +101,54 @@ const FlashcardBody: React.FC<FlashcardBodyProps> = ({userDecks}) => {
         await sendMessage();
     }
 
+    const addFlashcardsToAnki = async () => {
+        setIsLoading(true);
+
+        const flattenFlashcards: Flashcard[] = flashcards.flatMap((flashcard) => {
+            const selectedMeanings = flashcard.selectedMeaningIndex.map(
+                (index) => flashcard.meanings[index]
+            );
+            return selectedMeanings.map((meaning) => {
+                return new Flashcard({
+                    word: flashcard.word,
+                    phonetic: flashcard.phonetic,
+                    meanings: [meaning],
+                    selectedMeaningIndex: [0],
+                    inputLanguage: flashcard.inputLanguage,
+                    outputLanguage: flashcard.outputLanguage,
+                });
+            });
+        });
+        const {data}: ApiResponse<AddCardFeedbackResponseData> = (await axiosApi.post(ankiPaths.getAddFlashcard(), {
+            cards: flattenFlashcards,
+            selectedDeckName: selectedDeck
+        })).data;
+
+        setAddFlashcardsFeedback(data);
+        setCurrentScreen(2);
+        setIsLoading(false);
+    };
+
+    if (isLoading) {
+        return <CustomSpinner/>
+    }
+
+    const resetPageData = () =>{
+        onClose();
+        setFlashcards([]);
+        setSelectedDeck('');
+        setWordTags([]);
+        setCurrentScreen(0);
+        setIsLoading(false);
+    }
+
     return (
-        <div className={'flex w-full h-auto justify-center items-center'}>
+        <div className={'flex w-full justify-center items-center'}>
             {currentScreen == 0 &&
-                <AddFlashcardsForm
+                <AddWordsForm
                     isAnkiConnected={true}
                     tags={wordTags} setTags={setWordTags} userDecks={userDecks} selectedDeck={selectedDeck}
-                    setSelectedDeck={setselectedDeck} setInputLanguage={setInputLanguage}
+                    setSelectedDeck={setSelectedDeck} setInputLanguage={setInputLanguage}
                     inputLanguage={inputLanguage}
                     outputLanguage={outputLanguage} setOutputLanguage={setOutputLanguage} isLoading={isLoading}
                     handleCreateFlashcards={onStartFlashcardCreation} isOpen={isOpen} onClose={onClose}
@@ -135,14 +156,13 @@ const FlashcardBody: React.FC<FlashcardBodyProps> = ({userDecks}) => {
                 />
             }
             {currentScreen == 1 &&
-                <FlashCardResults
+                <FlashcardsCreation
+                    addFlashcardsToAnki={addFlashcardsToAnki}
                     flashcards={flashcards}
                     setFlashcards={setFlashcards}
-                    inputLanguage={inputLanguage}
-                    outputLanguage={outputLanguage}
-                    selectedDeckName={selectedDeck}
                 />
             }
+            {currentScreen == 2 && <FlashcardsResults resetPageData={resetPageData} responseData={addFlashcardsFeedback!}/>}
         </div>
     )
 };

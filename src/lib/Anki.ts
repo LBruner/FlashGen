@@ -4,6 +4,7 @@ import {removeTags} from "./FlashcardFormatter";
 import {AxiosResponse} from "axios";
 import {AnkiResponse} from "@/models/anki/deck";
 import axiosApi from "@/lib/AxiosApi";
+import {AddCardFeedbackResponseData} from "@/models/ApiResponse";
 
 const getFlashcardNotes = (flashcards: Flashcard[], selectedDeckname: string) => {
     return flashcards.map((flashcard) => {
@@ -67,7 +68,7 @@ export const addFlashcards = async (flashcards: Flashcard[], selectedDeckname: s
         },
     }))
 
-    const response: AxiosResponse<AnkiResponse> = await axiosApi.post(process.env.ANKI_URL!, {
+    const response: AxiosResponse<AnkiResponse<AddCardFeedbackResponseData>> = await axiosApi.post(process.env.ANKI_URL!, {
         action: "addNotes",
         version: 6,
         params: {

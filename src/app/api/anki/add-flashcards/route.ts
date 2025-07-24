@@ -2,7 +2,7 @@ import {addFlashcards} from "@/lib/Anki";
 import {Flashcard} from "@/models/Flashcard";
 import {FlashcardSchema} from "@/models/schemas/flashcard-schema";
 import {z} from "zod";
-import {ApiResponse} from "@/models/ApiResponse";
+import {AddCardFeedbackResponseData, ApiResponse} from "@/models/ApiResponse";
 import {createJsonResponse} from "@/lib/NextApiResponse";
 
 const FlashcardArraySchema = z.object({
@@ -12,6 +12,8 @@ const FlashcardArraySchema = z.object({
 
 export async function POST(request: Request) {
     try {
+        const startTimer = performance.now();
+
         const reqBody = await request.json();
         const {selectedDeckName, cards} = FlashcardArraySchema.parse(reqBody);
         const flashcards: Flashcard[] = cards.map((item) => new Flashcard(item));
@@ -29,18 +31,18 @@ export async function POST(request: Request) {
 
         const {result, error: ankiError} = ankiResponse;
 
-        const apiResponse: ApiResponse<Array<string>> = {
-            data: result,
+        const endTimer = performance.now();
+
+        const apiResponse: ApiResponse<AddCardFeedbackResponseData> = {
+            data: ankiError ? result : {
+                addedCards: flashcards.length,
+                executionTime: (endTimer - startTimer) / 1000,
+                deckName: selectedDeckName,
+            },
             status: ankiError ? 500 : 200,
             errorMessage: ankiError ?? null,
             success: !ankiError,
         };
-
-        if (ankiResponse.error == null) {
-            return new Response(JSON.stringify({
-                message: `${flashcards.length} Flashcards adicionados com sucesso!`
-            }));
-        }
 
         return createJsonResponse({...apiResponse});
     } catch (error) {
