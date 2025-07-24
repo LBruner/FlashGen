@@ -9,7 +9,7 @@ import {pagePaths} from "@/path-routes";
 import {RiExpandLeftLine, RiExpandRightLine} from "react-icons/ri";
 import ThemeButton from "@/components/UI/Sidebar/ThemeButton";
 
-const SideBar: React.FC = _ => {
+const SideBar: React.FC = () => {
 
     const {systemTheme, theme, setTheme} = useTheme();
     const currentTheme = theme === 'system' ? systemTheme : theme;

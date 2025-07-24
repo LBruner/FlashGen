@@ -4,7 +4,7 @@ import {ApiResponse} from "@/models/ApiResponse";
 import {createJsonResponse} from "@/lib/NextApiResponse";
 import axiosApi from "@/lib/AxiosApi";
 
-export async function GET(_: Request): Promise<Response> {
+export async function GET(): Promise<Response> {
     try {
         const ankiResponse: AxiosResponse<AnkiResponse<number>> = await axiosApi.post(process.env.ANKI_URL!, {
             action: 'version',

@@ -4,7 +4,7 @@ import {ApiResponse} from "@/models/ApiResponse";
 import axiosApi from "@/lib/AxiosApi";
 import {createJsonResponse} from "@/lib/NextApiResponse";
 
-export async function GET(_: Request) {
+export async function GET() {
     try {
         const ankiResponse: AxiosResponse<AnkiResponse<AnkiDeck[]>> = await axiosApi.post(process.env.ANKI_URL!, {
             action: "deckNames",
