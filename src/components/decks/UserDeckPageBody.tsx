@@ -26,7 +26,7 @@ const UserDeckPageBody: React.FC<UserDeckPageBodyProps> = ({decksStats}) => {
         <div className={'py-8 px-12 h-screen overflow-y-scroll'}>
             <div className={'mb-4'}>
                 <p className={'text-3xl font-bold'}>My Decks</p>
-                <p className={'text-lg text-gray-400'}>manage your flashcard collections</p>
+                <p className={'text-lg dark:text-gray-400 text-gray-700'}>manage your flashcard collections</p>
             </div>
             <div className={'flex flex-col gap-8'}>
                 <DecksSummaryList deckStats={getSummaryStats(sortedDecks)}/>

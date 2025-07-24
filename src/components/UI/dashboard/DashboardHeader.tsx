@@ -21,7 +21,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({title, subtitle, endCo
         <div className={'flex justify-between w-full items-center'}>
             <div className={'flex flex-col'}>
                 <h1 className="text-2xl font-bold">{title}</h1>
-                <p className={'text-gray-300'}>{subtitle}</p>
+                <p className={'dark:text-gray-300 text-gray-700'}>{subtitle}</p>
             </div>
             <div>
                 {endContent}

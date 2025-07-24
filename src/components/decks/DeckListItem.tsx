@@ -1,7 +1,7 @@
 import React from "react";
 import {AnkiDeckStats} from "@/models/anki/deck";
-import {IoBookOutline} from "react-icons/io5";
 import {Settings} from "lucide-react";
+import {PiCards} from "react-icons/pi";
 
 interface DeckListItemProps {
     decksStats: AnkiDeckStats;
@@ -10,12 +10,12 @@ interface DeckListItemProps {
 const DeckListItem: React.FC<DeckListItemProps> = (props) => {
     const {name, total_in_deck, new_count, review_count} = props.decksStats;
     return (
-        <div className={'bg-gray-700 w-full px-6 py-4 rounded-xl'}>
+        <div className={'bg-white rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm dark:bg-gray-800 w-full px-6 py-4 rounded-xl'}>
             <div className={'flex flex-col gap-2'}>
                 <div className={'flex items-center justify-between'}>
                     <div className={'flex items-center gap-4 '}>
-                        <div className={`p-3 rounded-xl bg-red-200`}>
-                            <IoBookOutline size={20}/>
+                        <div className={`p-3 rounded-xl bg-red-50`}>
+                            <PiCards size={20}/>
                         </div>
                         <div>
                             <p className={'text-xl font-bold'}>{name}</p>

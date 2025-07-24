@@ -33,7 +33,7 @@ export default function RootLayout({
         <Providers>
             <div className={'flex'}>
                 <SideBar/>
-                <div className={'flex-1'}>{children}</div>
+                <div className={'flex-1  min-h-screen bg-gradient-to-br from-violet-50 via-white to-indigo-50 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950'}>{children}</div>
             </div>
         </Providers>
         </body>
