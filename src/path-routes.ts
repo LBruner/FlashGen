@@ -8,9 +8,9 @@ export const ankiPaths = {
     getDeckStats() {
         return `/api/anki/deck-stats`;
     },
-    getAddFlashcard(){
+    getAddFlashcard() {
         return `/api/anki/add-flashcards`;
-    }
+    },
 }
 
 export const pagePaths = {
@@ -22,5 +22,8 @@ export const pagePaths = {
     },
     getSettingsPage() {
         return '/settings';
+    },
+    getAppGuidePage() {
+        return '/app-guide';
     },
 }
