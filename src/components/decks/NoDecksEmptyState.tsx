@@ -21,12 +21,10 @@ const NoDecksEmptyState: React.FC = () => {
                 <div
                     className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/10 dark:bg-purple-500/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
             </div>
-
             <div className="relative z-10 max-w-6xl mx-auto">
                 <div className="text-center mb-16">
                     <div className="inline-flex items-center justify-center mb-8">
                         <div className="relative">
-
                             <div
                                 className="relative bg-gradient-to-r from-blue-500 to-purple-600 p-6 rounded-3xl shadow-2xl">
                                 <IoBookOutline size={28} className="text-white"/>
@@ -37,12 +35,9 @@ const NoDecksEmptyState: React.FC = () => {
                     <h1 className="text-4xl font-black bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent mb-6 leading-tight">
                         Start Your Learning Journey
                     </h1>
-
                     <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed font-medium mb-8">
-                        You don't have any flashcard decks yet. Let's create your first deck and begin building your
-                        knowledge base!
+                        You don't have any flashcard decks yet. Let's create your first deck and begin building your knowledge base!
                     </p>
-
                     <button
                         className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 hover:from-blue-700 hover:via-purple-700 hover:to-indigo-800 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 overflow-hidden">
                         <div
@@ -53,7 +48,6 @@ const NoDecksEmptyState: React.FC = () => {
                         <IoSparkles size={20} className="animate-bounce"/>
                     </button>
                 </div>
-
                 <div className="mb-16">
                     <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-4">
                         Popular Deck Types

@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState} from "react";
+import React from "react";
 import {useTheme} from "next-themes";
 import {IoBookOutline, IoSettingsOutline} from "react-icons/io5";
 import {FiHome} from "react-icons/fi";
@@ -8,19 +8,20 @@ import SidebarNavButton from "@/components/UI/Sidebar/SidebarNavButton";
 import {pagePaths} from "@/path-routes";
 import {RiExpandLeftLine, RiExpandRightLine} from "react-icons/ri";
 import ThemeButton from "@/components/UI/Sidebar/ThemeButton";
+import {useSidebar} from "@/store/context/ui-context-provider";
 
 const SideBar: React.FC = () => {
-
     const {systemTheme, theme, setTheme} = useTheme();
     const currentTheme = theme === 'system' ? systemTheme : theme;
 
     const toggleTheme = () => {
         setTheme(currentTheme === 'dark' ? 'light' : 'dark');
     };
-    const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
+
+    const { isSidebarMinimized, setIsSidebarMinimized } = useSidebar();
 
     return (
-        <div className={`bg-customSidebarDarkBg h-screen flex flex-col transition-all duration-300 ease-soft-spring ${
+        <div className={`bg-customSidebarDarkBg fixed h-screen flex flex-col transition-all duration-300 ease-soft-spring ${
             isSidebarMinimized ? 'w-16' : 'w-72'
         }`}>
             <div

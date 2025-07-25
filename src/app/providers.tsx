@@ -3,6 +3,7 @@
 import React, {useEffect, useState} from "react";
 import {ThemeProvider} from "next-themes";
 import {HeroUIProvider} from "@heroui/react";
+import {SidebarProvider} from "@/store/context/ui-context-provider";
 
 interface ProvidersProps {
     children: React.ReactNode;
@@ -16,13 +17,19 @@ const Providers: React.FC<ProvidersProps> = ({children}) => {
     }, []);
 
     if (!mounted) {
-        return <>{children}</>;
+        return <>
+            <SidebarProvider>
+                {children}
+            </SidebarProvider>
+        </>;
     }
 
     return (
         <ThemeProvider attribute="class" defaultTheme="light">
             <HeroUIProvider>
-                {children}
+                <SidebarProvider>
+                    {children}
+                </SidebarProvider>
             </HeroUIProvider>
         </ThemeProvider>
     );

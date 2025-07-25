@@ -26,14 +26,14 @@ const AddFlashcardsForm: React.FC<AddFlashcardsScreenProps> = (props) => {
 
     return (
         <div className={'w-full h-auto relative overflow-hidden'}>
-            <div className={'relative z-10 flex flex-col w-full min-h-screen py-8 px-4 sm:px-8 lg:px-12'}>
+            <div className={'relative z-10 flex flex-col w-full h-screen py-8 px-12'}>
                 <DashboardHeader
                     title={'Create Flashcards'}
                 />
-                <div className={'flex-1 flex flex-col justify-center items-center px-4'}>
+                <div className={'flex-1 flex flex-col justify-center items-center mb-24'}>
                     <LanguageSettingsModal {...props}/>
 
-                    <div className={'w-full max-w-4xl mx-auto'}>
+                    <div className={'w-full'}>
                         <div className={'text-center mb-12'}>
                             <div className={'inline-flex items-center justify-center mb-8 relative'}>
                                 <div
