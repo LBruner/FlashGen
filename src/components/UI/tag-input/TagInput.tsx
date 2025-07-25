@@ -36,9 +36,9 @@ const CreateFlashcardsPage: React.FC<CreateFlashcardsPageProps> = ({tags, setTag
                         type="text"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
-                        onKeyPress={handleKeyPress}
+                        onKeyDown={handleKeyPress}
                         placeholder="Enter a word..."
-                        className="flex-1 px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent transition-all"
+                        className="flex-1 px-4 py-3 bg-slate-50 border text-black border-slate-600/50 rounded-xl dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent transition-all"
                     />
                     <button
                         onClick={handleAddTag}
@@ -52,8 +52,8 @@ const CreateFlashcardsPage: React.FC<CreateFlashcardsPageProps> = ({tags, setTag
                     <div className="flex flex-wrap gap-2 mb-6">
                         {tags.map((tag, index) => (
                             <div key={index}
-                                 className="flex items-center space-x-2 bg-slate-700/50 px-3 py-2 rounded-lg border border-slate-600/50">
-                                <span className="text-white text-sm">{tag}</span>
+                                 className="flex items-center space-x-2 dark:bg-indigo-950 bg-gray-100 px-3 py-2 rounded-lg border border-slate-600/50">
+                                <span className="dark:text-white text-sm">{tag}</span>
                                 <button
                                     onClick={() => handleRemoveTag(tag)}
                                     className="text-slate-400 hover:text-red-400 transition-colors"
