@@ -6,6 +6,8 @@ import DecksSummaryList from "@/components/decks/DecksSummaryList";
 import DecksList from "@/components/decks/DecksList";
 import DeckListSorter from "@/components/decks/DeckListSorter";
 import {pegaStatDosDecks, pegaTodosDecks} from "@/app/actions/anki";
+import CustomSpinner from "@/components/UI/CustomSpinner";
+import NoDecksEmptyState from "@/components/decks/NoDecksEmptyState";
 
 const getSummaryStats = (decksStats: AnkiDeckStats[]) => {
     return {
@@ -16,26 +18,35 @@ const getSummaryStats = (decksStats: AnkiDeckStats[]) => {
     }
 }
 
+
 const UserDeckPageBody: React.FC = () => {
     const [sortedDecks, setSortedDecks] = useState<AnkiDeckStats[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        buscaDadosDosDecks();
-    },[]);
+        buscaDadosDosDecks().then();
+    }, []);
 
     const buscaDadosDosDecks = async (): Promise<void> => {
         const userDecks = await pegaTodosDecks();
         const decksDetails = await pegaStatDosDecks(userDecks);
         setSortedDecks(decksDetails);
+        setIsLoading(false);
     }
 
-    //TODO: Checar se o Anki está conectado
-    //TODO: Retornar fallback caso não tenha cards
+    if (isLoading) {
+        return <CustomSpinner/>
+    }
+
+    if (sortedDecks.length === 0) {
+        return <NoDecksEmptyState/>;
+    }
 
     return (
-        <div className={'py-8 px-12 h-screen overflow-y-scroll'}>
+        <div
+            className={'py-8 px-12 h-screen overflow-y-scroll bg-white dark:bg-gray-900 transition-colors duration-200'}>
             <div className={'mb-4'}>
-                <p className={'text-3xl font-bold'}>My Decks</p>
+                <p className={'text-3xl font-bold text-gray-900 dark:text-white'}>My Decks</p>
                 <p className={'text-lg dark:text-gray-400 text-gray-700'}>manage your flashcard collections</p>
             </div>
             <div className={'flex flex-col gap-8'}>
