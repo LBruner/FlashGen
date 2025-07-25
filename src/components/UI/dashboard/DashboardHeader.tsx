@@ -1,11 +1,8 @@
 'use client';
 
 import React from "react";
-import useSWR from "swr";
-import {ankiPaths} from "@/path-routes";
-import axiosApi from "@/lib/AxiosApi";
 
-const fetcher = (url: string) => axiosApi.get(url).then(res => res.data)
+// export const fetcher = (url: string) => axiosApi.get(url).then(res => res.data)
 
 interface DashboardHeaderProps {
     title: string;
@@ -14,8 +11,7 @@ interface DashboardHeaderProps {
 }
 
 const DashboardHeader: React.FC<DashboardHeaderProps> = ({title, subtitle, endContent}) => {
-    const {
-    } = useSWR(ankiPaths.getConnection(), fetcher, {refreshInterval: 1000})
+    // const {} = useSWR(ankiPaths.getConnection(), fetcher, {refreshInterval: 1000})
 
     return (
         <div className={'flex justify-between w-full items-center'}>

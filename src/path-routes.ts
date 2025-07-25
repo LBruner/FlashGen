@@ -3,10 +3,10 @@ export const ankiPaths = {
         return '/api/anki/connection';
     },
     getDeckList() {
-        return `${process.env.LOCAL_API_URL}/anki/decks`;
+        return `/api/anki/decks`;
     },
     getDeckStats() {
-        return `${process.env.LOCAL_API_URL}/anki/deck-stats`;
+        return `/api/anki/deck-stats`;
     },
     getAddFlashcard(){
         return `/api/anki/add-flashcards`;

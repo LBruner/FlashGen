@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Flashcard} from "@/models/Flashcard";
 import {ChatMessage} from "@/models/ChatMessage";
 import {getPrompt} from "../../../public/prompt";
@@ -15,15 +15,23 @@ import {ankiPaths} from "@/path-routes";
 import FlashcardsCreation from "@/components/FlashcardsCreation/FlashcardsCreation";
 import FlashcardsResults from "@/components/flashcards/FlashcardsResults";
 import CustomSpinner from "@/components/UI/CustomSpinner";
+import {pegaTodosDecks} from "@/app/actions/anki";
 
-interface FlashcardBodyProps {
-    userDecks: AnkiDeck[];
-}
-
-const FlashcardBody: React.FC<FlashcardBodyProps> = ({userDecks}) => {
+const FlashcardBody: React.FC = () => {
     const [wordTags, setWordTags] = useState<Array<string>>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [userDecks, setUserDecks] = useState<Array<AnkiDeck>>([]);
     const {isOpen, onOpen, onClose} = useDisclosure();
+
+    useEffect(() => {
+        buscaDecksUsuario();
+    },[]);
+
+    const buscaDecksUsuario = async (): Promise<void> => {
+        const userDecks = await pegaTodosDecks();
+        setUserDecks(userDecks);
+        setSelectedDeck(userDecks[0]);
+    }
 
     const [flashcards, setFlashcards] = useState<Flashcard[]>([
         // new Flashcard({

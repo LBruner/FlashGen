@@ -1,14 +1,11 @@
 'use client';
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {AnkiDeckStats} from "@/models/anki/deck";
 import DecksSummaryList from "@/components/decks/DecksSummaryList";
 import DecksList from "@/components/decks/DecksList";
 import DeckListSorter from "@/components/decks/DeckListSorter";
-
-interface UserDeckPageBodyProps {
-    decksStats: AnkiDeckStats[ ];
-}
+import {pegaStatDosDecks, pegaTodosDecks} from "@/app/actions/anki";
 
 const getSummaryStats = (decksStats: AnkiDeckStats[]) => {
     return {
@@ -19,8 +16,21 @@ const getSummaryStats = (decksStats: AnkiDeckStats[]) => {
     }
 }
 
-const UserDeckPageBody: React.FC<UserDeckPageBodyProps> = ({decksStats}) => {
-    const [sortedDecks, setSortedDecks] = useState(decksStats);
+const UserDeckPageBody: React.FC = () => {
+    const [sortedDecks, setSortedDecks] = useState<AnkiDeckStats[]>([]);
+
+    useEffect(() => {
+        buscaDadosDosDecks();
+    },[]);
+
+    const buscaDadosDosDecks = async (): Promise<void> => {
+        const userDecks = await pegaTodosDecks();
+        const decksDetails = await pegaStatDosDecks(userDecks);
+        setSortedDecks(decksDetails);
+    }
+
+    //TODO: Checar se o Anki está conectado
+    //TODO: Retornar fallback caso não tenha cards
 
     return (
         <div className={'py-8 px-12 h-screen overflow-y-scroll'}>
@@ -30,7 +40,7 @@ const UserDeckPageBody: React.FC<UserDeckPageBodyProps> = ({decksStats}) => {
             </div>
             <div className={'flex flex-col gap-8'}>
                 <DecksSummaryList deckStats={getSummaryStats(sortedDecks)}/>
-                <DeckListSorter decksStats={decksStats}
+                <DeckListSorter decksStats={sortedDecks}
                                 setSortedDecksStats={setSortedDecks}/>
                 <DecksList decksStats={sortedDecks}/>
             </div>

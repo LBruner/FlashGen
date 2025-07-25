@@ -1,5 +1,3 @@
-'use server';
-
 import {AnkiDeck, AnkiDeckStats, DeckStatsMap} from "@/models/anki/deck";
 import {AxiosResponse} from "axios";
 import {ApiResponse} from "@/models/ApiResponse";
