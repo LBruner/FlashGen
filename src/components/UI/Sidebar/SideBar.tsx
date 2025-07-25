@@ -19,63 +19,73 @@ const SideBar: React.FC = () => {
     };
     const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
 
-    if (isSidebarMinimized)
-        return (
-            <div className={'bg-customSidebarDarkBg py-4 w-16 h-screen flex flex-col items-center justify-between'}>
-                <div>
-                    <div className={'flex flex-col items-center justify-center'}>
-                        <button onClick={setIsSidebarMinimized.bind(null, false)} className={'p-2'}>
-                            <RiExpandRightLine className={'text-gray-400 hover:text-gray-200'} size={30}/>
-                        </button>
-                    </div>
-                    <div className={'mt-4 flex flex-col gap-4'}>
-                        <SidebarNavButton path={pagePaths.getHomePage()}
-                                          icon={<FiHome
-                                              size={20}/>}/>
-                        <SidebarNavButton path={pagePaths.getUserDecksPage()}
-                                          icon={<IoBookOutline size={20}/>}/>
-                        <SidebarNavButton path={pagePaths.getSettingsPage()}
-                                          icon={<IoSettingsOutline size={20}/>}/>
-                        <ThemeButton/>
-                    </div>
-                </div>
-                <button
-                    className={'bg-gradient-to-r from-indigo-500 via-blue-500 to-indigo-300 p-3 rounded-xl'}>
-                    <IoBookOutline className={'text-white'} size={24}/>
-                </button>
-            </div>
-        );
-
     return (
-        <>
-            <div className={'bg-customSidebarDarkBg w-72 h-screen flex flex-col'}>
-                <div className={'flex border-b border-b-gray-400 dark:border-b-gray-600 items-center justify-between'}>
-                    <div className={'flex py-6 gap-4 pl-4'}>
+        <div className={`bg-customSidebarDarkBg h-screen flex flex-col transition-all duration-300 ease-soft-spring ${
+            isSidebarMinimized ? 'w-16' : 'w-72'
+        }`}>
+            <div
+                className={'flex border-b border-b-gray-400 dark:border-b-gray-600 items-center justify-between overflow-hidden'}>
+                <div className={`flex py-6 gap-4  items-center min-w-0 ${!isSidebarMinimized && 'pl-4'}`}>
+                    {!isSidebarMinimized &&
                         <button
-                            className={'bg-gradient-to-r from-indigo-500 via-blue-500 to-indigo-300 p-3 rounded-xl'}>
+                            className={'bg-gradient-to-r from-indigo-500 via-blue-500 to-indigo-300 p-3 rounded-xl flex-shrink-0'}>
                             <IoBookOutline className={'text-white'} size={24}/>
-                        </button>
-                        <div>
+                        </button>}
+                    <div className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                        isSidebarMinimized ? 'w-0 opacity-0' : 'w-auto opacity-100'
+                    }`}>
+                        <div className={'whitespace-nowrap'}>
                             <p className={'text-xl font-bold text-white'}>FlashGen</p>
                             <p className={'text-gray-400'}>Smart Flashcards</p>
                         </div>
                     </div>
-                    <button onClick={setIsSidebarMinimized.bind(null, true)} className={'mr-6'}>
-                        <RiExpandLeftLine className={'text-gray-300'} size={24}/>
+                </div>
+
+                <div
+                    className={`transition-all duration-300 ease-in-out flex justify-center ${isSidebarMinimized ? 'w-full' : 'pr-6'}`}>
+                    <button onClick={() => setIsSidebarMinimized(!isSidebarMinimized)} className={'p-2'}>
+                        {isSidebarMinimized ? (
+                            <RiExpandRightLine className={'text-gray-400 hover:text-gray-200'} size={24}/>
+                        ) : (
+                            <RiExpandLeftLine className={'text-gray-300 hover:text-gray-200'} size={24}/>
+                        )}
                     </button>
                 </div>
-                <div className={'mt-4 flex flex-col gap-4'}>
-                    <SidebarNavButton path={pagePaths.getHomePage()} title={'Dashboard'}
-                                      icon={<FiHome size={20}/>}/>
-                    <SidebarNavButton path={pagePaths.getUserDecksPage()} title={'My Decks'}
-                                      icon={<IoBookOutline size={20}/>}/>
-                    <SidebarNavButton onClick={toggleTheme} path={'#'} title={'Page Theme'}
-                                      icon={<ThemeButton/>}/>
-                    <SidebarNavButton path={pagePaths.getSettingsPage()} title={'Settings'}
-                                      icon={<IoSettingsOutline size={20}/>}/>
-                </div>
             </div>
-        </>
+
+            <div className={'mt-4 flex flex-col gap-4 flex-1'}>
+                <SidebarNavButton
+                    path={pagePaths.getHomePage()}
+                    title={!isSidebarMinimized ? 'Dashboard' : undefined}
+                    icon={<FiHome size={20}/>}
+                />
+                <SidebarNavButton
+                    path={pagePaths.getUserDecksPage()}
+                    title={!isSidebarMinimized ? 'My Decks' : undefined}
+                    icon={<IoBookOutline size={20}/>}
+                />
+                <SidebarNavButton
+                    onClick={toggleTheme}
+                    path={'#'}
+                    title={!isSidebarMinimized ? 'Page Theme' : undefined}
+                    icon={<ThemeButton/>}
+                />
+                <SidebarNavButton
+                    path={pagePaths.getSettingsPage()}
+                    title={!isSidebarMinimized ? 'Settings' : undefined}
+                    icon={<IoSettingsOutline size={20}/>}
+                />
+            </div>
+
+            {isSidebarMinimized &&
+                <div className={'pb-4 flex justify-center'}>
+                    <button
+                        className={'bg-gradient-to-r from-indigo-500 via-blue-500 to-indigo-300 p-3 rounded-xl'}>
+                        <IoBookOutline className={'text-white'} size={24}/>
+                    </button>
+                </div>
+            }
+        </div>
     );
 }
 
