@@ -15,7 +15,7 @@ export const ankiPaths = {
 
 export const pagePaths = {
     getHomePage() {
-        return '/flashcards';
+        return '/home';
     },
     getUserDecksPage() {
         return '/user-decks';
