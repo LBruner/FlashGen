@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import {ThemeProvider} from "next-themes";
 import {HeroUIProvider} from "@heroui/react";
 import {SidebarProvider} from "@/store/context/ui-context-provider";
+import {AppSettingsProvider} from "@/store/context/settings-context-provider";
 
 interface ProvidersProps {
     children: React.ReactNode;
@@ -19,7 +20,9 @@ const Providers: React.FC<ProvidersProps> = ({children}) => {
     if (!mounted) {
         return <>
             <SidebarProvider>
-                {children}
+                <AppSettingsProvider>
+                    {children}
+                </AppSettingsProvider>
             </SidebarProvider>
         </>;
     }
@@ -28,7 +31,9 @@ const Providers: React.FC<ProvidersProps> = ({children}) => {
         <ThemeProvider attribute="class" defaultTheme="light">
             <HeroUIProvider>
                 <SidebarProvider>
-                    {children}
+                    <AppSettingsProvider>
+                        {children}
+                    </AppSettingsProvider>
                 </SidebarProvider>
             </HeroUIProvider>
         </ThemeProvider>

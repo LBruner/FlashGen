@@ -8,6 +8,7 @@ import DeckListSorter from "@/components/decks/DeckListSorter";
 import {pegaStatDosDecks, pegaTodosDecks} from "@/app/actions/anki";
 import CustomSpinner from "@/components/UI/CustomSpinner";
 import NoDecksEmptyState from "@/components/decks/NoDecksEmptyState";
+import {useAppSettings} from "@/store/context/settings-context-provider";
 
 const getSummaryStats = (decksStats: AnkiDeckStats[]) => {
     return {

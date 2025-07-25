@@ -23,6 +23,14 @@ export async function GET(): Promise<Response> {
         return createJsonResponse({...apiResponse});
     } catch (error) {
         console.log(`Algo deu errado com a conexão a API do Anki: ${error}`);
-        return new Response(JSON.stringify({error: "Internal Server Error", data: []}), {status: 500});
+
+        const apiResponse: ApiResponse<Array<string>> = {
+            data: [],
+            status: 500,
+            errorMessage: `Anki can't be accessed`,
+            success: false,
+        };
+
+        return createJsonResponse(apiResponse);
     }
 }
