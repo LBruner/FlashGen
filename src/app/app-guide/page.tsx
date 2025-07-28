@@ -2,7 +2,7 @@ import {ArrowRight, CheckCircle, Download, Wifi, WifiOff} from 'lucide-react';
 
 const AppGuideOptions = () => {
     return (
-        <div className="h-screen flex flex-col justify-center items-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="h-screen flex flex-col justify-center items-center lg:px-8">
             <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-12">
                     <div className="flex justify-center mb-6">

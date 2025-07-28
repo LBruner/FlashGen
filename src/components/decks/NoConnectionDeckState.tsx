@@ -4,7 +4,7 @@ import {pagePaths} from "@/path-routes";
 
 const UserCardsNoConnection = () => {
     return (
-        <div className="h-screen flex flex-col justify-start items-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 i dark:to-gray-800 py-32">
+        <div className="h-screen flex flex-col justify-start items-center py-32">
             <div className="max-w-4xl mx-auto flex flex-col items-center">
                 <div className="text-center mb-12">
                     <div className="flex justify-center mb-6">
