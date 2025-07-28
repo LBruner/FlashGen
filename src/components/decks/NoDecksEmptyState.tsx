@@ -14,15 +14,15 @@ const NoDecksEmptyState: React.FC = () => {
 
     return (
         <div
-            className="h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950 py-8 px-4 sm:px-8 lg:px-12">
+            className="h-screen  flex flex-col justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950 py-8 px-4 sm:px-8 lg:px-12">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div
                     className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400/10 dark:bg-blue-500/5 rounded-full blur-3xl animate-pulse"></div>
                 <div
                     className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/10 dark:bg-purple-500/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
             </div>
-            <div className="relative z-10 max-w-6xl mx-auto">
-                <div className="text-center mb-16">
+            <div className="relative z-10 mx-auto">
+                <div className="text-center mb-16 flex flex-col justify-center items-center">
                     <div className="inline-flex items-center justify-center mb-8">
                         <div className="relative">
                             <div
@@ -36,7 +36,8 @@ const NoDecksEmptyState: React.FC = () => {
                         Start Your Learning Journey
                     </h1>
                     <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed font-medium mb-8">
-                        You don't have any flashcard decks yet. Let's create your first deck and begin building your knowledge base!
+                        You don't have any flashcard decks yet. Let's create your first deck and begin building your
+                        knowledge base!
                     </p>
                     <button
                         className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 hover:from-blue-700 hover:via-purple-700 hover:to-indigo-800 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 overflow-hidden">
@@ -48,7 +49,7 @@ const NoDecksEmptyState: React.FC = () => {
                         <IoSparkles size={20} className="animate-bounce"/>
                     </button>
                 </div>
-                <div className="mb-16">
+                <div>
                     <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-4">
                         Popular Deck Types
                     </h2>
