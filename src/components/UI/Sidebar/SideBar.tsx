@@ -9,6 +9,7 @@ import {pagePaths} from "@/path-routes";
 import {RiExpandLeftLine, RiExpandRightLine} from "react-icons/ri";
 import ThemeButton from "@/components/UI/Sidebar/ThemeButton";
 import {useSidebar} from "@/store/context/ui-context-provider";
+import {MdInfoOutline} from "react-icons/md";
 
 const SideBar: React.FC = () => {
     const {systemTheme, theme, setTheme} = useTheme();
@@ -18,12 +19,13 @@ const SideBar: React.FC = () => {
         setTheme(currentTheme === 'dark' ? 'light' : 'dark');
     };
 
-    const { isSidebarMinimized, setIsSidebarMinimized } = useSidebar();
+    const {isSidebarMinimized, setIsSidebarMinimized} = useSidebar();
 
     return (
-        <div className={`bg-customSidebarDarkBg fixed h-screen flex flex-col transition-all duration-300 ease-soft-spring ${
-            isSidebarMinimized ? 'w-16' : 'w-72'
-        }`}>
+        <div
+            className={`bg-customSidebarDarkBg fixed h-screen flex flex-col transition-all duration-300 ease-soft-spring ${
+                isSidebarMinimized ? 'w-16' : 'w-72'
+            }`}>
             <div
                 className={'flex border-b border-b-gray-400 dark:border-b-gray-600 items-center justify-between overflow-hidden'}>
                 <div className={`flex py-6 gap-4  items-center min-w-0 ${!isSidebarMinimized && 'pl-4'}`}>
@@ -57,24 +59,35 @@ const SideBar: React.FC = () => {
             <div className={'mt-4 flex flex-col gap-4 flex-1'}>
                 <SidebarNavButton
                     path={pagePaths.getHomePage()}
-                    title={!isSidebarMinimized ? 'Dashboard' : undefined}
+                    title={'Dashboard'}
                     icon={<FiHome size={20}/>}
+                    isSidebarMinimized={isSidebarMinimized}
                 />
                 <SidebarNavButton
                     path={pagePaths.getUserDecksPage()}
-                    title={!isSidebarMinimized ? 'My Decks' : undefined}
+                    title={'User Decks'}
                     icon={<IoBookOutline size={20}/>}
+                    isSidebarMinimized={isSidebarMinimized}
+                />
+                <SidebarNavButton
+                    path={pagePaths.getAppGuidePage()}
+                    title={'Troubleshoot'}
+                    icon={<MdInfoOutline size={20}/>}
+                    isSidebarMinimized={isSidebarMinimized}
                 />
                 <SidebarNavButton
                     onClick={toggleTheme}
                     path={'#'}
-                    title={!isSidebarMinimized ? 'Page Theme' : undefined}
+                    title={'Page Theme'}
                     icon={<ThemeButton/>}
+                    isSidebarMinimized={isSidebarMinimized}
+
                 />
                 <SidebarNavButton
                     path={pagePaths.getSettingsPage()}
-                    title={!isSidebarMinimized ? 'Settings' : undefined}
+                    title={'Settings'}
                     icon={<IoSettingsOutline size={20}/>}
+                    isSidebarMinimized={isSidebarMinimized}
                 />
             </div>
 
