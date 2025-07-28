@@ -8,6 +8,8 @@ import DeckListSorter from "@/components/decks/DeckListSorter";
 import {pegaStatDosDecks, pegaTodosDecks} from "@/app/actions/anki";
 import CustomSpinner from "@/components/UI/CustomSpinner";
 import NoDecksEmptyState from "@/components/decks/NoDecksEmptyState";
+import {useAppSettings} from "@/store/context/settings-context-provider";
+import UserCardsNoConnection from "@/components/decks/NoConnectionDeckState";
 
 const getSummaryStats = (decksStats: AnkiDeckStats[]) => {
     return {
@@ -22,6 +24,7 @@ const getSummaryStats = (decksStats: AnkiDeckStats[]) => {
 const UserDeckPageBody: React.FC = () => {
     const [sortedDecks, setSortedDecks] = useState<AnkiDeckStats[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const {isAnkiConnected} = useAppSettings();
 
     useEffect(() => {
         buscaDadosDosDecks().then();
@@ -36,6 +39,10 @@ const UserDeckPageBody: React.FC = () => {
 
     if (isLoading) {
         return <CustomSpinner/>
+    }
+
+    if(!isAnkiConnected){
+        return <UserCardsNoConnection/>
     }
 
     if (sortedDecks.length === 0) {
