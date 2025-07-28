@@ -26,7 +26,7 @@ const AnkiConnectionStatusBar: React.FC<AnkiConnectionStatusCardProps> = (
     );
 
     return (
-        <div className='flex'>
+        <div className='flex flex-col'>
             {isConnected ? connectedDiv : disconnectedDiv}
         </div>
     );

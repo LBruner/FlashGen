@@ -3,6 +3,10 @@ import LanguageSettingsModal from "@/components/UI/language-settings-modal/langu
 import TagInput from "@/components/UI/tag-input/TagInput";
 import {IoFlash, IoGlobeOutline, IoSparkles} from "react-icons/io5";
 import DashboardHeader from "@/components/UI/dashboard/DashboardHeader";
+import {useAppSettings} from "@/store/context/settings-context-provider";
+import CustomToast from "@/components/UI/toast/CustomToast";
+import {useRouter} from "next/navigation";
+import {pagePaths} from "@/path-routes";
 
 interface AddFlashcardsScreenProps {
     selectedDeck: string;
@@ -19,13 +23,23 @@ interface AddFlashcardsScreenProps {
     isOpen: boolean;
     onClose: () => void;
     onOpen: () => void;
-    isAnkiConnected: boolean;
 }
 
 const AddFlashcardsForm: React.FC<AddFlashcardsScreenProps> = (props) => {
+    const {isAnkiConnected} = useAppSettings();
+    const router = useRouter();
+
+    const redirectToGuidePage = () =>{
+        router.push(pagePaths.getAppGuidePage());
+    }
 
     return (
         <div className={'w-full h-auto relative overflow-hidden'}>
+            <CustomToast
+                title={'Connection Error!'} content={`We can't connect to AnkiConnect API`} type={'default'}
+                shouldDisplayToast={!isAnkiConnected}
+                onClickActionBtn={redirectToGuidePage}
+            />
             <div className={'relative z-10 flex flex-col w-full h-screen py-8 px-12'}>
                 <DashboardHeader
                     title={'Create Flashcards'}
