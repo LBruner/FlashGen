@@ -7,9 +7,14 @@ import {ankiPaths} from "@/path-routes";
 export const pegaTodosDecks = async (): Promise<AnkiDeck[]> => {
     try {
         const response: AxiosResponse<ApiResponse<Array<string>>> = await axiosApi.get(ankiPaths.getDeckList());
+
+        if(!response.data.success){
+            throw new Error(response.data.errorMessage?.toString());
+        }
+
         return response.data.data.map((deck: string) => deck);
     } catch (e) {
-        console.log(`Algo deu errado ao buscar os decks: ${e}`);
+        console.log(`Something went wrong fetching user decks: ${e}`);
         return [];
     }
 }
@@ -19,6 +24,10 @@ export const pegaStatDosDecks = async (deckNames: AnkiDeck[]): Promise<AnkiDeckS
         const decksWithStats: AxiosResponse<ApiResponse<DeckStatsMap>> = await axiosApi.post(ankiPaths.getDeckStats(), {
             decks: deckNames
         });
+
+        if(!decksWithStats.data.success){
+            throw new Error(decksWithStats.data.errorMessage?.toString());
+        }
 
         return Object.values(decksWithStats.data.data).map((deck: AnkiDeckStats) => {
             const fullName = deckNames.find((name) => name.endsWith(deck.name)) || deck.name;
@@ -30,7 +39,7 @@ export const pegaStatDosDecks = async (deckNames: AnkiDeck[]): Promise<AnkiDeckS
         });
     }
     catch (e) {
-        console.log(e)
+        console.log(`Something went wrong fetching decks stats: ${e}`);
         return [];
     }
 }

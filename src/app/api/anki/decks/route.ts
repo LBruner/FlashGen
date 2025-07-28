@@ -3,6 +3,7 @@ import {AnkiDeck, AnkiResponse} from "@/models/anki/deck";
 import {ApiResponse} from "@/models/ApiResponse";
 import axiosApi from "@/lib/AxiosApi";
 import {createJsonResponse} from "@/lib/NextApiResponse";
+import {noConnectionResponse} from "@/lib/NoConnectionResponse";
 
 export async function GET() {
     try {
@@ -22,7 +23,8 @@ export async function GET() {
 
         return createJsonResponse({...apiResponse});
     } catch (error) {
-        console.log(`Algo deu errado com a busca dos decks: ${error}`);
-        return new Response(JSON.stringify({error: "Internal Server Error", data: []}), {status: 500});
+        console.log(`Something went wrong fetching user decks: ${error}`);
+
+        return createJsonResponse(noConnectionResponse);
     }
 }

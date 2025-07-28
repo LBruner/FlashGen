@@ -4,6 +4,7 @@ import {ApiResponse} from "@/models/ApiResponse";
 import axiosApi from "@/lib/AxiosApi";
 import {createJsonResponse} from "@/lib/NextApiResponse";
 import {z} from "zod";
+import {noConnectionResponse} from "@/lib/NoConnectionResponse";
 
 const DeckNamesArraySchema = z.object({
     decks: z.array(z.string()),
@@ -34,10 +35,11 @@ export async function POST(request: Request) {
         return createJsonResponse({...apiResponse});
     } catch (error) {
         if (error instanceof z.ZodError) {
-            return new Response(`Formato inválido de flashcards. ${error}`, {status: 400});
+            return new Response(`Invalid flashcards format: ${error}`, {status: 400});
         }
 
-        console.log(`Algo deu errado com a conexão a API do Anki: ${error}`);
-        return new Response(JSON.stringify({error: "Internal Server Error", data: []}), {status: 500});
+        console.log(`Something went wrong fetching cards stats: ${error}`);
+
+        return createJsonResponse(noConnectionResponse);
     }
 }
