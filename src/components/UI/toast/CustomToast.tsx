@@ -16,26 +16,28 @@ const CustomToast: React.FC<CustomToastProps> = ({shouldDisplayToast, type, titl
     const {theme} = useTheme();
 
     useEffect(() => {
-        toast.dismiss();
-        if (shouldDisplayToast) {
-            toast(CustomNotificationContainer, {
-                data: {
-                    title,
-                    content,
-                    onClickActionBtn,
-                },
-                ariaLabel: 'Something went wrong',
-                autoClose: false,
-                closeButton: false,
-                className: 'p-0',
-                type: type || 'default',
-                icon: false,
-                theme,
-            });
-        } else {
+        const timeoutId = setTimeout(() => {
             toast.dismiss();
-        }
 
+            if (shouldDisplayToast) {
+                toast(CustomNotificationContainer, {
+                    data: {
+                        title,
+                        content,
+                        onClickActionBtn,
+                    },
+                    ariaLabel: 'Something went wrong',
+                    autoClose: false,
+                    closeButton: false,
+                    className: 'p-0',
+                    type: type || 'default',
+                    icon: false,
+                    theme,
+                });
+            }
+        }, 1000);
+
+        return () => clearTimeout(timeoutId);
     }, [shouldDisplayToast, theme]);
 
     return <ToastContainer limit={1} className="mt-16"/>;
