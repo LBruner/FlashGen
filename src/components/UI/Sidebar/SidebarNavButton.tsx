@@ -21,17 +21,14 @@ const SidebarNavButton: React.FC<sidebarButtonProps> = (props) => {
 
     return (
         <Tooltip isDisabled={!isSidebarMinimized} content={title} color={'default'} placement={'right'}>
-            <Link onClick={onClick} href={path} className={'w-full'}>
+            <Link onClick={onClick} href={path} className={`w-full ${isSidebarMinimized ? ' flex justify-center' : 'flex flex-col justify-center'}`}>
                 <div
-                    className={`${isActive ? 'bg-gradient-to-r from-customSidebarItemLeftGradientDarkBg from-50% to-blue-950 border border-gray-700' : ''} 
-                rounded-xl border-transparent border hover:border-gray-600 py-3 gap-2 flex items-center transition-all duration-300 ease-in-out
-                ${isSidebarMinimized ? 'px-3 mx-2' : 'mx-4 px-6'}`}>
-
+                    className={`${isActive && 'bg-gradient-to-r from-customSidebarItemLeftGradientDarkBg from-50% to-blue-950'}  rounded-xl p-3 gap-2 transition-all duration-300 ease-in-out
+                ${isSidebarMinimized ? ' mx-2' : 'mx-4 px-6 flex items-center justify-start'}`}>
                     <div
                         className={`${isActive ? 'text-white' : 'text-gray-400'} hover:text-gray-200 transition-colors duration-200`}>
                         {icon}
                     </div>
-
                     <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
                         title ? 'max-w-48 opacity-100' : 'max-w-0 opacity-0'
                     }`}>
