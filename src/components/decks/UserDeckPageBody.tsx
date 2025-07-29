@@ -12,8 +12,6 @@ import {useAppSettings} from "@/store/context/settings-context-provider";
 import UserCardsNoConnection from "@/components/decks/NoConnectionDeckState";
 import axiosApi from "@/lib/AxiosApi";
 import {ankiPaths} from "@/path-routes";
-import {ApiResponse} from "@/models/ApiResponse";
-import {AxiosResponse} from "axios";
 import {toast} from "react-toastify";
 import CustomNotificationContainer from "@/components/UI/toast/CustomNotificationContainer";
 import {useTheme} from "next-themes";
@@ -61,24 +59,26 @@ const UserDeckPageBody: React.FC = () => {
         return <NoDecksEmptyState/>;
     }
 
-    const deleteDeck = async (deckName: string, deleteCardsToo: boolean) => {
+    const manageDeck = async (operation: DeckOperation, deckName: string) => {
         let title = '';
         let content = '';
+
+        let endpointRoute = operation === 'CREATE' ? ankiPaths.getCreateDeck() : ankiPaths.getDeleteDeck();
+        console.log(endpointRoute);
+
         try {
-            const {data}: AxiosResponse<ApiResponse<null>> = await axiosApi.post(ankiPaths.getDeleteDeck(), {
+            const {data} = await axiosApi.post(endpointRoute, {
                 deckName,
-                deleteCardsToo,
             });
 
-            console.log(data);
+            const wasSuccessful = data!.success;
 
-            if (data.success) {
+            if (wasSuccessful) {
                 title = `Success!`
-                content = `Deck: ${deckName} deleted successfully.`
-            }
-            else{
+                content = `Deck: ${deckName} ${operation == 'CREATE' ? 'created' : 'deleted'} successfully.`
+            } else {
                 title = 'Error'
-                content = data.errorMessage!;
+                content = data!.errorMessage!;
             }
 
             toast(CustomNotificationContainer, {
@@ -87,14 +87,17 @@ const UserDeckPageBody: React.FC = () => {
                     content,
                     actionButton: <div></div>
                 },
-                ariaLabel: 'Something went wrong',
                 autoClose: 2000,
                 closeButton: false,
-                type: 'success',
+                type: wasSuccessful ? 'success' : 'error',
                 theme: theme,
             });
-            await fetchDecksData();
-        } catch (e) {
+
+            if (wasSuccessful) {
+                await fetchDecksData();
+            }
+        } catch
+            (e) {
             console.log(e);
         }
     }
@@ -109,11 +112,13 @@ const UserDeckPageBody: React.FC = () => {
             <div className={'flex flex-col gap-8'}>
                 <DecksSummaryList deckStats={getSummaryStats(sortedDecks)}/>
                 <DeckListSorter decksStats={sortedDecks}
-                                setSortedDecksStats={setSortedDecks}/>
-                <DecksList decksStats={sortedDecks} deleteDeck={deleteDeck}/>
+                                setSortedDecksStats={setSortedDecks} manageDeck={manageDeck}/>
+                <DecksList decksStats={sortedDecks} manageDeck={manageDeck}/>
             </div>
         </div>
     )
 }
 
 export default UserDeckPageBody;
+
+export type DeckOperation = 'CREATE' | 'DELETE';

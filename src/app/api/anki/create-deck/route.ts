@@ -15,11 +15,10 @@ export async function POST(request: Request) {
         const {deckName} = FlashcardArraySchema.parse(reqBody);
 
         const ankiResponse: AxiosResponse<AnkiResponse<null>> = await axiosApi.post(process.env.ANKI_URL!, {
-            action: "deleteDecks",
+            action: "createDeck",
             version: 6,
             params: {
-                decks: [deckName],
-                cardsToo: true,
+                deck: deckName,
             }
         });
 
@@ -39,7 +38,9 @@ export async function POST(request: Request) {
             return new Response(`Bad request. Error: ${error}`, {status: 400});
         }
 
-        console.error(`Something went wrong on deleting deck:`, error);
-        return new Response(`Something went wrong: ${error}`, {status: 200});
+        const errorMessage = 'Something went wrong on creating deck:';
+
+        console.error(errorMessage + error);
+        return new Response(`${errorMessage} ${error}`, {status: 200});
     }
 }

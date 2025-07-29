@@ -4,19 +4,20 @@ import {AnkiDeckStats} from "@/models/anki/deck";
 import {Settings, Trash2} from "lucide-react";
 import {PiCards} from "react-icons/pi";
 import {Button, Popover, PopoverContent, PopoverTrigger} from "@heroui/react";
+import {DeckOperation} from "@/components/decks/UserDeckPageBody";
 
 interface DeckListItemProps {
     decksStats: AnkiDeckStats;
-    deleteDeck: (deckName: string, deleteCardsToo: boolean) => Promise<void>;
+    manageDeck: (operation: DeckOperation, deckName: string) => Promise<void>;
 }
 
 const DeckListItem: React.FC<DeckListItemProps> = (props) => {
     const {name, total_in_deck, new_count, review_count} = props.decksStats;
-    const {deleteDeck} = props;
+    const {manageDeck} = props;
 
     return (
         <div
-            className={'bg-white rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm dark:bg-gray-800 w-full px-6 py-4 rounded-xl'}>
+            className={'bg-white border border-gray-200 dark:border-gray-700 shadow-sm dark:bg-gray-800 w-full px-6 py-4 rounded-xl'}>
             <div className={'flex flex-col gap-2'}>
                 <div className={'flex items-center justify-between'}>
                     <div className={'flex items-center gap-4 '}>
@@ -36,13 +37,13 @@ const DeckListItem: React.FC<DeckListItemProps> = (props) => {
                             <PopoverContent className="w-[240px] border dark:border-gray-700">
                                 {(_) => (
                                     <div className="flex flex-col gap-2 w-full p-4">
-                                        <p className="font-semibold text-xl text-red-700 text-foreground dark:text-red-400">
+                                        <p className="font-semibold text-xl text-red-700 dark:text-red-400">
                                             Delete Deck
                                         </p>
                                         <p>Are you sure you wish to delete the selected deck?</p>
-                                        <Button className={'dark:text-red-400 dark:text-red-400'} variant={'bordered'}
+                                        <Button className={'dark:text-red-400'} variant={'bordered'}
                                                 color={'danger'} onPress={() => {
-                                            deleteDeck(name, true).then();
+                                            manageDeck('DELETE', name).then();
                                         }}>
                                             Confirm
                                         </Button>
