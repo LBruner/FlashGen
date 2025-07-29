@@ -29,16 +29,22 @@ const AddFlashcardsForm: React.FC<AddFlashcardsScreenProps> = (props) => {
     const {isAnkiConnected} = useAppSettings();
     const router = useRouter();
 
-    const redirectToGuidePage = () =>{
+    const redirectToGuidePage = () => {
         router.push(pagePaths.getAppGuidePage());
     }
+
+    const redirectButton =
+        <button
+            onClick={redirectToGuidePage}
+            className="font-semibold text-sm text-blue-400">View Guide
+        </button>;
 
     return (
         <div className={'w-full h-auto relative overflow-hidden'}>
             <CustomToast
                 title={'Connection Error!'} content={`We can't connect to AnkiConnect API`} type={'default'}
                 shouldDisplayToast={!isAnkiConnected}
-                onClickActionBtn={redirectToGuidePage}
+                actionButton={redirectButton}
             />
             <div className={'relative z-10 flex flex-col w-full h-screen py-8 px-12'}>
                 <DashboardHeader

@@ -11,6 +11,9 @@ export const ankiPaths = {
     getAddFlashcard() {
         return `/api/anki/add-flashcards`;
     },
+    getDeleteDeck() {
+        return `/api/anki/delete-deck`;
+    },
 }
 
 export const pagePaths = {

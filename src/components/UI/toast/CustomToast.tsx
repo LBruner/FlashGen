@@ -8,11 +8,11 @@ interface CustomToastProps {
     shouldDisplayToast: boolean,
     title: string,
     content: string,
-    type: TypeOptions,
-    onClickActionBtn: () => void;
+    type?: TypeOptions,
+    actionButton: React.ReactNode;
 }
 
-const CustomToast: React.FC<CustomToastProps> = ({shouldDisplayToast, type, title, content, onClickActionBtn}) => {
+const CustomToast: React.FC<CustomToastProps> = ({shouldDisplayToast, type, title, content, actionButton}) => {
     const {theme} = useTheme();
 
     useEffect(() => {
@@ -24,14 +24,12 @@ const CustomToast: React.FC<CustomToastProps> = ({shouldDisplayToast, type, titl
                     data: {
                         title,
                         content,
-                        onClickActionBtn,
+                        actionButton: actionButton
                     },
                     ariaLabel: 'Something went wrong',
                     autoClose: false,
                     closeButton: false,
-                    className: 'p-0',
                     type: type || 'default',
-                    icon: false,
                     theme,
                 });
             }

@@ -10,6 +10,13 @@ import CustomSpinner from "@/components/UI/CustomSpinner";
 import NoDecksEmptyState from "@/components/decks/NoDecksEmptyState";
 import {useAppSettings} from "@/store/context/settings-context-provider";
 import UserCardsNoConnection from "@/components/decks/NoConnectionDeckState";
+import axiosApi from "@/lib/AxiosApi";
+import {ankiPaths} from "@/path-routes";
+import {ApiResponse} from "@/models/ApiResponse";
+import {AxiosResponse} from "axios";
+import {toast} from "react-toastify";
+import CustomNotificationContainer from "@/components/UI/toast/CustomNotificationContainer";
+import {useTheme} from "next-themes";
 
 const getSummaryStats = (decksStats: AnkiDeckStats[]) => {
     return {
@@ -20,17 +27,22 @@ const getSummaryStats = (decksStats: AnkiDeckStats[]) => {
     }
 }
 
-
 const UserDeckPageBody: React.FC = () => {
     const [sortedDecks, setSortedDecks] = useState<AnkiDeckStats[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const {isAnkiConnected} = useAppSettings();
+    const {theme} = useTheme();
 
     useEffect(() => {
-        buscaDadosDosDecks().then();
-    }, []);
+        fetchDecksData().then();
+    }, [isAnkiConnected]);
 
-    const buscaDadosDosDecks = async (): Promise<void> => {
+    useEffect(() => {
+        toast.dismiss();
+    }, [theme]);
+
+    const fetchDecksData = async (): Promise<void> => {
+        setIsLoading(true);
         const userDecks = await pegaTodosDecks();
         const decksDetails = await pegaStatDosDecks(userDecks);
         setSortedDecks(decksDetails);
@@ -41,12 +53,50 @@ const UserDeckPageBody: React.FC = () => {
         return <CustomSpinner/>
     }
 
-    if(!isAnkiConnected){
+    if (!isAnkiConnected) {
         return <UserCardsNoConnection/>
     }
 
     if (sortedDecks.length === 0) {
         return <NoDecksEmptyState/>;
+    }
+
+    const deleteDeck = async (deckName: string, deleteCardsToo: boolean) => {
+        let title = '';
+        let content = '';
+        try {
+            const {data}: AxiosResponse<ApiResponse<null>> = await axiosApi.post(ankiPaths.getDeleteDeck(), {
+                deckName,
+                deleteCardsToo,
+            });
+
+            console.log(data);
+
+            if (data.success) {
+                title = `Success!`
+                content = `Deck: ${deckName} deleted successfully.`
+            }
+            else{
+                title = 'Error'
+                content = data.errorMessage!;
+            }
+
+            toast(CustomNotificationContainer, {
+                data: {
+                    title,
+                    content,
+                    actionButton: <div></div>
+                },
+                ariaLabel: 'Something went wrong',
+                autoClose: 2000,
+                closeButton: false,
+                type: 'success',
+                theme: theme,
+            });
+            await fetchDecksData();
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     return (
@@ -60,7 +110,7 @@ const UserDeckPageBody: React.FC = () => {
                 <DecksSummaryList deckStats={getSummaryStats(sortedDecks)}/>
                 <DeckListSorter decksStats={sortedDecks}
                                 setSortedDecksStats={setSortedDecks}/>
-                <DecksList decksStats={sortedDecks}/>
+                <DecksList decksStats={sortedDecks} deleteDeck={deleteDeck}/>
             </div>
         </div>
     )
