@@ -26,6 +26,7 @@ const getSummaryStats = (decksStats: AnkiDeckStats[]) => {
 }
 
 const UserDeckPageBody: React.FC = () => {
+    const [userDecks, setUserDecks] = useState<AnkiDeckStats[]>([]);
     const [sortedDecks, setSortedDecks] = useState<AnkiDeckStats[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const {isAnkiConnected} = useAppSettings();
@@ -43,6 +44,7 @@ const UserDeckPageBody: React.FC = () => {
         setIsLoading(true);
         const userDecks = await pegaTodosDecks();
         const decksDetails = await pegaStatDosDecks(userDecks);
+        setUserDecks(decksDetails);
         setSortedDecks(decksDetails);
         setIsLoading(false);
     }
@@ -55,7 +57,7 @@ const UserDeckPageBody: React.FC = () => {
         return <UserCardsNoConnection/>
     }
 
-    if (sortedDecks.length === 0) {
+    if (userDecks.length === 0) {
         return <NoDecksEmptyState/>;
     }
 
@@ -111,7 +113,7 @@ const UserDeckPageBody: React.FC = () => {
             </div>
             <div className={'flex flex-col gap-8'}>
                 <DecksSummaryList deckStats={getSummaryStats(sortedDecks)}/>
-                <DeckListSorter decksStats={sortedDecks}
+                <DeckListSorter unsortedDecks={userDecks} sortedDecks={sortedDecks}
                                 setSortedDecksStats={setSortedDecks} manageDeck={manageDeck}/>
                 <DecksList decksStats={sortedDecks} manageDeck={manageDeck}/>
             </div>

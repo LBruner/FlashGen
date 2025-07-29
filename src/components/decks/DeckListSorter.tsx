@@ -7,13 +7,14 @@ import {Input} from "@heroui/input";
 import {DeckOperation} from "@/components/decks/UserDeckPageBody";
 
 interface DeckListSorterProps {
-    decksStats: AnkiDeckStats[];
+    unsortedDecks: AnkiDeckStats[];
+    sortedDecks: AnkiDeckStats[];
     setSortedDecksStats: Dispatch<SetStateAction<AnkiDeckStats[]>>
     manageDeck: (operation: DeckOperation, deckName: string) => Promise<void>;
 }
 
 const DeckListSorter: React.FC<DeckListSorterProps> = (props) => {
-    const {decksStats, setSortedDecksStats, manageDeck} = props;
+    const {sortedDecks, setSortedDecksStats, manageDeck} = props;
     const [searchTerm, setSearchTerm] = useState('');
     const [sortBy, setSortBy] = useState('name');
     const [showNestedDecks, areDecksNested] = useState(false);
@@ -26,7 +27,9 @@ const DeckListSorter: React.FC<DeckListSorterProps> = (props) => {
         areDecksNested(false);
 
         setSortedDecksStats(
-            decksStats.filter((deck) => deck.name.toLowerCase().includes(e.target.value.toLowerCase()))
+            props.unsortedDecks.filter((deck) =>
+                deck.name.toLowerCase().includes(e.target.value.toLowerCase())
+            )
         );
     }
 
@@ -36,7 +39,7 @@ const DeckListSorter: React.FC<DeckListSorterProps> = (props) => {
         areDecksNested(false);
         setSearchTerm('');
 
-        const newSortedList = [...decksStats].sort((a, b) => {
+        const newSortedList = [...sortedDecks].sort((a, b) => {
             switch (sortValue) {
                 case 'totalCards':
                     return b.total_in_deck - a.total_in_deck;
@@ -58,9 +61,9 @@ const DeckListSorter: React.FC<DeckListSorterProps> = (props) => {
         areDecksNested(isNowNested);
 
         if (isNowNested) {
-            setSortedDecksStats(nestDecks(decksStats));
+            setSortedDecksStats(nestDecks(sortedDecks));
         } else {
-            setSortedDecksStats(decksStats);
+            setSortedDecksStats(sortedDecks);
         }
     };
 
