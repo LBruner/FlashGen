@@ -16,6 +16,9 @@ import FlashcardsCreation from "@/components/FlashcardsCreation/FlashcardsCreati
 import FlashcardsResults from "@/components/flashcards/FlashcardsResults";
 import CustomSpinner from "@/components/UI/CustomSpinner";
 import {pegaTodosDecks} from "@/app/actions/anki";
+import CustomNotificationContainer from "@/components/UI/toast/CustomNotificationContainer";
+import {toast} from "react-toastify";
+import {useTheme} from "next-themes";
 
 const FlashcardBody: React.FC = () => {
     const [wordTags, setWordTags] = useState<Array<string>>([]);
@@ -24,13 +27,14 @@ const FlashcardBody: React.FC = () => {
     const {isOpen, onOpen, onClose} = useDisclosure();
 
     useEffect(() => {
-        buscaDecksUsuario();
-    },[]);
+        buscaDecksUsuario().then();
+    }, []);
 
     const buscaDecksUsuario = async (): Promise<void> => {
         const userDecks = await pegaTodosDecks();
-        setUserDecks(userDecks);
-        setSelectedDeck(userDecks[0]);
+        const newUserDecks = ['Import cards (.csv file)', ...userDecks];
+        setUserDecks(newUserDecks);
+        setSelectedDeck(newUserDecks[0]);
     }
 
     const [flashcards, setFlashcards] = useState<Flashcard[]>([
@@ -75,6 +79,7 @@ const FlashcardBody: React.FC = () => {
     const [outputLanguage, setOutputLanguage] = useState<string>(flashcardLanguages[1].code);
 
     const [addFlashcardsFeedback, setAddFlashcardsFeedback] = useState<AddCardFeedbackResponseData | null>();
+    const {theme} = useTheme();
 
     const sendMessage = async () => {
         if (wordTags.length === 0 || isLoading) return;
@@ -137,11 +142,8 @@ const FlashcardBody: React.FC = () => {
         setIsLoading(false);
     };
 
-    if (isLoading) {
-        return <CustomSpinner/>
-    }
 
-    const resetPageData = () =>{
+    const resetPageData = () => {
         onClose();
         setFlashcards([]);
         setSelectedDeck('');
@@ -150,17 +152,64 @@ const FlashcardBody: React.FC = () => {
         setIsLoading(false);
     }
 
+    const createDeck = async (deckName: string) => {
+        if(userDecks.includes(deckName)){
+            setSelectedDeck(deckName);
+
+            toast(CustomNotificationContainer, {
+                data: {
+                    title: 'Alert',
+                    content: `Deck: ${deckName} already exists. We have selected it for you`,
+                },
+                autoClose: 2000,
+                closeButton: false,
+                type: 'info',
+                theme,
+            });
+            return;
+        }
+        try {
+            const {data} = await axiosApi.post(ankiPaths.getCreateDeck(), {
+                deckName,
+            });
+
+            const wasSuccessful = data!.success;
+
+            toast(CustomNotificationContainer, {
+                data: {
+                    title: 'Success',
+                    content: `Deck: ${deckName} successfully created`,
+                },
+                autoClose: 2000,
+                closeButton: false,
+                type: wasSuccessful ? 'success' : 'error',
+                theme,
+            });
+
+            if (wasSuccessful) {
+                setUserDecks(prevState => [deckName, ...prevState]);
+                setSelectedDeck(deckName);
+            }
+        } catch
+            (e) {
+            console.log(e);
+        }
+    };
+
+    if (isLoading) {
+        return <CustomSpinner/>
+    }
+
     return (
         <div className={'flex w-full justify-center items-center'}>
             {currentScreen == 0 &&
                 <AddWordsForm
-                    isAnkiConnected={true}
                     tags={wordTags} setTags={setWordTags} userDecks={userDecks} selectedDeck={selectedDeck}
                     setSelectedDeck={setSelectedDeck} setInputLanguage={setInputLanguage}
                     inputLanguage={inputLanguage}
                     outputLanguage={outputLanguage} setOutputLanguage={setOutputLanguage} isLoading={isLoading}
                     handleCreateFlashcards={onStartFlashcardCreation} isOpen={isOpen} onClose={onClose}
-                    onOpen={onOpen}
+                    onOpen={onOpen} createDeck={createDeck}
                 />
             }
             {currentScreen == 1 &&
@@ -170,7 +219,8 @@ const FlashcardBody: React.FC = () => {
                     setFlashcards={setFlashcards}
                 />
             }
-            {currentScreen == 2 && <FlashcardsResults resetPageData={resetPageData} responseData={addFlashcardsFeedback!}/>}
+            {currentScreen == 2 &&
+                <FlashcardsResults resetPageData={resetPageData} responseData={addFlashcardsFeedback!}/>}
         </div>
     )
 };

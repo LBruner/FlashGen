@@ -5,6 +5,7 @@ import {
     Autocomplete,
     AutocompleteItem,
     Button,
+    Divider,
     Modal,
     ModalBody,
     ModalContent,
@@ -14,8 +15,12 @@ import {
     SelectItem,
 } from "@heroui/react";
 import {AnkiDeck} from "@/models/anki/deck";
-import {X} from "lucide-react";
+import {Notebook, X} from "lucide-react";
 import {flashcardLanguages} from "@/lib/languages-list";
+import CreateDeckPopover from "@/components/decks/CreateDeckPopover";
+import CustomSolidButton from "@/components/UI/CustomSolidButton";
+import Link from "next/link";
+import {pagePaths} from "@/path-routes";
 
 interface LanguageSettingsModalProps {
     isOpen: boolean;
@@ -28,6 +33,7 @@ interface LanguageSettingsModalProps {
     setOutputLanguage: React.Dispatch<React.SetStateAction<string>>;
     outputLanguage: string;
     handleCreateFlashcards: () => void;
+    createDeck: (deckName: string) => Promise<void>;
 }
 
 const LanguageSettingsModal: React.FC<LanguageSettingsModalProps> = (
@@ -41,7 +47,8 @@ const LanguageSettingsModal: React.FC<LanguageSettingsModalProps> = (
         outputLanguage,
         inputLanguage,
         setOutputLanguage,
-        setInputLanguage
+        setInputLanguage,
+        createDeck
     }) => {
 
     return (
@@ -56,7 +63,7 @@ const LanguageSettingsModal: React.FC<LanguageSettingsModalProps> = (
                         <div
                             className="bg-white dark:bg-slate-800 rounded-2xl p-6 w-full max-w-md border border-gray-200 dark:border-slate-700/50 shadow-2xl transition-colors duration-200">
                             <div className="flex items-center justify-between mb-6">
-                                <h3 className="text-xl font-bold text-gray-900 dark:text-white transition-colors duration-200">
+                                <h3 className="text-2xl font-bold text-gray-900 dark:text-white transition-colors duration-200">
                                     Configure Flashcards
                                 </h3>
                                 <button
@@ -71,19 +78,19 @@ const LanguageSettingsModal: React.FC<LanguageSettingsModalProps> = (
                                 <div>
                                     <label
                                         className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2 transition-colors duration-200">
-                                        Anki Deck Name
+                                        Deck Name
                                     </label>
                                     <div className="relative">
                                         <Autocomplete
-                                            errorMessage={'Campo obrigatório'}
+                                            errorMessage={'Required field'}
                                             isRequired={true}
                                             color={'default'}
+                                            defaultInputValue={'Import cards (.csv file)'}
                                             selectedKey={selectedDeck}
                                             multiple={false}
+                                            allowsCustomValue={true}
+                                            defaultItems={[{'oi': 'oi'}]}
                                             onSelectionChange={(deck) => setSelectedDeck(deck?.toString() ?? '')}
-                                            classNames={{
-                                                base: "bg-white dark:bg-slate-700",
-                                            }}
                                         >
                                             {
                                                 userDecks.map((deck) => (
@@ -101,7 +108,14 @@ const LanguageSettingsModal: React.FC<LanguageSettingsModalProps> = (
                                         </Autocomplete>
                                     </div>
                                 </div>
-
+                                <div className={'flex gap-2 justify-between'}>
+                                    <Link href={pagePaths.getUserDecksPage()}>
+                                        <CustomSolidButton text={'Manage Decks'} onClick={() => {
+                                        }} icon={<Notebook/>}/>
+                                    </Link>
+                                    <CreateDeckPopover createDeck={createDeck} placement={'right'} offset={40}/>
+                                </div>
+                                <Divider/>
                                 <div>
                                     <label
                                         className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2 transition-colors duration-200">
@@ -111,12 +125,6 @@ const LanguageSettingsModal: React.FC<LanguageSettingsModalProps> = (
                                         onSelectionChange={(language) => setInputLanguage(language.currentKey as string)}
                                         selectionMode={'single'}
                                         selectedKeys={[inputLanguage]}
-                                        classNames={{
-                                            base: "bg-white dark:bg-slate-700",
-                                            trigger: "bg-gray-50 dark:bg-slate-700 border-gray-200 dark:border-slate-600 hover:border-gray-300 dark:hover:border-slate-500 text-gray-900 dark:text-white",
-                                            popoverContent: "bg-white dark:bg-slate-700 border-gray-200 dark:border-slate-600",
-                                            value: "text-gray-900 dark:text-white"
-                                        }}
                                     >
                                         {flashcardLanguages.map((language) => (
                                             <SelectItem
@@ -143,12 +151,6 @@ const LanguageSettingsModal: React.FC<LanguageSettingsModalProps> = (
                                         onSelectionChange={(language) => setOutputLanguage(language.currentKey as string)}
                                         selectionMode={'single'}
                                         selectedKeys={[outputLanguage]}
-                                        classNames={{
-                                            base: "bg-white dark:bg-slate-700",
-                                            trigger: "bg-gray-50 dark:bg-slate-700 border-gray-200 dark:border-slate-600 hover:border-gray-300 dark:hover:border-slate-500 text-gray-900 dark:text-white",
-                                            popoverContent: "bg-white dark:bg-slate-700 border-gray-200 dark:border-slate-600",
-                                            value: "text-gray-900 dark:text-white"
-                                        }}
                                     >
                                         {flashcardLanguages.map((language) => (
                                             <SelectItem
@@ -179,7 +181,7 @@ const LanguageSettingsModal: React.FC<LanguageSettingsModalProps> = (
                                     onClick={handleCreateFlashcards}
                                     className="flex-1 py-3 px-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-xl transition-all duration-200 font-medium shadow-lg hover:shadow-xl"
                                 >
-                                    Create
+                                    Fetch Cards
                                 </button>
                             </div>
                         </div>

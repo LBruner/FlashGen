@@ -23,6 +23,7 @@ interface AddFlashcardsScreenProps {
     isOpen: boolean;
     onClose: () => void;
     onOpen: () => void;
+    createDeck: (deckName: string) => Promise<void>;
 }
 
 const AddFlashcardsForm: React.FC<AddFlashcardsScreenProps> = (props) => {
@@ -52,7 +53,6 @@ const AddFlashcardsForm: React.FC<AddFlashcardsScreenProps> = (props) => {
                 />
                 <div className={'flex-1 flex flex-col justify-center items-center mb-24'}>
                     <LanguageSettingsModal {...props}/>
-
                     <div className={'w-full'}>
                         <div className={'text-center mb-12'}>
                             <div className={'inline-flex items-center justify-center mb-8 relative'}>

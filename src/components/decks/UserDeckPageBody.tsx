@@ -66,7 +66,6 @@ const UserDeckPageBody: React.FC = () => {
         let content = '';
 
         let endpointRoute = operation === 'CREATE' ? ankiPaths.getCreateDeck() : ankiPaths.getDeleteDeck();
-        console.log(endpointRoute);
 
         try {
             const {data} = await axiosApi.post(endpointRoute, {
