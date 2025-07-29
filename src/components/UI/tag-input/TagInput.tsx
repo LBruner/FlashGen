@@ -38,7 +38,7 @@ const CreateFlashcardsPage: React.FC<CreateFlashcardsPageProps> = ({tags, setTag
                         onChange={(e) => setInputValue(e.target.value)}
                         onKeyDown={handleKeyPress}
                         placeholder="Enter a word..."
-                        className="flex-1 px-4 py-3 bg-slate-50 border text-black border-slate-600/50 rounded-xl dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent transition-all"
+                        className="flex-1 px-4 py-3 bg-slate-50 border text-black border-slate-600/50 rounded-xl dark:text-white dark:bg-gray-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent transition-all"
                     />
                     <button
                         onClick={handleAddTag}
