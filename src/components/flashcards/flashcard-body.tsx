@@ -19,6 +19,8 @@ import {pegaTodosDecks} from "@/app/actions/anki";
 import CustomNotificationContainer from "@/components/UI/toast/CustomNotificationContainer";
 import {toast} from "react-toastify";
 import {useTheme} from "next-themes";
+import {getSelectedMeaningsFlashcards} from "@/lib/Anki";
+import {AnkiExporter} from "@/models/AnkiExporter";
 
 const FlashcardBody: React.FC = () => {
     const [wordTags, setWordTags] = useState<Array<string>>([]);
@@ -38,42 +40,42 @@ const FlashcardBody: React.FC = () => {
     }
 
     const [flashcards, setFlashcards] = useState<Flashcard[]>([
-        // new Flashcard({
-        //     "word": "<span style=\"color: rgb(231, 217, 15);\">live</span>",
-        //     "phonetic": "(/lɪv/)",
-        //     "meanings": [
-        //         {
-        //             "definition": "to be alive; have life",
-        //             "translation": "viver",
-        //             "example": "She wants to <span style=\"color: rgb(231, 217, 15);\">live</span> a long and happy life."
-        //         },
-        //         {
-        //             "definition": "to reside in a particular place",
-        //             "translation": "morar",
-        //             "example": "They <span style=\"color: rgb(231, 217, 15);\">live</span> in a small apartment downtown."
-        //         }
-        //     ]
-        // }),
-        // new Flashcard({
-        //     "word": "<span style=\"color: rgb(231, 217, 15);\">dance</span>",
-        //     "phonetic": "(/dæns/)",
-        //     "meanings": [
-        //         {
-        //             "definition": "to move rhythmically to music",
-        //             "translation": "dançar",
-        //             "example": "He loves to <span style=\"color: rgb(231, 217, 15);\">dance</span> at parties."
-        //         },
-        //         {
-        //             "definition": "a series of movements performed to music",
-        //             "translation": "dança",
-        //             "example": "The ballet <span style=\"color: rgb(231, 217, 15);\">dance</span> was beautiful and graceful."
-        //         }
-        //     ]
-        // })
+        new Flashcard({
+            "word": "<span style=\"color: rgb(231, 217, 15);\">live</span>",
+            "phonetic": "(/lɪv/)",
+            "meanings": [
+                {
+                    "definition": "to be alive; have life",
+                    "translation": "viver",
+                    "example": "She wants to <span style=\"color: rgb(231, 217, 15);\">live</span> a long and happy life."
+                },
+                {
+                    "definition": "to reside in a particular place",
+                    "translation": "morar",
+                    "example": "They <span style=\"color: rgb(231, 217, 15);\">live</span> in a small apartment downtown."
+                }
+            ]
+        }),
+        new Flashcard({
+            "word": "<span style=\"color: rgb(231, 217, 15);\">dance</span>",
+            "phonetic": "(/dæns/)",
+            "meanings": [
+                {
+                    "definition": "to move rhythmically to music",
+                    "translation": "dançar",
+                    "example": "He loves to <span style=\"color: rgb(231, 217, 15);\">dance</span> at parties."
+                },
+                {
+                    "definition": "a series of movements performed to music",
+                    "translation": "dança",
+                    "example": "The ballet <span style=\"color: rgb(231, 217, 15);\">dance</span> was beautiful and graceful."
+                }
+            ]
+        })
     ]);
 
     const [selectedDeck, setSelectedDeck] = useState<AnkiDeck>(userDecks[0]);
-    const [currentScreen, setCurrentScreen] = useState(0);
+    const [currentScreen, setCurrentScreen] = useState(1);
 
     const [inputLanguage, setInputLanguage] = useState<string>(flashcardLanguages[0].code);
     const [outputLanguage, setOutputLanguage] = useState<string>(flashcardLanguages[1].code);
@@ -96,7 +98,7 @@ const FlashcardBody: React.FC = () => {
             });
 
             const flashcards = JSON.parse(response.data.data[0]);
-            console.log(flashcards.flashcards);
+
             const flashcardArray: Array<Flashcard> = flashcards.flashcards.map((flashcard: Flashcard) => new Flashcard({
                 ...flashcard, inputLanguage, outputLanguage,
                 selectedMeaningIndex: [0],
@@ -116,30 +118,25 @@ const FlashcardBody: React.FC = () => {
 
     const addFlashcardsToAnki = async () => {
         setIsLoading(true);
+        const selectedMeaningsFlashcards = getSelectedMeaningsFlashcards(flashcards);
 
-        const flattenFlashcards: Flashcard[] = flashcards.flatMap((flashcard) => {
-            const selectedMeanings = flashcard.selectedMeaningIndex.map(
-                (index) => flashcard.meanings[index]
-            );
-            return selectedMeanings.map((meaning) => {
-                return new Flashcard({
-                    word: flashcard.word,
-                    phonetic: flashcard.phonetic,
-                    meanings: [meaning],
-                    selectedMeaningIndex: [0],
-                    inputLanguage: flashcard.inputLanguage,
-                    outputLanguage: flashcard.outputLanguage,
-                });
-            });
-        });
         const {data}: ApiResponse<AddCardFeedbackResponseData> = (await axiosApi.post(ankiPaths.getAddFlashcard(), {
-            cards: flattenFlashcards,
-            selectedDeckName: selectedDeck
+            cards: selectedMeaningsFlashcards,
+            selectedDeckName: '53'
         })).data;
 
         setAddFlashcardsFeedback(data);
         setCurrentScreen(2);
         setIsLoading(false);
+    };
+
+    const importFlashcardsToFile = async () => {
+        if (flashcards.length === 0) {
+            return;
+        }
+
+        const selectedMeaningsFlashcards = getSelectedMeaningsFlashcards(flashcards);
+        AnkiExporter.exportToAnkiTSV(selectedMeaningsFlashcards);
     };
 
 
@@ -153,7 +150,7 @@ const FlashcardBody: React.FC = () => {
     }
 
     const createDeck = async (deckName: string) => {
-        if(userDecks.includes(deckName)){
+        if (userDecks.includes(deckName)) {
             setSelectedDeck(deckName);
 
             toast(CustomNotificationContainer, {
@@ -217,6 +214,8 @@ const FlashcardBody: React.FC = () => {
                     addFlashcardsToAnki={addFlashcardsToAnki}
                     flashcards={flashcards}
                     setFlashcards={setFlashcards}
+                    selectedDeck={selectedDeck}
+                    importFlashcardsToFile={importFlashcardsToFile}
                 />
             }
             {currentScreen == 2 &&

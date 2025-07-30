@@ -1,4 +1,4 @@
-import {addFlashcards} from "@/lib/Anki";
+import {syncFlashcardsToAnki} from "@/lib/Anki";
 import {Flashcard} from "@/models/Flashcard";
 import {FlashcardSchema} from "@/models/schemas/flashcard-schema";
 import {z} from "zod";
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
             })
         }
 
-        const ankiResponse = await addFlashcards(flashcards, selectedDeckName);
+        const ankiResponse = await syncFlashcardsToAnki(flashcards, selectedDeckName);
 
         const {result, error: ankiError} = ankiResponse;
 

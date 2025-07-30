@@ -6,6 +6,24 @@ import {AnkiResponse} from "@/models/anki/deck";
 import axiosApi from "@/lib/AxiosApi";
 import {AddCardFeedbackResponseData} from "@/models/ApiResponse";
 
+export const getSelectedMeaningsFlashcards = (flashcards: Flashcard[]) => {
+    return flashcards.flatMap((flashcard) => {
+        const selectedMeanings = flashcard.selectedMeaningIndex.map(
+            (index) => flashcard.meanings[index]
+        );
+        return selectedMeanings.map((meaning) => {
+            return new Flashcard({
+                word: flashcard.word,
+                phonetic: flashcard.phonetic,
+                meanings: [meaning],
+                selectedMeaningIndex: [0],
+                inputLanguage: flashcard.inputLanguage,
+                outputLanguage: flashcard.outputLanguage,
+            });
+        });
+    });
+}
+
 const getFlashcardNotes = (flashcards: Flashcard[], selectedDeckname: string) => {
     return flashcards.map((flashcard) => {
         const exampleAudioUrl = googleTTS.getAudioUrl(
@@ -59,22 +77,15 @@ const getFlashcardNotes = (flashcards: Flashcard[], selectedDeckname: string) =>
     });
 };
 
-export const addFlashcards = async (flashcards: Flashcard[], selectedDeckname: string) => {
-    console.log(JSON.stringify({
-        action: "addNotes",
-        version: 6,
-        params: {
-            notes: [getFlashcardNotes(flashcards, selectedDeckname)].flat(),
-        },
-    }))
-
+export const syncFlashcardsToAnki = async (flashcards: Flashcard[], selectedDeckName: string) => {
     const response: AxiosResponse<AnkiResponse<AddCardFeedbackResponseData>> = await axiosApi.post(process.env.ANKI_URL!, {
         action: "addNotes",
         version: 6,
         params: {
-            notes: [getFlashcardNotes(flashcards, selectedDeckname)].flat(),
+            notes: [getFlashcardNotes(flashcards, selectedDeckName)].flat(),
         },
     });
 
     return response.data;
 };
+
