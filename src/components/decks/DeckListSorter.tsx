@@ -97,7 +97,9 @@ const DeckListSorter: React.FC<DeckListSorterProps> = (props) => {
                 <Filter className="w-5 h-5"/>
                 <span className={'w-20'}>{!showNestedDecks ? 'Group' : 'Ungroup'}</span>
             </button>
-            <CreateDeckPopover createDeck={manageDeck.bind(null, 'CREATE')}/>
+            <div className={'w-auto'}>
+                <CreateDeckPopover placement={'left'} createDeck={manageDeck.bind(null, 'CREATE')}/>
+            </div>
         </div>
     )
 }

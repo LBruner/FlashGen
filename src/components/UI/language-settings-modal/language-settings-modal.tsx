@@ -89,7 +89,6 @@ const LanguageSettingsModal: React.FC<LanguageSettingsModalProps> = (
                                             selectedKey={selectedDeck}
                                             multiple={false}
                                             allowsCustomValue={true}
-                                            defaultItems={[{'oi': 'oi'}]}
                                             onSelectionChange={(deck) => setSelectedDeck(deck?.toString() ?? '')}
                                         >
                                             {
@@ -109,11 +108,13 @@ const LanguageSettingsModal: React.FC<LanguageSettingsModalProps> = (
                                     </div>
                                 </div>
                                 <div className={'flex gap-2 justify-between'}>
-                                    <Link href={pagePaths.getUserDecksPage()}>
+                                    <Link className={'flex-1'} href={pagePaths.getUserDecksPage()}>
                                         <CustomSolidButton text={'Manage Decks'} onClick={() => {
                                         }} icon={<Notebook/>}/>
                                     </Link>
-                                    <CreateDeckPopover createDeck={createDeck} placement={'right'} offset={40}/>
+                                    <div className={'flex-1'}>
+                                        <CreateDeckPopover createDeck={createDeck} placement={'right'} offset={40}/>
+                                    </div>
                                 </div>
                                 <Divider/>
                                 <div>
