@@ -57,9 +57,9 @@ const DeckListSorter: React.FC<DeckListSorterProps> = (props) => {
         areDecksNested(isNowNested);
 
         if (isNowNested) {
-            setSortedDecksStats(nestDecks(sortedDecks));
+            setSortedDecksStats(nestDecks(props.unsortedDecks));
         } else {
-            setSortedDecksStats(sortedDecks);
+            setSortedDecksStats(props.unsortedDecks);
         }
     };
 
