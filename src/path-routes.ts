@@ -32,4 +32,10 @@ export const pagePaths = {
     getAppGuidePage() {
         return '/app-guide';
     },
+    getAnkiConnectPageGuide(){
+        return '/app-guide/anki-connect';
+    },
+    getTsvExportPageGuide(){
+        return '/app-guide/tsv-export';
+    }
 }

@@ -1,4 +1,6 @@
 import {ArrowRight, CheckCircle, Download, Wifi, WifiOff} from 'lucide-react';
+import Link from "next/link";
+import {pagePaths} from "@/path-routes";
 
 const AppGuideOptions = () => {
     return (
@@ -7,7 +9,8 @@ const AppGuideOptions = () => {
                 <div className="text-center mb-12">
                     <div className="flex justify-center mb-6">
                         <div className="relative">
-                            <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
+                            <div
+                                className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
                                 <WifiOff className="w-8 h-8 text-red-600 dark:text-red-400"/>
                             </div>
                             <div
@@ -32,7 +35,8 @@ const AppGuideOptions = () => {
                         }`}
                     >
                         <div className="flex items-center justify-center mb-6">
-                            <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                            <div
+                                className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
                                 <Wifi className="w-8 h-8 text-blue-600 dark:text-blue-400"/>
                             </div>
                         </div>
@@ -60,24 +64,28 @@ const AppGuideOptions = () => {
                             </div>
                         </div>
 
-                        <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 mb-6 border dark:border-blue-800/30">
+                        <div
+                            className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 mb-6 border dark:border-blue-800/30">
                             <p className="text-sm text-blue-800 dark:text-blue-200">
                                 <strong>Requirements:</strong> Anki desktop app with AnkiConnect add-on installed
                             </p>
                         </div>
 
-                        <button
-                            className="w-full bg-blue-600 dark:bg-blue-700 text-white py-3 px-4 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors duration-200 flex items-center justify-center shadow-sm dark:shadow-gray-900/20">
-                            <span>Learn How to Connect</span>
-                            <ArrowRight className="w-4 h-4 ml-2"/>
-                        </button>
+                        <Link href={pagePaths.getAnkiConnectPageGuide()}>
+                            <button
+                                className="w-full bg-blue-600 dark:bg-blue-700 text-white py-3 px-4 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors duration-200 flex items-center justify-center shadow-sm dark:shadow-gray-900/20">
+                                <span>Learn How to Connect</span>
+                                <ArrowRight className="w-4 h-4 ml-2"/>
+                            </button>
+                        </Link>
                     </div>
 
                     <div
                         className={`bg-white dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-gray-900/20 p-8 border-2 border-transparent dark:border-gray-700 transition-all duration-300 cursor-pointer hover:shadow-xl dark:hover:shadow-gray-900/40 hover:border-green-200 dark:hover:border-green-600/50`}
                     >
                         <div className="flex items-center justify-center mb-6">
-                            <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                            <div
+                                className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
                                 <Download className="w-8 h-8 text-green-600 dark:text-green-400"/>
                             </div>
                         </div>
@@ -106,7 +114,8 @@ const AppGuideOptions = () => {
                             </div>
                         </div>
 
-                        <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 mb-6 border dark:border-green-800/30">
+                        <div
+                            className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 mb-6 border dark:border-green-800/30">
                             <p className="text-sm text-green-800 dark:text-green-200">
                                 <strong>Perfect for:</strong> Users who prefer manual control or don't have Anki desktop
                             </p>
