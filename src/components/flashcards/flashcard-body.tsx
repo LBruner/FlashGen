@@ -137,8 +137,13 @@ const FlashcardBody: React.FC = () => {
 
         const selectedMeaningsFlashcards = getSelectedMeaningsFlashcards(flashcards);
         AnkiExporter.exportToAnkiTSV(selectedMeaningsFlashcards);
+        setAddFlashcardsFeedback({
+            addedCards: flashcards.length,
+            executionTime: 0,
+            deckName: 'Exported through file'
+        });
+        setCurrentScreen(2);
     };
-
 
     const resetPageData = () => {
         onClose();

@@ -1,8 +1,7 @@
 import React from "react";
 import {AddCardFeedbackResponseData} from "@/models/ApiResponse";
-import {Check, Clock, Home, Library, Plus, Sparkles} from "lucide-react";
+import {Check, Clock, Info, Plus, Sparkles} from "lucide-react";
 import Link from "next/link";
-import {pagePaths} from "@/path-routes";
 
 interface FlashcardsResultsProps {
     responseData: AddCardFeedbackResponseData;
@@ -17,7 +16,7 @@ const FlashcardsResults: React.FC<FlashcardsResultsProps> = (
     const {deckName, executionTime, addedCards} = responseData;
 
     return (
-        <div>
+        <div className={'h-screen'}>
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div
                     className="absolute top-40 right-10 w-96 h-96 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse animation-delay-2000"></div>
@@ -83,30 +82,23 @@ const FlashcardsResults: React.FC<FlashcardsResultsProps> = (
 
                     <div className="space-y-4">
                         <div className="grid md:grid-cols-2 gap-4">
-                            <button
-                                className="group flex items-center justify-center gap-3 bg-gradient-to-r from-violet-500 to-indigo-600 hover:from-violet-600 hover:to-indigo-700 dark:from-violet-600 dark:to-indigo-700 dark:hover:from-violet-700 dark:hover:to-indigo-800 text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
-                                <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300"/>
-                                <Link href={pagePaths.getUserDecksPage()}>Create Another Deck</Link>
-                            </button>
-
-                            <button
-                                className="group flex items-center justify-center gap-3 bg-white hover:bg-gray-50 dark:bg-slate-700 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 font-semibold py-4 px-6 rounded-2xl border-2 border-gray-200 dark:border-slate-600 hover:border-violet-300 dark:hover:border-violet-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
-                                <Library className="w-5 h-5 group-hover:scale-110 transition-transform duration-300"/>
-                                <Link href={pagePaths.getUserDecksPage()}>View All Decks</Link>
-                            </button>
+                            <CustomLinkButton onClick={resetPageData}
+                                className={'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700'}
+                                title={'Add More Cards'} path={'#'} icon={<Plus
+                                className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300"/>
+                            }/>
+                            <CustomLinkButton
+                                className={'bg-gradient-to-r from-violet-500 to-indigo-600 hover:from-violet-600 hover:to-indigo-700 dark:from-violet-600 dark:to-indigo-700 dark:hover:from-violet-700 dark:hover:to-indigo-800'}
+                                title={'View Anki Importing Guide'} path={'app-guide'} icon={<Info
+                                className="w-5 h-5  transition-transform duration-300"/>}
+                            />
                         </div>
-
-                        <button onClick={resetPageData}
-                            className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 dark:from-slate-700 dark:to-slate-600 dark:hover:from-slate-600 dark:hover:to-slate-500 text-gray-700 dark:text-gray-200 font-medium py-3 px-6 rounded-xl transition-all duration-300 group">
-                            <Home className="w-4 h-4 group-hover:scale-110 transition-transform duration-300"/>
-                           Back to Home
-                        </button>
                     </div>
 
                     <div
                         className="text-center mt-8 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-2xl border border-blue-100 dark:border-blue-800">
                         <p className="text-sm text-blue-700 dark:text-blue-300">
-                            💡 <strong>Pro tip:</strong> Your cards are automatically saved and ready for review. Start
+                            💡 <strong>Pro tip:</strong> Start
                             studying now to maximize retention!
                         </p>
                     </div>
@@ -114,6 +106,22 @@ const FlashcardsResults: React.FC<FlashcardsResultsProps> = (
             </div>
         </div>
     )
+}
+
+interface CustomButtonProps {
+    title: string,
+    path: string;
+    icon: React.ReactNode;
+    className: string;
+    onClick?: () => void;
+}
+
+const CustomLinkButton: React.FC<CustomButtonProps> = ({onClick, title, path, icon, className}) => {
+    return <button onClick={onClick}
+                   className={`group flex items-center justify-center gap-3 text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl ${className}`}>
+        {icon}
+        <Link href={path}>{title}</Link>
+    </button>;
 }
 
 export default FlashcardsResults;
