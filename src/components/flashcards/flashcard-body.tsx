@@ -120,7 +120,7 @@ const FlashcardBody: React.FC = () => {
         setIsLoading(true);
         const selectedMeaningsFlashcards = getSelectedMeaningsFlashcards(flashcards);
 
-        const {data}: ApiResponse<AddCardFeedbackResponseData> = (await axiosApi.post(ankiPaths.getAddFlashcard(), {
+        const {data}: ApiResponse<AddCardFeedbackResponseData> = (await axiosApi.post(ankiPaths.getFlashcardsEndpoint(), {
             cards: selectedMeaningsFlashcards,
             selectedDeckName: selectedDeck
         })).data;
@@ -171,7 +171,7 @@ const FlashcardBody: React.FC = () => {
             return;
         }
         try {
-            const {data} = await axiosApi.post(ankiPaths.getCreateDeck(), {
+            const {data} = await axiosApi.post(ankiPaths.getDecksEndpoint(), {
                 deckName,
             });
 

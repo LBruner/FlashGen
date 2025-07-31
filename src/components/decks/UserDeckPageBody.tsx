@@ -65,21 +65,28 @@ const UserDeckPageBody: React.FC = () => {
         let title = '';
         let content = '';
 
-        let endpointRoute = operation === 'CREATE' ? ankiPaths.getCreateDeck() : ankiPaths.getDeleteDeck();
-
         try {
-            const {data} = await axiosApi.post(endpointRoute, {
-                deckName,
-            });
+            let responseData;
 
-            const wasSuccessful = data!.success;
+            if(operation === 'CREATE'){
+                const {data} = await axiosApi.post(`${ankiPaths.getDecksEndpoint()}`, {
+                    deckName,
+                });
+                responseData = data;
+            }
+            else{
+                const {data} = await axiosApi.delete(`${ankiPaths.getDecksEndpoint()}/${deckName}`);
+                responseData = data;
+            }
+
+            const wasSuccessful = responseData!.success;
 
             if (wasSuccessful) {
                 title = `Success!`
                 content = `Deck: ${deckName} ${operation == 'CREATE' ? 'created' : 'deleted'} successfully.`
             } else {
                 title = 'Error'
-                content = data!.errorMessage!;
+                content = responseData!.errorMessage!;
             }
 
             toast(CustomNotificationContainer, {

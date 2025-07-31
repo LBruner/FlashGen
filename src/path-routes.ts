@@ -2,20 +2,17 @@ export const ankiPaths = {
     getConnection() {
         return '/api/anki/connection';
     },
-    getDeckList() {
+    getDeckStats() {
+        return `/api/anki/decks/stats`;
+    },
+    getFlashcardsEndpoint() {
+        return `/api/anki/flashcards`;
+    },
+    getDecksEndpoint() {
         return `/api/anki/decks`;
     },
-    getDeckStats() {
-        return `/api/anki/deck-stats`;
-    },
-    getAddFlashcard() {
-        return `/api/anki/add-flashcards`;
-    },
-    getCreateDeck() {
-        return `/api/anki/create-deck`;
-    },
-    getDeleteDeck() {
-        return `/api/anki/delete-deck`;
+    getDecksStatsEndpoint() {
+        return `/api/anki/decks`;
     },
 }
 

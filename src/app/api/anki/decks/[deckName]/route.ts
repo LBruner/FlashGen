@@ -1,18 +1,13 @@
 import {z} from "zod";
-import {ApiResponse} from "@/models/ApiResponse";
-import {createJsonResponse} from "@/lib/NextApiResponse";
 import {AxiosResponse} from "axios";
 import {AnkiResponse} from "@/models/anki/deck";
 import axiosApi from "@/lib/AxiosApi";
+import {ApiResponse} from "@/models/ApiResponse";
+import {createJsonResponse} from "@/lib/NextApiResponse";
 
-const FlashcardArraySchema = z.object({
-    deckName: z.string(),
-});
-
-export async function POST(request: Request) {
+export async function DELETE(request: Request, { params }: { params: Promise<{ deckName: string }>}) {
     try {
-        const reqBody = await request.json();
-        const {deckName} = FlashcardArraySchema.parse(reqBody);
+        const {deckName} = await params;
 
         const ankiResponse: AxiosResponse<AnkiResponse<null>> = await axiosApi.post(process.env.ANKI_URL!, {
             action: "deleteDecks",

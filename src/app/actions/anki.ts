@@ -6,7 +6,7 @@ import {ankiPaths} from "@/path-routes";
 
 export const pegaTodosDecks = async (): Promise<AnkiDeck[]> => {
     try {
-        const response: AxiosResponse<ApiResponse<Array<string>>> = await axiosApi.get(ankiPaths.getDeckList());
+        const response: AxiosResponse<ApiResponse<Array<string>>> = await axiosApi.get(ankiPaths.getDecksEndpoint());
 
         if(!response.data.success){
             throw new Error(response.data.errorMessage?.toString());
