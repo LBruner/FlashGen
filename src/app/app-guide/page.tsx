@@ -121,11 +121,13 @@ const AppGuideOptions = () => {
                             </p>
                         </div>
 
-                        <button
-                            className="w-full bg-green-600 dark:bg-green-700 text-white py-3 px-4 rounded-lg hover:bg-green-700 dark:hover:bg-green-600 transition-colors duration-200 flex items-center justify-center shadow-sm dark:shadow-gray-900/20">
-                            <span>Learn About CSV Export</span>
-                            <ArrowRight className="w-4 h-4 ml-2"/>
-                        </button>
+                        <Link href={pagePaths.getTsvExportPageGuide()}>
+                            <button
+                                className="w-full bg-green-600 dark:bg-green-700 text-white py-3 px-4 rounded-lg hover:bg-green-700 dark:hover:bg-green-600 transition-colors duration-200 flex items-center justify-center shadow-sm dark:shadow-gray-900/20">
+                                <span>Learn About CSV Export</span>
+                                <ArrowRight className="w-4 h-4 ml-2"/>
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>
