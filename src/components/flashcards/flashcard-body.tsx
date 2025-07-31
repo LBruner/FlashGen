@@ -40,42 +40,42 @@ const FlashcardBody: React.FC = () => {
     }
 
     const [flashcards, setFlashcards] = useState<Flashcard[]>([
-        new Flashcard({
-            "word": "<span style=\"color: rgb(231, 217, 15);\">live</span>",
-            "phonetic": "(/lɪv/)",
-            "meanings": [
-                {
-                    "definition": "to be alive; have life",
-                    "translation": "viver",
-                    "example": "She wants to <span style=\"color: rgb(231, 217, 15);\">live</span> a long and happy life."
-                },
-                {
-                    "definition": "to reside in a particular place",
-                    "translation": "morar",
-                    "example": "They <span style=\"color: rgb(231, 217, 15);\">live</span> in a small apartment downtown."
-                }
-            ]
-        }),
-        new Flashcard({
-            "word": "<span style=\"color: rgb(231, 217, 15);\">dance</span>",
-            "phonetic": "(/dæns/)",
-            "meanings": [
-                {
-                    "definition": "to move rhythmically to music",
-                    "translation": "dançar",
-                    "example": "He loves to <span style=\"color: rgb(231, 217, 15);\">dance</span> at parties."
-                },
-                {
-                    "definition": "a series of movements performed to music",
-                    "translation": "dança",
-                    "example": "The ballet <span style=\"color: rgb(231, 217, 15);\">dance</span> was beautiful and graceful."
-                }
-            ]
-        })
+        // new Flashcard({
+        //     "word": "<span style=\"color: rgb(231, 217, 15);\">live</span>",
+        //     "phonetic": "(/lɪv/)",
+        //     "meanings": [
+        //         {
+        //             "definition": "to be alive; have life",
+        //             "translation": "viver",
+        //             "example": "She wants to <span style=\"color: rgb(231, 217, 15);\">live</span> a long and happy life."
+        //         },
+        //         {
+        //             "definition": "to reside in a particular place",
+        //             "translation": "morar",
+        //             "example": "They <span style=\"color: rgb(231, 217, 15);\">live</span> in a small apartment downtown."
+        //         }
+        //     ]
+        // }),
+        // new Flashcard({
+        //     "word": "<span style=\"color: rgb(231, 217, 15);\">dance</span>",
+        //     "phonetic": "(/dæns/)",
+        //     "meanings": [
+        //         {
+        //             "definition": "to move rhythmically to music",
+        //             "translation": "dançar",
+        //             "example": "He loves to <span style=\"color: rgb(231, 217, 15);\">dance</span> at parties."
+        //         },
+        //         {
+        //             "definition": "a series of movements performed to music",
+        //             "translation": "dança",
+        //             "example": "The ballet <span style=\"color: rgb(231, 217, 15);\">dance</span> was beautiful and graceful."
+        //         }
+        //     ]
+        // })
     ]);
 
     const [selectedDeck, setSelectedDeck] = useState<AnkiDeck>(userDecks[0]);
-    const [currentScreen, setCurrentScreen] = useState(1);
+    const [currentScreen, setCurrentScreen] = useState(0);
 
     const [inputLanguage, setInputLanguage] = useState<string>(flashcardLanguages[0].code);
     const [outputLanguage, setOutputLanguage] = useState<string>(flashcardLanguages[1].code);
@@ -122,7 +122,7 @@ const FlashcardBody: React.FC = () => {
 
         const {data}: ApiResponse<AddCardFeedbackResponseData> = (await axiosApi.post(ankiPaths.getAddFlashcard(), {
             cards: selectedMeaningsFlashcards,
-            selectedDeckName: '53'
+            selectedDeckName: selectedDeck
         })).data;
 
         setAddFlashcardsFeedback(data);
