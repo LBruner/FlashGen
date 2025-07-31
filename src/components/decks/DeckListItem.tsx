@@ -1,7 +1,7 @@
 'use client';
 import React from "react";
 import {AnkiDeckStats} from "@/models/anki/deck";
-import {Settings, Trash2} from "lucide-react";
+import {Trash2} from "lucide-react";
 import {PiCards} from "react-icons/pi";
 import {Button, Popover, PopoverContent, PopoverTrigger} from "@heroui/react";
 import {DeckOperation} from "@/components/decks/UserDeckPageBody";
@@ -51,7 +51,6 @@ const DeckListItem: React.FC<DeckListItemProps> = (props) => {
                                 )}
                             </PopoverContent>
                         </Popover>
-                        <button><Settings color={'blue'}/></button>
                     </div>
                 </div>
 
