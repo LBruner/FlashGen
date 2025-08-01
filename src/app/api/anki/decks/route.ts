@@ -3,7 +3,7 @@ import {AnkiDeck, AnkiResponse} from "@/models/anki/deck";
 import {ApiResponse} from "@/models/api-response";
 import axiosApi from "@/lib/axios-api";
 import {createJsonResponse} from "@/lib/next-api-response";
-import {noConnectionResponse} from "@/lib/no-connection-response";
+import {apiErrorResponse, getZodErrorResponse} from "@/lib/api-error-response";
 import {z} from "zod";
 
 export async function GET() {
@@ -24,9 +24,10 @@ export async function GET() {
 
         return createJsonResponse({...apiResponse});
     } catch (error) {
-        console.log(`Something went wrong fetching user decks: ${error}`);
+        const errorMsg = `Something went wrong fetching user decks: ${error}: ${error}`;
+        console.log(errorMsg);
 
-        return createJsonResponse(noConnectionResponse);
+        return createJsonResponse(apiErrorResponse(errorMsg));
     }
 }
 
@@ -59,13 +60,12 @@ export async function POST(request: Request) {
         return createJsonResponse({...apiResponse});
     } catch (error) {
         if (error instanceof z.ZodError) {
-            console.error("Zod Validation Error:", error.errors);
-            return new Response(`Bad request. Error: ${error}`, {status: 400});
+            return getZodErrorResponse(error);
         }
 
-        const errorMessage = 'Something went wrong on creating deck:';
+        const errorMsg = `Something went wrong on creating deck:: ${error}`
+        console.log(errorMsg);
 
-        console.error(errorMessage + error);
-        return new Response(`${errorMessage} ${error}`, {status: 200});
+        return createJsonResponse(apiErrorResponse(errorMsg));
     }
 }

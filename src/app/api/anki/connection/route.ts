@@ -3,7 +3,7 @@ import {AnkiResponse} from "@/models/anki/deck";
 import {ApiResponse} from "@/models/api-response";
 import {createJsonResponse} from "@/lib/next-api-response";
 import axiosApi from "@/lib/axios-api";
-import {noConnectionResponse} from "@/lib/no-connection-response";
+import {apiErrorResponse} from "@/lib/api-error-response";
 
 export async function GET(): Promise<Response> {
     try {
@@ -23,8 +23,9 @@ export async function GET(): Promise<Response> {
 
         return createJsonResponse({...apiResponse});
     } catch (error) {
-        console.log(`Something went wrong connecting to AnkiConnect API: ${error}`);
+        const errorMsg= `Something went wrong connecting to AnkiConnect API: ${error}`;
+        console.log(errorMsg);
 
-        return createJsonResponse(noConnectionResponse);
+        return createJsonResponse(apiErrorResponse(errorMsg));
     }
 }

@@ -4,7 +4,7 @@ import {ApiResponse} from "@/models/api-response";
 import axiosApi from "@/lib/axios-api";
 import {createJsonResponse} from "@/lib/next-api-response";
 import {z} from "zod";
-import {noConnectionResponse} from "@/lib/no-connection-response";
+import {apiErrorResponse, getZodErrorResponse} from "@/lib/api-error-response";
 
 const DeckNamesArraySchema = z.object({
     decks: z.array(z.string()),
@@ -35,11 +35,12 @@ export async function POST(request: Request) {
         return createJsonResponse({...apiResponse});
     } catch (error) {
         if (error instanceof z.ZodError) {
-            return new Response(`Invalid flashcards format: ${error}`, {status: 400});
+            return getZodErrorResponse(error);
         }
 
-        console.log(`Something went wrong fetching cards stats: ${error}`);
+        const errorMsg = `Something went wrong fetching cards stats: ${error}`;
+        console.log(errorMsg);
 
-        return createJsonResponse(noConnectionResponse);
+        return createJsonResponse(apiErrorResponse(errorMsg));
     }
 }

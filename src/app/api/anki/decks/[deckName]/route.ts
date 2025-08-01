@@ -4,6 +4,7 @@ import {AnkiResponse} from "@/models/anki/deck";
 import axiosApi from "@/lib/axios-api";
 import {ApiResponse} from "@/models/api-response";
 import {createJsonResponse} from "@/lib/next-api-response";
+import {apiErrorResponse, getZodErrorResponse} from "@/lib/api-error-response";
 
 export async function DELETE(request: Request, { params }: { params: Promise<{ deckName: string }>}) {
     try {
@@ -30,11 +31,12 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ d
         return createJsonResponse({...apiResponse});
     } catch (error) {
         if (error instanceof z.ZodError) {
-            console.error("Zod Validation Error:", error.errors);
-            return new Response(`Bad request. Error: ${error}`, {status: 400});
+            return getZodErrorResponse(error);
         }
 
-        console.error(`Something went wrong on deleting deck:`, error);
-        return new Response(`Something went wrong: ${error}`, {status: 200});
+        const errorMsg = `Something went wrong on deleting deck: ${error}`
+        console.log(errorMsg);
+
+        return createJsonResponse(apiErrorResponse(errorMsg));
     }
 }

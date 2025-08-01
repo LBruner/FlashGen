@@ -1,8 +1,10 @@
+import {ZodIssue} from "zod";
+
 export type ApiResponse<T> = {
     success: boolean;
     status: number;
     data: T;
-    errorMessage: string | null;
+    errorMessage: string| ZodIssue[] | null;
 }
 
 export type AddCardFeedbackResponseData = {

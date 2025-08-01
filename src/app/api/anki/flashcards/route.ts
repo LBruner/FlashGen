@@ -4,6 +4,7 @@ import {FlashcardSchema} from "@/models/schemas/flashcard-schema";
 import {z} from "zod";
 import {AddCardFeedbackResponseData, ApiResponse} from "@/models/api-response";
 import {createJsonResponse} from "@/lib/next-api-response";
+import {apiErrorResponse, getZodErrorResponse} from "@/lib/api-error-response";
 
 const FlashcardArraySchema = z.object({
     selectedDeckName: z.string(),
@@ -22,7 +23,7 @@ export async function POST(request: Request) {
             return createJsonResponse({
                 data: null,
                 status: 500,
-                errorMessage: 'Nenhum flashcard foi enviado',
+                errorMessage: 'No flashcards were sent.',
                 success: false,
             })
         }
@@ -47,11 +48,12 @@ export async function POST(request: Request) {
         return createJsonResponse({...apiResponse});
     } catch (error) {
         if (error instanceof z.ZodError) {
-            console.error("Erro de validação Zod:", error.errors);
-            return new Response(`Formato inválido de flashcards. Erro: ${error}`, {status: 400});
+            return getZodErrorResponse(error);
         }
 
-        console.error("Erro interno:", error);
-        return new Response("Erro no servidor.", {status: 500});
+        const errorMessage = 'Something went wrong on creating flashcards:' + error;
+        console.log(errorMessage);
+
+        return createJsonResponse(apiErrorResponse(errorMessage));
     }
 }
