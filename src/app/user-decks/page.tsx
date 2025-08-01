@@ -1,5 +1,5 @@
 import React from "react";
-import UserDeckPageBody from "@/components/decks/UserDeckPageBody";
+import UserDeckPageBody from "@/components/decks/user-deck-page-body";
 import {ToastContainer} from "react-toastify";
 
 const UserDecksPage: React.FC = async () => {

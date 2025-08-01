@@ -4,14 +4,14 @@ import React from "react";
 import {useTheme} from "next-themes";
 import {IoBookOutline, IoSettingsOutline} from "react-icons/io5";
 import {FiHome} from "react-icons/fi";
-import SidebarNavButton from "@/components/UI/Sidebar/SidebarNavButton";
+import SidebarNavButton from "@/components/UI/Sidebar/sidebar-nav-button";
 import {pagePaths} from "@/path-routes";
 import {RiExpandLeftLine, RiExpandRightLine} from "react-icons/ri";
-import ThemeButton from "@/components/UI/Sidebar/ThemeButton";
+import ThemeButton from "@/components/UI/Sidebar/theme-button";
 import {useSidebar} from "@/store/context/ui-context-provider";
 import {MdInfoOutline} from "react-icons/md";
 
-const SideBar: React.FC = () => {
+const Sidebar: React.FC = () => {
     const {systemTheme, theme, setTheme} = useTheme();
     const currentTheme = theme === 'system' ? systemTheme : theme;
 
@@ -103,4 +103,4 @@ const SideBar: React.FC = () => {
     );
 }
 
-export default SideBar;
+export default Sidebar;

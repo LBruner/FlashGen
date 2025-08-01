@@ -1,8 +1,8 @@
 import React, {createContext, ReactNode, useContext} from "react";
 import useSWR, {SWRResponse} from "swr";
-import axiosApi from "@/lib/AxiosApi";
+import axiosApi from "@/lib/axios-api";
 import {ankiPaths} from "@/path-routes";
-import {ApiResponse} from "@/models/ApiResponse";
+import {ApiResponse} from "@/models/api-response";
 
 interface SettingsContextProvider {
     isAnkiConnected: boolean;

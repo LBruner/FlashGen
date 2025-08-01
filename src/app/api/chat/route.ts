@@ -1,8 +1,8 @@
-import {AIResponse, ChatBody} from "@/models/ChatMessage";
-import {chatConfig} from "@/models/ChatConfig";
-import axiosApi from "@/lib/AxiosApi";
-import {ApiResponse} from "@/models/ApiResponse";
-import {createJsonResponse} from "@/lib/NextApiResponse";
+import {AIResponse, ChatBody} from "@/models/chat-message";
+import {chatConfig} from "@/models/chat-config";
+import axiosApi from "@/lib/axios-api";
+import {ApiResponse} from "@/models/api-response";
+import {createJsonResponse} from "@/lib/next-api-response";
 
 export async function POST(request: Request) {
     const reqBody: ChatBody = await request.json();

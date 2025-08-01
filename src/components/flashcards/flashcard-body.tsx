@@ -1,26 +1,26 @@
 'use client';
 
 import React, {useEffect, useState} from "react";
-import {Flashcard} from "@/models/Flashcard";
-import {ChatMessage} from "@/models/ChatMessage";
+import {Flashcard} from "@/models/flashcard";
+import {ChatMessage} from "@/models/chat-message";
 import {getPrompt} from "../../../public/prompt";
 import {AnkiDeck} from "@/models/anki/deck";
 import {flashcardLanguages} from "@/lib/languages-list";
 import {AxiosResponse} from "axios";
-import AddWordsForm from "@/components/pages/AddFlashcardsForm";
+import AddWordsForm from "@/components/pages/add-flashcards-form";
 import {useDisclosure} from "@heroui/react";
-import axiosApi from "@/lib/AxiosApi";
-import {AddCardFeedbackResponseData, ApiResponse} from "@/models/ApiResponse";
+import axiosApi from "@/lib/axios-api";
+import {AddCardFeedbackResponseData, ApiResponse} from "@/models/api-response";
 import {ankiPaths} from "@/path-routes";
-import FlashcardsCreation from "@/components/FlashcardsCreation/FlashcardsCreation";
-import FlashcardsResults from "@/components/flashcards/FlashcardsResults";
-import CustomSpinner from "@/components/UI/CustomSpinner";
+import FlashcardsCreation from "@/components/FlashcardsCreation/flashcards-creation";
+import FlashcardsResults from "@/components/flashcards/flashcards-results";
+import CustomSpinner from "@/components/UI/custom-spinner";
 import {pegaTodosDecks} from "@/app/actions/anki";
-import CustomNotificationContainer from "@/components/UI/toast/CustomNotificationContainer";
+import CustomNotificationContainer from "@/components/UI/toast/custom-notification-container";
 import {toast} from "react-toastify";
 import {useTheme} from "next-themes";
-import {getSelectedMeaningsFlashcards} from "@/lib/Anki";
-import {AnkiExporter} from "@/models/AnkiExporter";
+import {getSelectedMeaningsFlashcards} from "@/lib/anki";
+import {AnkiExporter} from "@/models/anki-exporter";
 
 const FlashcardBody: React.FC = () => {
     const [wordTags, setWordTags] = useState<Array<string>>([]);

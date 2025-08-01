@@ -2,7 +2,7 @@
 
 import React from "react";
 import {useAppSettings} from "@/store/context/settings-context-provider";
-import AnkiConnectionStatusBar from "@/components/anki-connection/AnkiConnectionStatusBar";
+import AnkiConnectionStatusBar from "@/components/anki-connection/anki-connection-status-bar";
 
 interface DashboardHeaderProps {
     title: string;

@@ -1,5 +1,5 @@
 import React from "react";
-import DecksSummaryItem from "@/components/decks/DecksSummaryItem";
+import DecksSummaryItem from "@/components/decks/decks-summary-item";
 import {IoBookOutline} from "react-icons/io5";
 import {FaChartBar} from "react-icons/fa";
 import {FaRegClock, FaRegStar} from "react-icons/fa6";

@@ -1,6 +1,6 @@
 import React from "react";
-import {Flashcard} from "@/models/Flashcard";
-import {capitalizeFirstLetter, removeTags} from "@/lib/FlashcardFormatter";
+import {Flashcard} from "@/models/flashcard";
+import {capitalizeFirstLetter, removeTags} from "@/lib/flashcard-formatter";
 import {RxCheck} from "react-icons/rx";
 
 interface FlashcardMeaningsColumnsProps {

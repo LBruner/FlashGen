@@ -1,9 +1,9 @@
 import {AxiosResponse} from "axios";
 import {AnkiDeck, AnkiResponse} from "@/models/anki/deck";
-import {ApiResponse} from "@/models/ApiResponse";
-import axiosApi from "@/lib/AxiosApi";
-import {createJsonResponse} from "@/lib/NextApiResponse";
-import {noConnectionResponse} from "@/lib/NoConnectionResponse";
+import {ApiResponse} from "@/models/api-response";
+import axiosApi from "@/lib/axios-api";
+import {createJsonResponse} from "@/lib/next-api-response";
+import {noConnectionResponse} from "@/lib/no-connection-response";
 import {z} from "zod";
 
 export async function GET() {

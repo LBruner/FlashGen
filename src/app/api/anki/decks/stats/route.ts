@@ -1,10 +1,10 @@
 import {AxiosResponse} from "axios";
 import {AnkiResponse, DeckStatsMap} from "@/models/anki/deck";
-import {ApiResponse} from "@/models/ApiResponse";
-import axiosApi from "@/lib/AxiosApi";
-import {createJsonResponse} from "@/lib/NextApiResponse";
+import {ApiResponse} from "@/models/api-response";
+import axiosApi from "@/lib/axios-api";
+import {createJsonResponse} from "@/lib/next-api-response";
 import {z} from "zod";
-import {noConnectionResponse} from "@/lib/NoConnectionResponse";
+import {noConnectionResponse} from "@/lib/no-connection-response";
 
 const DeckNamesArraySchema = z.object({
     decks: z.array(z.string()),

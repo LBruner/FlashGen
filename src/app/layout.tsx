@@ -3,8 +3,8 @@ import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import React from "react";
 import Providers from "@/app/providers";
-import SideBar from "@/components/UI/Sidebar/SideBar";
-import MainContentWrapper from "@/components/MainContentWrapper";
+import Sidebar from "@/components/UI/Sidebar/sidebar";
+import MainContentWrapper from "@/components/main-content-wrapper";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -30,7 +30,7 @@ export default function RootLayout({children}: Readonly<{
             className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50 dark:bg-customDarkBg`}
         >
         <Providers>
-            <SideBar/>
+            <Sidebar/>
             <MainContentWrapper>
                 {children}
             </MainContentWrapper>

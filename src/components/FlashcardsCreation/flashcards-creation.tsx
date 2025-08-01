@@ -1,7 +1,7 @@
 import FlashcardCardList from "../flashcards-card/flashcards-cards-list";
-import {Flashcard} from "@/models/Flashcard";
+import {Flashcard} from "@/models/flashcard";
 import React from "react";
-import CustomSolidButton from "@/components/UI/CustomSolidButton";
+import CustomSolidButton from "@/components/UI/custom-solid-button";
 import {GrDocumentCsv} from "react-icons/gr";
 import {useAppSettings} from "@/store/context/settings-context-provider";
 

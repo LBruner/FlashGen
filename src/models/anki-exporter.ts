@@ -1,4 +1,4 @@
-import {Flashcard} from "@/models/Flashcard";
+import {Flashcard} from "@/models/flashcard";
 import {Meaning} from "@/models/schemas/flashcard-schema";
 
 //TODO: Find a way to add audio to exported cards. Maybe make a request to add

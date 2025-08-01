@@ -17,8 +17,8 @@ import {
 import {AnkiDeck} from "@/models/anki/deck";
 import {Notebook, X} from "lucide-react";
 import {flashcardLanguages} from "@/lib/languages-list";
-import CreateDeckPopover from "@/components/decks/CreateDeckPopover";
-import CustomSolidButton from "@/components/UI/CustomSolidButton";
+import CreateDeckPopover from "@/components/decks/create-deck-popover";
+import CustomSolidButton from "@/components/UI/custom-solid-button";
 import Link from "next/link";
 import {pagePaths} from "@/path-routes";
 

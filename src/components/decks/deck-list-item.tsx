@@ -4,7 +4,7 @@ import {AnkiDeckStats} from "@/models/anki/deck";
 import {Trash2} from "lucide-react";
 import {PiCards} from "react-icons/pi";
 import {Button, Popover, PopoverContent, PopoverTrigger} from "@heroui/react";
-import {DeckOperation} from "@/components/decks/UserDeckPageBody";
+import {DeckOperation} from "@/components/decks/user-deck-page-body";
 
 interface DeckListItemProps {
     decksStats: AnkiDeckStats;

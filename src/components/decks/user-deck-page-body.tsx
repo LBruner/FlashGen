@@ -2,19 +2,19 @@
 
 import React, {useEffect, useState} from "react";
 import {AnkiDeckStats} from "@/models/anki/deck";
-import DecksSummaryList from "@/components/decks/DecksSummaryList";
-import DecksList from "@/components/decks/DecksList";
-import DeckListSorter from "@/components/decks/DeckListSorter";
+import DecksSummaryList from "@/components/decks/decks-summary-list";
+import DecksList from "@/components/decks/decks-list";
+import DeckListSorter from "@/components/decks/deck-list-sorter";
 import {pegaStatDosDecks, pegaTodosDecks} from "@/app/actions/anki";
-import CustomSpinner from "@/components/UI/CustomSpinner";
-import NoDecksEmptyState from "@/components/decks/NoDecksEmptyState";
+import NoDecksEmptyState from "@/components/decks/no-decks-empty-state";
 import {useAppSettings} from "@/store/context/settings-context-provider";
-import UserCardsNoConnection from "@/components/decks/NoConnectionDeckState";
-import axiosApi from "@/lib/AxiosApi";
+import UserCardsNoConnection from "@/components/decks/no-connection-deck-state";
+import axiosApi from "@/lib/axios-api";
 import {ankiPaths} from "@/path-routes";
 import {toast} from "react-toastify";
-import CustomNotificationContainer from "@/components/UI/toast/CustomNotificationContainer";
+import CustomNotificationContainer from "@/components/UI/toast/custom-notification-container";
 import {useTheme} from "next-themes";
+import CustomSpinner from "@/components/UI/custom-spinner";
 
 const getSummaryStats = (decksStats: AnkiDeckStats[]) => {
     return {

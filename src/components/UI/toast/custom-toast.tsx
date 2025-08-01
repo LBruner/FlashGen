@@ -1,7 +1,7 @@
 'use client';
 import React, {useEffect} from "react";
 import {toast, ToastContainer, TypeOptions} from "react-toastify";
-import CustomNotificationContainer from "@/components/UI/toast/CustomNotificationContainer";
+import CustomNotificationContainer from "@/components/UI/toast/custom-notification-container";
 import {useTheme} from "next-themes";
 
 interface CustomToastProps {

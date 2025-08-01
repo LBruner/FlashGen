@@ -1,5 +1,5 @@
 import React from "react";
-import {Flashcard} from "@/models/Flashcard";
+import {Flashcard} from "@/models/flashcard";
 import FlashcardCard from "@/components/flashcards-card/flashcard-card";
 
 interface FlashcardCardListProps {

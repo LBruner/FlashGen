@@ -1,9 +1,9 @@
 import {AxiosResponse} from "axios";
 import {AnkiResponse} from "@/models/anki/deck";
-import {ApiResponse} from "@/models/ApiResponse";
-import {createJsonResponse} from "@/lib/NextApiResponse";
-import axiosApi from "@/lib/AxiosApi";
-import {noConnectionResponse} from "@/lib/NoConnectionResponse";
+import {ApiResponse} from "@/models/api-response";
+import {createJsonResponse} from "@/lib/next-api-response";
+import axiosApi from "@/lib/axios-api";
+import {noConnectionResponse} from "@/lib/no-connection-response";
 
 export async function GET(): Promise<Response> {
     try {

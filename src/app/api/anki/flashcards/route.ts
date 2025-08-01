@@ -1,9 +1,9 @@
-import {syncFlashcardsToAnki} from "@/lib/Anki";
-import {Flashcard} from "@/models/Flashcard";
+import {syncFlashcardsToAnki} from "@/lib/anki";
+import {Flashcard} from "@/models/flashcard";
 import {FlashcardSchema} from "@/models/schemas/flashcard-schema";
 import {z} from "zod";
-import {AddCardFeedbackResponseData, ApiResponse} from "@/models/ApiResponse";
-import {createJsonResponse} from "@/lib/NextApiResponse";
+import {AddCardFeedbackResponseData, ApiResponse} from "@/models/api-response";
+import {createJsonResponse} from "@/lib/next-api-response";
 
 const FlashcardArraySchema = z.object({
     selectedDeckName: z.string(),

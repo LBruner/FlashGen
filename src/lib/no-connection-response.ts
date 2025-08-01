@@ -1,4 +1,4 @@
-import {ApiResponse} from "@/models/ApiResponse";
+import {ApiResponse} from "@/models/api-response";
 
 export const noConnectionResponse: ApiResponse<Array<string>> = {
     data: [],

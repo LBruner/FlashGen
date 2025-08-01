@@ -3,7 +3,7 @@ import {Button, Popover, PopoverContent, PopoverTrigger,} from "@heroui/react";
 import {Layers, Plus, X} from "lucide-react";
 import {Input} from "@heroui/input";
 import {OverlayPlacement} from "@heroui/aria-utils";
-import CustomSolidButton from "@/components/UI/CustomSolidButton";
+import CustomSolidButton from "@/components/UI/custom-solid-button";
 
 interface CreateDeckPopoverProps {
     createDeck: (deckName: string) => Promise<void>;

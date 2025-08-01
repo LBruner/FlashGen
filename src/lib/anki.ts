@@ -1,10 +1,10 @@
-import {Flashcard} from "@/models/Flashcard";
+import {Flashcard} from "@/models/flashcard";
 import * as googleTTS from "google-tts-api";
-import {removeTags} from "./FlashcardFormatter";
+import {removeTags} from "./flashcard-formatter";
 import {AxiosResponse} from "axios";
 import {AnkiResponse} from "@/models/anki/deck";
-import axiosApi from "@/lib/AxiosApi";
-import {AddCardFeedbackResponseData} from "@/models/ApiResponse";
+import axiosApi from "@/lib/axios-api";
+import {AddCardFeedbackResponseData} from "@/models/api-response";
 
 export const getSelectedMeaningsFlashcards = (flashcards: Flashcard[]) => {
     return flashcards.flatMap((flashcard) => {

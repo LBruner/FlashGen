@@ -1,10 +1,10 @@
 import React, {Dispatch, SetStateAction} from "react";
 import LanguageSettingsModal from "@/components/UI/language-settings-modal/language-settings-modal";
-import TagInput from "@/components/UI/tag-input/TagInput";
+import TagInput from "@/components/UI/tag-input/tag-input";
 import {IoFlash, IoGlobeOutline, IoSparkles} from "react-icons/io5";
-import DashboardHeader from "@/components/UI/dashboard/DashboardHeader";
+import DashboardHeader from "@/components/UI/dashboard/dashboard-header";
 import {useAppSettings} from "@/store/context/settings-context-provider";
-import CustomToast from "@/components/UI/toast/CustomToast";
+import CustomToast from "@/components/UI/toast/custom-toast";
 import {useRouter} from "next/navigation";
 import {pagePaths} from "@/path-routes";
 

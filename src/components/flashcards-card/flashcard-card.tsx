@@ -1,7 +1,7 @@
 import React from "react";
-import {Flashcard} from "@/models/Flashcard";
+import {Flashcard} from "@/models/flashcard";
 import FlashcardMeaningColumns from "@/components/flashcards-card/flashcard-meaning-columns";
-import {removeTags} from "@/lib/FlashcardFormatter";
+import {removeTags} from "@/lib/flashcard-formatter";
 
 interface FlashcardCardCardProps {
     flashcard: Flashcard;

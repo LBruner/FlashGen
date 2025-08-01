@@ -1,9 +1,9 @@
 import {z} from "zod";
 import {AxiosResponse} from "axios";
 import {AnkiResponse} from "@/models/anki/deck";
-import axiosApi from "@/lib/AxiosApi";
-import {ApiResponse} from "@/models/ApiResponse";
-import {createJsonResponse} from "@/lib/NextApiResponse";
+import axiosApi from "@/lib/axios-api";
+import {ApiResponse} from "@/models/api-response";
+import {createJsonResponse} from "@/lib/next-api-response";
 
 export async function DELETE(request: Request, { params }: { params: Promise<{ deckName: string }>}) {
     try {

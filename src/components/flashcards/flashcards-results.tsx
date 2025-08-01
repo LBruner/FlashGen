@@ -1,5 +1,5 @@
 import React from "react";
-import {AddCardFeedbackResponseData} from "@/models/ApiResponse";
+import {AddCardFeedbackResponseData} from "@/models/api-response";
 import {Check, Clock, Info, Plus, Sparkles} from "lucide-react";
 import Link from "next/link";
 

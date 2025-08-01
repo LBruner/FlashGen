@@ -3,8 +3,8 @@
 import React, {useState} from "react";
 import {Button} from "@heroui/react";
 import {Textarea} from "@heroui/input";
-import {ChatResponse} from "@/models/ChatResponse";
-import {ChatMessage} from "@/models/ChatMessage";
+import {ChatResponse} from "@/models/chat-response";
+import {ChatMessage} from "@/models/chat-message";
 
 
 const Chat: React.FC = () => {

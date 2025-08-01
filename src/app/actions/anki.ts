@@ -1,7 +1,7 @@
 import {AnkiDeck, AnkiDeckStats, DeckStatsMap} from "@/models/anki/deck";
 import {AxiosResponse} from "axios";
-import {ApiResponse} from "@/models/ApiResponse";
-import axiosApi from "@/lib/AxiosApi";
+import {ApiResponse} from "@/models/api-response";
+import axiosApi from "@/lib/axios-api";
 import {ankiPaths} from "@/path-routes";
 
 export const pegaTodosDecks = async (): Promise<AnkiDeck[]> => {

@@ -1,4 +1,4 @@
-import {FlashcardLanguage} from "@/models/FlashcardLanguage";
+import {FlashcardLanguage} from "@/models/flashcard-language";
 
 export const flashcardLanguages: FlashcardLanguage[] = [
     new FlashcardLanguage(1, "English", "en", "US"),

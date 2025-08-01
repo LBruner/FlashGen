@@ -1,7 +1,7 @@
 import React from "react";
 import {AnkiDeckStats} from "@/models/anki/deck";
-import DeckListItem from "@/components/decks/DeckListItem";
-import {DeckOperation} from "@/components/decks/UserDeckPageBody";
+import DeckListItem from "@/components/decks/deck-list-item";
+import {DeckOperation} from "@/components/decks/user-deck-page-body";
 
 interface DecksListProps {
     decksStats: AnkiDeckStats[];

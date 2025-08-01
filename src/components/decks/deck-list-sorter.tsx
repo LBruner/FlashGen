@@ -1,9 +1,9 @@
 import React, {ChangeEvent, Dispatch, SetStateAction, useState} from "react";
 import {AnkiDeckStats} from "@/models/anki/deck";
 import {Filter, Search} from "lucide-react";
-import {nestDecks} from "@/lib/Decks";
-import {DeckOperation} from "@/components/decks/UserDeckPageBody";
-import CreateDeckPopover from "@/components/decks/CreateDeckPopover";
+import {nestDecks} from "@/lib/decks";
+import {DeckOperation} from "@/components/decks/user-deck-page-body";
+import CreateDeckPopover from "@/components/decks/create-deck-popover";
 
 interface DeckListSorterProps {
     unsortedDecks: AnkiDeckStats[];
