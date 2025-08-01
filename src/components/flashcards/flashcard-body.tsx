@@ -21,18 +21,20 @@ import {toast} from "react-toastify";
 import {useTheme} from "next-themes";
 import {getSelectedMeaningsFlashcards} from "@/lib/anki";
 import {AnkiExporter} from "@/models/anki-exporter";
+import {useAppSettings} from "@/store/context/settings-context-provider";
 
 const FlashcardBody: React.FC = () => {
     const [wordTags, setWordTags] = useState<Array<string>>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [userDecks, setUserDecks] = useState<Array<AnkiDeck>>([]);
     const {isOpen, onOpen, onClose} = useDisclosure();
+    const {isAnkiConnected} = useAppSettings();
 
     useEffect(() => {
-        buscaDecksUsuario().then();
-    }, []);
+        fetchUserDecks().then();
+    }, [isAnkiConnected]);
 
-    const buscaDecksUsuario = async (): Promise<void> => {
+    const fetchUserDecks = async (): Promise<void> => {
         const userDecks = await pegaTodosDecks();
         const newUserDecks = ['Import cards (.csv file)', ...userDecks];
         setUserDecks(newUserDecks);
