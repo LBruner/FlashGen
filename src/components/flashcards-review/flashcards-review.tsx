@@ -10,16 +10,20 @@ interface FlashCardResultsProps {
     setFlashcards: React.Dispatch<React.SetStateAction<Flashcard[]>>;
     addFlashcardsToAnki: () => void;
     importFlashcardsToFile: (flashcards: Flashcard[]) => void;
+    userDecks: AnkiDeck[];
     selectedDeck: string;
+    setSelectedDeck: Dispatch<SetStateAction<string>>;
 }
 
-const FlashcardsCreation: React.FC<FlashCardResultsProps> = (
+const FlashcardsReview: React.FC<FlashCardResultsProps> = (
     {
         flashcards,
         setFlashcards,
         addFlashcardsToAnki,
         selectedDeck,
-        importFlashcardsToFile
+        importFlashcardsToFile,
+        userDecks,
+        setSelectedDeck
     }) => {
 
     const {isAnkiConnected} = useAppSettings();
@@ -57,6 +61,8 @@ const FlashcardsCreation: React.FC<FlashCardResultsProps> = (
                             onClick={selectAllMeanings}>
                             📋 Select All
                         </button>
+                        <FlashcardsSettingsPopover userDecks={userDecks} selectedDeck={selectedDeck}
+                                                   setSelectedDeck={setSelectedDeck}/>
                         {isAnkiConnected && selectedDeck != '' &&
                             <CustomSolidButton
                                 className={''} text={'Sync to Anki'} onClick={addFlashcardsToAnki}

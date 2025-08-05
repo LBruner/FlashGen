@@ -217,16 +217,18 @@ const FlashcardBody: React.FC = () => {
                 />
             }
             {currentScreen == 1 &&
-                <FlashcardsCreation
+                <FlashcardsReview
                     addFlashcardsToAnki={addFlashcardsToAnki}
                     flashcards={flashcards}
                     setFlashcards={setFlashcards}
                     selectedDeck={selectedDeck}
+                    setSelectedDeck={setSelectedDeck}
                     importFlashcardsToFile={importFlashcardsToFile}
+                    userDecks={userDecks}
                 />
             }
             {currentScreen == 2 &&
-                <FlashcardsResults resetPageData={resetPageData} responseData={addFlashcardsFeedback!}/>}
+                <FlashcardsResults resetPageData={resetPageData} responseData={addFlashcardsFeedback!} />}
         </div>
     )
 };

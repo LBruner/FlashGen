@@ -2,8 +2,6 @@
 
 import React from "react";
 import {
-    Autocomplete,
-    AutocompleteItem,
     Button,
     Divider,
     Modal,
@@ -21,6 +19,7 @@ import CreateDeckPopover from "@/components/decks/create-deck-popover";
 import CustomSolidButton from "@/components/UI/custom-solid-button";
 import Link from "next/link";
 import {pagePaths} from "@/path-routes";
+import UserDecksAutocomplete from "@/components/decks/user-decks-autocomplete";
 
 interface LanguageSettingsModalProps {
     isOpen: boolean;
@@ -78,33 +77,10 @@ const LanguageSettingsModal: React.FC<LanguageSettingsModalProps> = (
                                 <div>
                                     <label
                                         className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2 transition-colors duration-200">
-                                        Deck Name
+                                        Deck Name <span className={'text-xs text-gray-500'}>(Can change later)</span>
                                     </label>
-                                    <div className="relative">
-                                        <Autocomplete
-                                            errorMessage={'Required field'}
-                                            isRequired={true}
-                                            color={'default'}
-                                            defaultInputValue={'Import cards (.csv file)'}
-                                            selectedKey={selectedDeck}
-                                            multiple={false}
-                                            allowsCustomValue={true}
-                                            onSelectionChange={(deck) => setSelectedDeck(deck?.toString() ?? '')}
-                                        >
-                                            {
-                                                userDecks.map((deck) => (
-                                                    <AutocompleteItem
-                                                        textValue={deck}
-                                                        key={deck}
-                                                        classNames={{
-                                                            base: "text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-slate-600"
-                                                        }}
-                                                    >
-                                                        {deck}
-                                                    </AutocompleteItem>
-                                                ))
-                                            }
-                                        </Autocomplete>
+                                    <div className="w-full h-full">
+                                        <UserDecksAutocomplete userDecks={userDecks} selectedDeck={selectedDeck} setSelectedDeck={setSelectedDeck}/>
                                     </div>
                                 </div>
                                 <div className={'flex gap-2 justify-between'}>
