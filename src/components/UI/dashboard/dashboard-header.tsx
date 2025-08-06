@@ -8,7 +8,7 @@ interface DashboardHeaderProps {
     title: string;
 }
 
-const DashboardHeader: React.FC<DashboardHeaderProps> = ({title}) => {
+const DashboardHeader: React.FC<DashboardHeaderProps> = ({title,}) => {
     const {isAnkiConnected} = useAppSettings();
 
     return (
@@ -22,7 +22,9 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({title}) => {
                         className={'absolute -bottom-1 left-0 w-12 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full'}></div>
                 </div>
             </div>
-            <AnkiConnectionStatusBar isConnected={isAnkiConnected}/>
+            <div className={'flex items-center gap-4'}>
+                <AnkiConnectionStatusBar isConnected={isAnkiConnected}/>
+            </div>
         </div>
     )
 }

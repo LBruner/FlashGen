@@ -7,12 +7,11 @@ import {getPrompt} from "../../../public/prompt";
 import {AnkiDeck} from "@/models/anki/deck";
 import {flashcardLanguages} from "@/lib/languages-list";
 import {AxiosResponse} from "axios";
-import AddWordsForm from "@/components/pages/add-flashcards-form";
+import AddFlashcardsForm from "@/components/pages/add-flashcards-form";
 import {useDisclosure} from "@heroui/react";
 import axiosApi from "@/lib/axios-api";
 import {AddCardFeedbackResponseData, ApiResponse} from "@/models/api-response";
 import {ankiPaths} from "@/path-routes";
-import FlashcardsCreation from "@/components/FlashcardsCreation/flashcards-creation";
 import FlashcardsResults from "@/components/flashcards/flashcards-results";
 import CustomSpinner from "@/components/UI/custom-spinner";
 import {pegaTodosDecks} from "@/app/actions/anki";
@@ -22,6 +21,9 @@ import {useTheme} from "next-themes";
 import {getSelectedMeaningsFlashcards} from "@/lib/anki";
 import {AnkiExporter} from "@/models/anki-exporter";
 import {useAppSettings} from "@/store/context/settings-context-provider";
+import FlashcardsReview from "@/components/flashcards-review/flashcards-review";
+import FlashcardSteps from "@/components/UI/flashcard-steps";
+import ScreenHeaderSwitcher from "@/components/UI/dashboard-header-switcher";
 
 const FlashcardBody: React.FC = () => {
     const [wordTags, setWordTags] = useState<Array<string>>([]);
@@ -75,9 +77,9 @@ const FlashcardBody: React.FC = () => {
         //     ]
         // })
     ]);
-
+    console.log(flashcards)
     const [selectedDeck, setSelectedDeck] = useState<AnkiDeck>(userDecks[0]);
-    const [currentScreen, setCurrentScreen] = useState(0);
+    const [currentScreenIndex, setCurrentScreenIndex] = useState(0);
 
     const [inputLanguage, setInputLanguage] = useState<string>(flashcardLanguages[0].code);
     const [outputLanguage, setOutputLanguage] = useState<string>(flashcardLanguages[1].code);
@@ -88,10 +90,25 @@ const FlashcardBody: React.FC = () => {
     const sendMessage = async () => {
         if (wordTags.length === 0 || isLoading) return;
 
+        const newWords = wordTags.filter((word) => {
+            const wordExists = flashcards.some((card) => {
+                const cleanCardWord = card.word.replace(/<[^>]*>/g, '').toLowerCase();
+                return cleanCardWord === word.toLowerCase();
+            });
+
+            return !wordExists;
+        });
+
+        if (newWords.length === 0) {
+            console.log('All words already exist in flashcards');
+            return;
+        }
+
         const newMessage: ChatMessage = {
             role: "user",
-            content: getPrompt(wordTags.map((item) => item), inputLanguage, outputLanguage),
+            content: getPrompt(newWords, inputLanguage, outputLanguage),
         };
+
         setIsLoading(true);
 
         try {
@@ -99,22 +116,25 @@ const FlashcardBody: React.FC = () => {
                 messages: [newMessage],
             });
 
-            const flashcards = JSON.parse(response.data.data[0]);
+            const responseFlashcards = JSON.parse(response.data.data[0]);
 
-            const flashcardArray: Array<Flashcard> = flashcards.flashcards.map((flashcard: Flashcard) => new Flashcard({
-                ...flashcard, inputLanguage, outputLanguage,
+            const flashcardArray: Array<Flashcard> = responseFlashcards.flashcards.map((flashcard: Flashcard) => new Flashcard({
+                ...flashcard,
+                inputLanguage,
+                outputLanguage,
                 selectedMeaningIndex: [0],
             }));
 
-            setFlashcards(flashcardArray);
+            setFlashcards(prevFlashcards => [...prevFlashcards, ...flashcardArray]);
             setIsLoading(false);
         } catch (e) {
-            console.log(e)
+            console.log(e);
+            setIsLoading(false);
         }
     }
 
     const onStartFlashcardCreation = async () => {
-        setCurrentScreen(1);
+        setCurrentScreenIndex(1);
         await sendMessage();
     }
 
@@ -128,7 +148,7 @@ const FlashcardBody: React.FC = () => {
         })).data;
 
         setAddFlashcardsFeedback(data);
-        setCurrentScreen(2);
+        setCurrentScreenIndex(2);
         setIsLoading(false);
     };
 
@@ -144,16 +164,16 @@ const FlashcardBody: React.FC = () => {
             executionTime: 0,
             deckName: 'Exported through file'
         });
-        setCurrentScreen(2);
+        setCurrentScreenIndex(2);
     };
 
     const resetPageData = () => {
         onClose();
         setFlashcards([]);
-        setSelectedDeck('');
         setWordTags([]);
-        setCurrentScreen(0);
+        setCurrentScreenIndex(0);
         setIsLoading(false);
+        setAddFlashcardsFeedback(null);
     }
 
     const createDeck = async (deckName: string) => {
@@ -200,23 +220,35 @@ const FlashcardBody: React.FC = () => {
         }
     };
 
+    const switchActiveScreen = (pageIndex: number) => {
+        setCurrentScreenIndex(pageIndex);
+    }
+
     if (isLoading) {
         return <CustomSpinner/>
     }
 
     return (
-        <div className={'flex w-full justify-center items-center'}>
-            {currentScreen == 0 &&
-                <AddWordsForm
+        <div className={'flex h-auto  pt-8 px-12 flex-col w-full items-center'}>
+            <ScreenHeaderSwitcher currentScreenIndex={currentScreenIndex}/>
+            <FlashcardSteps
+                showFlashcardReviewPage={flashcards.length > 0}
+                showFeedbackPage={addFlashcardsFeedback != null}
+                currentScreenIndex={currentScreenIndex}
+                setCurrentScreen={setCurrentScreenIndex}
+            />
+            {currentScreenIndex == 0 &&
+                <AddFlashcardsForm
                     tags={wordTags} setTags={setWordTags} userDecks={userDecks} selectedDeck={selectedDeck}
                     setSelectedDeck={setSelectedDeck} setInputLanguage={setInputLanguage}
                     inputLanguage={inputLanguage}
                     outputLanguage={outputLanguage} setOutputLanguage={setOutputLanguage} isLoading={isLoading}
                     handleCreateFlashcards={onStartFlashcardCreation} isOpen={isOpen} onClose={onClose}
                     onOpen={onOpen} createDeck={createDeck}
+                    switchActiveScreen={switchActiveScreen}
                 />
             }
-            {currentScreen == 1 &&
+            {currentScreenIndex == 1 &&
                 <FlashcardsReview
                     addFlashcardsToAnki={addFlashcardsToAnki}
                     flashcards={flashcards}
@@ -227,8 +259,8 @@ const FlashcardBody: React.FC = () => {
                     userDecks={userDecks}
                 />
             }
-            {currentScreen == 2 &&
-                <FlashcardsResults resetPageData={resetPageData} responseData={addFlashcardsFeedback!} />}
+            {currentScreenIndex == 2 &&
+                <FlashcardsResults resetPageData={resetPageData} responseData={addFlashcardsFeedback!}/>}
         </div>
     )
 };

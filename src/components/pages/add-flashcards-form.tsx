@@ -2,7 +2,6 @@ import React, {Dispatch, SetStateAction} from "react";
 import LanguageSettingsModal from "@/components/UI/language-settings-modal/language-settings-modal";
 import TagInput from "@/components/UI/tag-input/tag-input";
 import {IoFlash, IoGlobeOutline, IoSparkles} from "react-icons/io5";
-import DashboardHeader from "@/components/UI/dashboard/dashboard-header";
 import {useAppSettings} from "@/store/context/settings-context-provider";
 import CustomToast from "@/components/UI/toast/custom-toast";
 import {useRouter} from "next/navigation";
@@ -41,17 +40,14 @@ const AddFlashcardsForm: React.FC<AddFlashcardsScreenProps> = (props) => {
         </button>;
 
     return (
-        <div className={'w-full h-auto relative overflow-hidden'}>
+        <div className={'w-8/12 mt-4'}>
             <CustomToast
                 title={'Connection Error!'} content={`We can't connect to AnkiConnect API`} type={'default'}
                 shouldDisplayToast={!isAnkiConnected}
                 actionButton={redirectButton}
             />
-            <div className={'relative z-10 flex flex-col w-full h-screen py-8 px-12'}>
-                <DashboardHeader
-                    title={'Create Flashcards'}
-                />
-                <div className={'flex-1 flex flex-col justify-center items-center mb-24'}>
+            <div className={'z-10 flex flex-col'}>
+                <div className={'flex flex-col'}>
                     <LanguageSettingsModal {...props}/>
                     <div className={'w-full'}>
                         <div className={'text-center mb-12'}>
@@ -66,7 +62,7 @@ const AddFlashcardsForm: React.FC<AddFlashcardsScreenProps> = (props) => {
                                 Add Words to Study
                             </p>
 
-                            <p className={'text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed font-medium'}>
+                            <p className={'text-lg text-gray-600 dark:text-gray-300 mx-auto leading-relaxed font-medium'}>
                                 Type words, press Enter, and watch AI create{' '}
                                 <span
                                     className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent font-bold">
@@ -76,7 +72,7 @@ const AddFlashcardsForm: React.FC<AddFlashcardsScreenProps> = (props) => {
                             </p>
                         </div>
 
-                        <div className={'grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 max-w-2xl mx-auto'}>
+                        <div className={'grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 mx-auto'}>
                             <div
                                 className={'bg-white/60 dark:bg-gray-800/60 backdrop-blur-xl border border-white/30 dark:border-gray-700/30 rounded-2xl p-4 text-center shadow-lg hover:shadow-xl transition-all duration-300'}>
                                 <div
@@ -98,7 +94,7 @@ const AddFlashcardsForm: React.FC<AddFlashcardsScreenProps> = (props) => {
                         </div>
 
                         <div
-                            className={'relative group max-w-3xl mx-auto'}
+                            className={'relative group mx-auto'}
                         >
                             <div
                                 className={'relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl border border-white/40 dark:border-gray-700/40 rounded-3xl p-8 sm:p-10 shadow-2xl'}>

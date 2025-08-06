@@ -1,6 +1,6 @@
 import React from "react";
 import {AddCardFeedbackResponseData} from "@/models/api-response";
-import {Check, Clock, Info, Plus, Sparkles} from "lucide-react";
+import {Clock, Info, Plus, Sparkles} from "lucide-react";
 import Link from "next/link";
 
 interface FlashcardsResultsProps {
@@ -16,21 +16,10 @@ const FlashcardsResults: React.FC<FlashcardsResultsProps> = (
     const {deckName, executionTime, addedCards} = responseData;
 
     return (
-        <div className={'h-screen'}>
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div
-                    className="absolute top-40 right-10 w-96 h-96 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse animation-delay-2000"></div>
-                <div
-                    className="absolute bottom-20 left-1/3 w-80 h-80 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse animation-delay-4000"></div>
-            </div>
-
-            <div className="relative z-10 container mx-auto px-4 py-12">
-                <div className="max-w-2xl mx-auto">
+        <div>
+            <div className="mt-5 mx-auto px-4">
+                <div className="mx-auto">
                     <div className="text-center mb-8">
-                        <div
-                            className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full mb-6 animate-bounce">
-                            <Check className="w-10 h-10 text-white" strokeWidth={3}/>
-                        </div>
                         <h1 className="text-4xl font-bold bg-gradient-to-r from-violet-600 to-indigo-600 dark:from-violet-400 dark:to-indigo-400 bg-clip-text text-transparent mb-3">
                             Cards Created Successfully!
                         </h1>
@@ -93,14 +82,6 @@ const FlashcardsResults: React.FC<FlashcardsResultsProps> = (
                                 className="w-5 h-5  transition-transform duration-300"/>}
                             />
                         </div>
-                    </div>
-
-                    <div
-                        className="text-center mt-8 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-2xl border border-blue-100 dark:border-blue-800">
-                        <p className="text-sm text-blue-700 dark:text-blue-300">
-                            💡 <strong>Pro tip:</strong> Start
-                            studying now to maximize retention!
-                        </p>
                     </div>
                 </div>
             </div>

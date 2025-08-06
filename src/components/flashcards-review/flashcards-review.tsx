@@ -48,12 +48,7 @@ const FlashcardsReview: React.FC<FlashCardResultsProps> = (
     const cannotSyncFlashcards = hasNoCardsToAdd || selectedDeck == userDecks[0];
 
     return (
-        <div className={'w-full h-auto gap-8 py-8 flex flex-col mx-12'}>
-            <div className={'flex flex-col w-full justify-start items-start'}>
-                <p className={'text-3xl font-bold'}>🎯 Review Your Flashcards</p>
-                <p className={'text-lg light:text-gray-500 dark:text-gray-200'}>Select meanings and edit content before
-                    creating your cards</p>
-            </div>
+        <div className={'w-11/12 pb-8 gap-8 flex flex-col'}>
             <div className={'flex flex-col gap-8 items-center justify-center'}>
                 <div
                     className={'w-full flex flex-col items-center justify-center rounded-lg py-4 gap-4 dark:bg-slate-50/5 bg-gray-100 border dark:border-transparent'}>
