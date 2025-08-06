@@ -23,7 +23,7 @@ import {AnkiExporter} from "@/models/anki-exporter";
 import {useAppSettings} from "@/store/context/settings-context-provider";
 import FlashcardsReview from "@/components/flashcards-review/flashcards-review";
 import FlashcardSteps from "@/components/UI/flashcard-steps";
-import ScreenHeaderSwitcher from "@/components/UI/dashboard-header-switcher";
+import ScreenHeaderSwitcher from "@/components/UI/dashboard/dashboard-header-switcher";
 
 const FlashcardBody: React.FC = () => {
     const [wordTags, setWordTags] = useState<Array<string>>([]);
@@ -220,9 +220,6 @@ const FlashcardBody: React.FC = () => {
         }
     };
 
-    const switchActiveScreen = (pageIndex: number) => {
-        setCurrentScreenIndex(pageIndex);
-    }
 
     if (isLoading) {
         return <CustomSpinner/>
@@ -245,7 +242,6 @@ const FlashcardBody: React.FC = () => {
                     outputLanguage={outputLanguage} setOutputLanguage={setOutputLanguage} isLoading={isLoading}
                     handleCreateFlashcards={onStartFlashcardCreation} isOpen={isOpen} onClose={onClose}
                     onOpen={onOpen} createDeck={createDeck}
-                    switchActiveScreen={switchActiveScreen}
                 />
             }
             {currentScreenIndex == 1 &&
