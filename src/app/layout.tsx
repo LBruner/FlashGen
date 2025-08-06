@@ -25,9 +25,9 @@ export default function RootLayout({children}: Readonly<{
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="en" className={'bg-slate-50 dark:bg-customDarkBg'}>
         <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50 dark:bg-customDarkBg`}
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
         <Providers>
             <Sidebar/>
