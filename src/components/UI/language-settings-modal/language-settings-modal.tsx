@@ -155,7 +155,10 @@ const LanguageSettingsModal: React.FC<LanguageSettingsModalProps> = (
                                     Cancel
                                 </button>
                                 <button
-                                    onClick={handleCreateFlashcards}
+                                    onClick={() => {
+                                        onClose();
+                                        handleCreateFlashcards();
+                                    }}
                                     className="flex-1 py-3 px-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-xl transition-all duration-200 font-medium shadow-lg hover:shadow-xl"
                                 >
                                     Fetch Cards
