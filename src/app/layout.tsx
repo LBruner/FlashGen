@@ -19,6 +19,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
     title: "FlashGen",
     description: "Automated AI Flashcards Creation",
+    keywords: ['flashcards', 'AI', 'education'],
 };
 
 export default function RootLayout({children}: Readonly<{

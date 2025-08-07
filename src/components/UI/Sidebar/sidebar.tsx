@@ -2,7 +2,7 @@
 
 import React from "react";
 import {useTheme} from "next-themes";
-import {IoBookOutline, IoSettingsOutline} from "react-icons/io5";
+import {IoBookOutline} from "react-icons/io5";
 import {FiHome} from "react-icons/fi";
 import SidebarNavButton from "@/components/UI/Sidebar/sidebar-nav-button";
 import {pagePaths} from "@/path-routes";
@@ -83,12 +83,12 @@ const Sidebar: React.FC = () => {
                     isSidebarMinimized={isSidebarMinimized}
 
                 />
-                <SidebarNavButton
-                    path={pagePaths.getSettingsPage()}
-                    title={'Settings'}
-                    icon={<IoSettingsOutline size={20}/>}
-                    isSidebarMinimized={isSidebarMinimized}
-                />
+                {/*<SidebarNavButton*/}
+                {/*    path={pagePaths.getSettingsPage()}*/}
+                {/*    title={'Settings'}*/}
+                {/*    icon={<IoSettingsOutline size={20}/>}*/}
+                {/*    isSidebarMinimized={isSidebarMinimized}*/}
+                {/*/>*/}
             </div>
 
             {isSidebarMinimized &&

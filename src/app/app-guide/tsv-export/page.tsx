@@ -1,11 +1,13 @@
-'use client';
 
 import {ArrowLeft, CheckCircle, Download, FileText, FolderOpen, MousePointer, Settings, Upload} from 'lucide-react';
 import {pagePaths} from "@/path-routes";
 import Link from "next/link";
 
-const TSVImportGuide = () => {
+export const metadata = {
+    title: 'TSV Export | FlashGen',
+};
 
+const TSVImportGuide = () => {
     return (
         <div
             className="bg-gradient-to-br from-green-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-800 dark:to-green-900/20">

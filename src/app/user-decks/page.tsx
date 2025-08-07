@@ -2,6 +2,10 @@ import React from "react";
 import UserDeckPageBody from "@/components/decks/user-deck-page-body";
 import {ToastContainer} from "react-toastify";
 
+export const metadata = {
+    title: "User Decks | FlashGen",
+};
+
 const UserDecksPage: React.FC = async () => {
     return (
         <div className={'w-full'}>

@@ -2,6 +2,13 @@ import {ArrowRight, CheckCircle, Download, Wifi, WifiOff} from 'lucide-react';
 import Link from "next/link";
 import {pagePaths} from "@/path-routes";
 
+export const metadata = {
+    title: {
+        template: '%s | FlashGen',
+        default: 'Troubleshoot | FlashGen'
+    },
+};
+
 const AppGuideOptions = () => {
     return (
         <div className="h-screen flex flex-col justify-center items-center lg:px-8">
