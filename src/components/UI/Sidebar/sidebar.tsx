@@ -10,6 +10,7 @@ import {RiExpandLeftLine, RiExpandRightLine} from "react-icons/ri";
 import ThemeButton from "@/components/UI/Sidebar/theme-button";
 import {useSidebar} from "@/store/context/ui-context-provider";
 import {MdInfoOutline} from "react-icons/md";
+import {appName} from "@/constants";
 
 const Sidebar: React.FC = () => {
     const {systemTheme, theme, setTheme} = useTheme();
@@ -38,7 +39,7 @@ const Sidebar: React.FC = () => {
                         isSidebarMinimized ? 'w-0 opacity-0' : 'w-auto opacity-100'
                     }`}>
                         <div className={'whitespace-nowrap'}>
-                            <p className={'text-xl font-bold text-white'}>FlashGen</p>
+                            <p className={'text-xl font-bold text-white'}>{appName}</p>
                             <p className={'text-gray-400'}>Smart Flashcards</p>
                         </div>
                     </div>

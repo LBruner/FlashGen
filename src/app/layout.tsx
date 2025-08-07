@@ -5,6 +5,7 @@ import React from "react";
 import Providers from "@/app/providers";
 import Sidebar from "@/components/UI/Sidebar/sidebar";
 import MainContentWrapper from "@/components/main-content-wrapper";
+import {appName} from "@/constants";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -17,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "FlashGen",
+    title: appName,
     description: "Automated AI Flashcards Creation",
     keywords: ['flashcards', 'AI', 'education'],
 };

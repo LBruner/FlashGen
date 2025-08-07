@@ -1,9 +1,10 @@
 import React from "react";
 import UserDeckPageBody from "@/components/decks/user-deck-page-body";
 import {ToastContainer} from "react-toastify";
+import {appName} from "@/constants";
 
 export const metadata = {
-    title: "User Decks | FlashGen",
+    title: `User Decks | ${appName}`,
 };
 
 const UserDecksPage: React.FC = async () => {

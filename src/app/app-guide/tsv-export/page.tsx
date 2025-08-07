@@ -2,9 +2,10 @@
 import {ArrowLeft, CheckCircle, Download, FileText, FolderOpen, MousePointer, Settings, Upload} from 'lucide-react';
 import {pagePaths} from "@/path-routes";
 import Link from "next/link";
+import {appName} from "@/constants";
 
 export const metadata = {
-    title: 'TSV Export | FlashGen',
+    title: `TSV Export | ${appName}`,
 };
 
 const TSVImportGuide = () => {

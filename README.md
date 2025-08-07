@@ -1,3 +1,3 @@
-# FlashGen
+# LingkiAI
 
-[![wakatime](https://wakatime.com/badge/github/LBruner/FlashGen.svg)](https://wakatime.com/badge/github/LBruner/FlashGen)
+[![wakatime](https://wakatime.com/badge/github/LBruner/LingkiAI.svg)](https://wakatime.com/badge/github/LBruner/LingkiAI)

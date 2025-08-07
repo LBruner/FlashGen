@@ -4,6 +4,7 @@ import React, {useState} from "react";
 import Link from "next/link";
 import {pagePaths} from "@/path-routes";
 import {ArrowLeft, CheckCircle, Copy, ExternalLink, Settings, Terminal, Wifi} from "lucide-react";
+import {appName} from "@/constants";
 
 const AnkiConnectSetupGuide: React.FC = _ => {
     const [copiedStep, setCopiedStep] = useState<string | null>(null);
@@ -176,9 +177,9 @@ const AnkiConnectSetupGuide: React.FC = _ => {
                                     <div
                                         className="bg-gray-900 dark:bg-gray-800 rounded-lg p-4 font-mono text-sm flex items-center justify-between border border-gray-700">
                                         <span
-                                            className="text-green-400">git clone https://github.com/LBruner/FlashGen</span>
+                                            className="text-green-400">git clone https://github.com/LBruner/${appName}</span>
                                         <button
-                                            onClick={() => copyToClipboard('git clone https://github.com/LBruner/FlashGen', 'git-clone')}
+                                            onClick={() => copyToClipboard(`git clone https://github.com/LBruner/${appName}`, 'git-clone')}
                                             className="ml-2 p-1 text-gray-400 hover:text-white transition-colors"
                                         >
                                             {copiedStep === 'git-clone' ? <CheckCircle className="w-4 h-4"/> :
@@ -192,9 +193,9 @@ const AnkiConnectSetupGuide: React.FC = _ => {
                                         directory:</p>
                                     <div
                                         className="bg-gray-900 dark:bg-gray-800 rounded-lg p-4 font-mono text-sm flex items-center justify-between border border-gray-700">
-                                        <span className="text-green-400">cd FlashGen</span>
+                                        <span className="text-green-400">cd ${appName}</span>
                                         <button
-                                            onClick={() => copyToClipboard('cd FlashGen', 'cd-project')}
+                                            onClick={() => copyToClipboard(`cd ${appName}`, 'cd-project')}
                                             className="ml-2 p-1 text-gray-400 hover:text-white transition-colors"
                                         >
                                             {copiedStep === 'cd-project' ? <CheckCircle className="w-4 h-4"/> :

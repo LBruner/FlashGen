@@ -1,12 +1,10 @@
 import {ArrowRight, CheckCircle, Download, Wifi, WifiOff} from 'lucide-react';
 import Link from "next/link";
 import {pagePaths} from "@/path-routes";
+import {appName} from "@/constants";
 
 export const metadata = {
-    title: {
-        template: '%s | FlashGen',
-        default: 'Troubleshoot | FlashGen'
-    },
+    title: `Troubleshoot | ${appName}`,
 };
 
 const AppGuideOptions = () => {
