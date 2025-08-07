@@ -226,7 +226,7 @@ const FlashcardBody: React.FC = () => {
     }
 
     return (
-        <div className={'flex h-auto  pt-8 px-12 flex-col w-full items-center'}>
+        <div className={'flex h-screen pt-8 px-12 flex-col w-full items-center'}>
             <ScreenHeaderSwitcher currentScreenIndex={currentScreenIndex}/>
             <FlashcardSteps
                 showFlashcardReviewPage={flashcards.length > 0}
