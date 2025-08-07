@@ -11,9 +11,6 @@ export const ankiPaths = {
     getDecksEndpoint() {
         return `/api/anki/decks`;
     },
-    getDecksStatsEndpoint() {
-        return `/api/anki/decks`;
-    },
 }
 
 export const pagePaths = {

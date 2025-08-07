@@ -20,13 +20,12 @@ const DeckListItem: React.FC<DeckListItemProps> = (props) => {
             className={'bg-white border border-gray-200 dark:border-gray-700 shadow-sm dark:bg-gray-800 w-full px-6 py-4 rounded-xl'}>
             <div className={'flex flex-col gap-2'}>
                 <div className={'flex items-center justify-between'}>
-                    <div className={'flex items-center gap-4 '}>
-                        <div className={`p-3 rounded-xl bg-red-50`}>
+                    <div className={'flex items-start gap-4 '}>
+                        <div className={`p-3 rounded-xl bg-red-50 dark:bg-gray-500`}>
                             <PiCards size={20}/>
                         </div>
                         <div>
-                            <p className={'text-xl font-bold'}>{name}</p>
-                            <p>12 day streak</p>
+                            <p className={'text-2xl font-bold'}>{name}</p>
                         </div>
                     </div>
                     <div className={'flex gap-2'}>
