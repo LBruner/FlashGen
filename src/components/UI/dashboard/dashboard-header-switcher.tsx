@@ -35,7 +35,7 @@ const ScreenHeaderSwitcher: React.FC<ScreenHeaderSwitcherProps> = ({ currentScre
                                 🚀 Success!
                             </p>
                             <p className="text-lg text-gray-500 dark:text-gray-200">
-                                Your flashcards were added
+                                Your flashcards are ready
                             </p>
                         </div>
                     </div>

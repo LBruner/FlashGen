@@ -2,11 +2,13 @@ import React from "react";
 import {AddCardFeedbackResponseData} from "@/models/api-response";
 import {Clock, Info, Plus, Sparkles} from "lucide-react";
 import Link from "next/link";
+import {pagePaths} from "@/path-routes";
 
 interface FlashcardsResultsProps {
     responseData: AddCardFeedbackResponseData;
     resetPageData: () => void;
 }
+
 
 const FlashcardsResults: React.FC<FlashcardsResultsProps> = (
     {
@@ -15,16 +17,19 @@ const FlashcardsResults: React.FC<FlashcardsResultsProps> = (
     }: FlashcardsResultsProps) => {
     const {deckName, executionTime, addedCards} = responseData;
 
+    const wasExported = executionTime == 0;
     return (
         <div>
             <div className="mt-5 mx-auto px-4">
                 <div className="mx-auto">
                     <div className="text-center mb-8">
                         <h1 className="text-4xl font-bold bg-gradient-to-r from-violet-600 to-indigo-600 dark:from-violet-400 dark:to-indigo-400 bg-clip-text text-transparent mb-3">
-                            Cards Created Successfully!
+                            Cards {wasExported ? 'Exported' : 'Created'} Successfully!
                         </h1>
                         <p className="text-lg text-gray-600 dark:text-gray-300">
-                            Your flashcards are ready for studying
+                            {wasExported ? 'Your flashcards are ready for importing' : 'Your flashcards are ready for studying.'}
+                            <br/>
+                            {wasExported ? 'Check the guide for importing cards into Anki bellow' : ''}
                         </p>
                     </div>
 
@@ -51,8 +56,7 @@ const FlashcardsResults: React.FC<FlashcardsResultsProps> = (
                                 <div
                                     className="flex-shrink-0 w-3 h-3 bg-emerald-400 dark:bg-emerald-500 rounded-full mt-2"></div>
                                 <div>
-                                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Cards
-                                        Created</p>
+                                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Cards {wasExported ? 'Exported' : 'Created'}</p>
                                     <p className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">{addedCards}</p>
                                 </div>
                             </div>
@@ -72,13 +76,13 @@ const FlashcardsResults: React.FC<FlashcardsResultsProps> = (
                     <div className="space-y-4">
                         <div className="grid md:grid-cols-2 gap-4">
                             <CustomLinkButton onClick={resetPageData}
-                                className={'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700'}
-                                title={'Add More Cards'} path={'#'} icon={<Plus
+                                              className={'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700'}
+                                              title={'Add More Cards'} path={'#'} icon={<Plus
                                 className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300"/>
                             }/>
                             <CustomLinkButton
                                 className={'bg-gradient-to-r from-violet-500 to-indigo-600 hover:from-violet-600 hover:to-indigo-700 dark:from-violet-600 dark:to-indigo-700 dark:hover:from-violet-700 dark:hover:to-indigo-800'}
-                                title={'View Anki Importing Guide'} path={'app-guide'} icon={<Info
+                                title={'View Anki Importing Guide'} path={pagePaths.getTsvExportPageGuide()} icon={<Info
                                 className="w-5 h-5  transition-transform duration-300"/>}
                             />
                         </div>
