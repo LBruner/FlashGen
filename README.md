@@ -104,11 +104,10 @@ VIVER
 
 <p align="center">
   <img src="public/docs/images/screenshot_1.png" alt="Home"/>
-  <img src="public/docs/images/screenshot_2.png" alt="AI Flashcards"/>
-</p>
-<p align="center">
+
   <img src="public/docs/images/screenshot_3.png" alt="Flashcards creation"/>
   <img src="public/docs/images/screenshot_4.png" alt="Vendas"/>
+  <img src="public/docs/images/screenshot_2.png" alt="AI Flashcards"/>
 </p>
 
 
